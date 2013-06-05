@@ -1,4 +1,6 @@
-﻿$(function () {
+﻿function noBack() { window.history.forward(); }
+$(function () {
+    noBack();
     $("#applydonation").click(function (ev) {
         ev.preventDefault();
         return false;
