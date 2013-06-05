@@ -20,7 +20,7 @@ namespace CmsWeb.Models
         {
             public string Name { get; set; }
             public decimal? Pct { get; set; }
-        	public string Leader { get; set; }
+            public string Leader { get; set; }
         }
         public static IEnumerable<InvovementInfo> InvolvementList(int queryid)
         {
@@ -42,7 +42,7 @@ namespace CmsWeb.Models
                          HomePhone = p.HomePhone,
                          WorkPhone = p.WorkPhone,
                          CellPhone = p.CellPhone,
-						 Email = p.EmailAddress,
+                         Email = p.EmailAddress,
                          DivName = om.Organization.Division.Name,
                          OrgName = om.Organization.OrganizationName,
                          Teacher = p.BFClass.LeaderName,
@@ -58,7 +58,7 @@ namespace CmsWeb.Models
                                       {
                                           Name = m.Organization.OrganizationName,
                                           Pct = m.AttendPct,
-										  Leader = m.Organization.LeaderName
+                                          Leader = m.Organization.LeaderName
                                       },
 
                          JoinInfo = p.JoinType.Description + " , " + p.JoinDate.ToString().Substring(0, 11),
@@ -66,8 +66,8 @@ namespace CmsWeb.Models
                          OfficeUseOnly = "",
                          LastName = p.LastName,
                          FirstName = p.PreferredName,
-						 Campus = p.Campu.Description,
-						 CampusDate = Db.LastChanged(p.PeopleId, "CampusId").FormatDate(),
+                         Campus = p.Campu.Description,
+                         CampusDate = Db.LastChanged(p.PeopleId, "CampusId").FormatDate(),
                      };
             return q2;
         }
@@ -202,6 +202,7 @@ namespace CmsWeb.Models
             public string Request { get; set; }
             public decimal Amount { get; set; }
             public decimal AmountPaid { get; set; }
+            public bool HasBalance { get; set; }
             public string Email { get; set; }
             public string HomePhone { get; set; }
             public string CellPhone { get; set; }
@@ -267,6 +268,11 @@ namespace CmsWeb.Models
             var q2 = from p in q
                      let om = Db.OrganizationMembers.SingleOrDefault(om => om.OrganizationId == Util2.CurrentOrgId && om.PeopleId == p.PeopleId)
                      let recreg = p.RecRegs.FirstOrDefault()
+                     let bal = (from t in Db.Transactions
+                                where t.OriginalTransaction.TransactionPeople.Any(pp => pp.PeopleId == p.PeopleId)
+                                where t.OriginalTransaction.OrgId == Util2.CurrentOrgId
+                                orderby t.Id descending
+                                select t.Amtdue).FirstOrDefault()
                      select new MemberInfoClass
                      {
                          FirstName = p.PreferredName,
@@ -277,6 +283,7 @@ namespace CmsWeb.Models
                          Request = om.Request,
                          Amount = om.Amount ?? 0,
                          AmountPaid = om.AmountPaid ?? 0,
+                         HasBalance = bal != null && bal > 0,
                          Groups = string.Join(",", om.OrgMemMemTags.Select(mt => mt.MemberTag.Name)),
                          Email = p.EmailAddress,
                          HomePhone = p.HomePhone.FmtFone(),
@@ -326,10 +333,10 @@ namespace CmsWeb.Models
                          Leader = bfm.Organization.LeaderName,
                          OrgName = bfm.Organization.OrganizationName,
                          Schedule = tm.Hour + ":" + tm.Minute.ToString().PadLeft(2, '0'),
-						 HomePhone = p.HomePhone.FmtFone(),
-						 CellPhone1 = p.Family.HeadOfHousehold.CellPhone.FmtFone(),
-						 CellPhone2 = p.Family.HeadOfHouseholdSpouse.CellPhone.FmtFone(),
-					 };
+                         HomePhone = p.HomePhone.FmtFone(),
+                         CellPhone1 = p.Family.HeadOfHousehold.CellPhone.FmtFone(),
+                         CellPhone2 = p.Family.HeadOfHouseholdSpouse.CellPhone.FmtFone(),
+                     };
             return q2.Take(maximumRows);
         }
     }

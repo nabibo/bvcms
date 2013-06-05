@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Text;
 using System.Web.Mvc;
 using CmsData;
 using CmsWeb.Models;
@@ -69,19 +70,17 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
 						pay = due;
 					om.AmountPaid += pay;
 
-					string tstamp = Util.Now.ToString("MMM d yyyy h:mm tt");
-					om.AddToMemberData(tstamp);
-					var tran = "{0:C} ({1})".Fmt(
-						pay, ti.Id, ti.Testing == true ? " test" : "");
-					om.AddToMemberData(tran);
-					om.AddToMemberData("(Total due {0:c})".Fmt(ti.Amtdue));
+				    var sb = new StringBuilder();
+					sb.AppendFormat("{0:g} ----------\n", Util.Now);
+					sb.AppendFormat("{0:c} ({1} id) transaction amount\n", ti.Amt, ti.Id);
+					sb.AppendFormat("{0:c} applied to this registrant\n",pay);
+					sb.AppendFormat("{0:c} total due all registrants\n", ti.Amtdue);
 
+                    om.AddToMemberData(sb.ToString());
 					var reg = p.RecRegs.Single();
-					reg.AddToComments("-------------");
-					reg.AddToComments(tran);
-					reg.AddToComments("(Total due {0:c})".Fmt(ti.Amtdue));
-					reg.AddToComments(Util.Now.ToString("MMM d yyyy h:mm tt"));
-					reg.AddToComments("{0} - {1}".Fmt(org.DivisionName, org.OrganizationName));
+				    reg.AddToComments(sb.ToString());
+					reg.AddToComments("{0} ({1})".Fmt(org.OrganizationName, org.OrganizationId));
+
 					amt -= pay;
 				}
 				else

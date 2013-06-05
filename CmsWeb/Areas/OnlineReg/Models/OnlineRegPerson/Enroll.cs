@@ -176,38 +176,41 @@ namespace CmsWeb.Models
 					om.AddToGroup(DbUtil.Db, name);
 			}
 
-			string tstamp = Util.Now.ToString("MMM d yyyy h:mm tt");
-			om.AddToMemberData(tstamp);
-			var tran = "{0:C} ({1})".Fmt(om.AmountPaid.ToString2("C"), ti.TransactionId);
+		    var sb = new StringBuilder();
+
+		    sb.AppendFormat("{0:g} ----------------\n", DateTime.Now);
 			if (om.AmountPaid > 0)
 			{
-				om.AddToMemberData(tran);
+				sb.AppendFormat("{0:c} ({1} id) transaction amount\n", ti.Amt, ti.Id);
+				sb.AppendFormat("{0:c} total due all registrants\n", ti.Amtdue);
 				if (others.HasValue())
-					om.AddToMemberData("Others: " + others);
+					sb.AppendFormat("Others: {0}\n", others);
 			}
+            om.AddToMemberData(sb.ToString());
 
-			reg.AddToComments("-------------");
-			reg.AddToComments(email);
-			if (request.HasValue())
-			{
-				reg.AddToComments("Request: " + request);
-				om.Request = request;
-			}
 
+		    var sbreg = new StringBuilder();
+			sbreg.AppendFormat("{0}\n".Fmt(org.OrganizationName));
+		    sbreg.AppendFormat("{0:g} ----------------\n", DateTime.Now);
 			if (om.AmountPaid > 0)
 			{
-				var totamtdue = TotalAmount() - om.AmountPaid;
-				if (totamtdue > 0)
-					reg.AddToComments("{0:C} due".Fmt(totamtdue.ToString2("C")));
-				reg.AddToComments(tran);
+				sbreg.AppendFormat("{0:c} ({1} id) transaction amount\n", ti.Amt, ti.Id);
+				sbreg.AppendFormat("{0:c} total due all registrants\n", ti.Amtdue);
+				sbreg.AppendFormat("{0:c} total fee this registrant\n", TotalAmount());
 			}
 			if (paylink.HasValue())
 			{
+				sbreg.AppendLine(paylink);
 				om.PayLink = paylink;
-				reg.AddToComments(paylink);
 			}
-			reg.AddToComments(tstamp);
-			reg.AddToComments("{0} - {1}".Fmt(org.DivisionName, org.OrganizationName));
+			if (request.HasValue())
+			{
+				sbreg.AppendFormat("Request: {0}\n", request);
+				om.Request = request;
+			}
+			sbreg.AppendFormat("{0}\n", email);
+
+            reg.AddToComments(sbreg.ToString());
 
 			DbUtil.Db.SubmitChanges();
 			return om;
