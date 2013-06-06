@@ -67,12 +67,6 @@ namespace CmsWeb.Models
                 if (value != null)
                     Util.SetProperty(p, prop, value);
         }
-        private void SetField(Family f, string[] a, string prop, string s, object value)
-        {
-            if (names.ContainsKey(s))
-                if (value != null)
-                    Util.SetProperty(f, prop, value);
-        }
 
         private string GetDigits(string[] a, string s)
         {
@@ -315,7 +309,7 @@ namespace CmsWeb.Models
                                 SetField(f, a, "CityName", "city");
                                 SetField(f, a, "StateCode", "state");
                                 SetField(f, a, "ZipCode", "zip");
-                                SetField(f, a, "HomePhone", "homephone", GetDigits(a, "homephone"));
+                                SetField(f, a, "HomePhone", "homephone");
                                 Db.Families.InsertOnSubmit(f);
                                 if (!testing)
                                     Db.SubmitChanges();

@@ -1,4 +1,3 @@
-using System;
 using System.Web.Routing;
 using AttributeRouting.Web.Mvc;
 
@@ -12,18 +11,8 @@ namespace CmsWeb
 		{    
 			// See http://github.com/mccalltd/AttributeRouting/wiki for more options.
 			// To debug routes locally using the built in ASP.NET development server, go to /routes.axd
-
-		    try
-		    {
-    			routes.MapAttributeRoutes();
-		    }
-		    catch (NullReferenceException ex)
-		    {
-		    }
-		    catch (Exception ex)
-		    {
-		        throw;
-		    }
+            
+			routes.MapAttributeRoutes();
 		}
 
         public static void Start() 

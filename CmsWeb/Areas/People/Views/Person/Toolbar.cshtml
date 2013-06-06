@@ -2,28 +2,26 @@
 <div class="btn-group">
     <button class="btn btn-inverse"><i class="icon-envelope-alt"></i></button>
     <button class="btn btn-inverse"><i class="icon-cloud-download"></i></button>
-    @* Dave: I changed this to make the entire button clickable instead of just the cog link 
-        so I also had to change the margin-left back to auto from -105 *@
-    <button class="btn btn-inverse dropdown" data-toggle="dropdown" class="dropdown-toggle">
-        <i class="icon-cog"></i>
-    </button>
-    <ul class="dropdown-menu" role="menu">
-        <li><a href="#">Add New User</a></li>
-        @foreach (var uname in Model.Person.Users.Select(uu => uu.Username))
-        {
-        <li><a class="manageUser" href="/Person/EditUser/@uname">Manage User: @uname</a></li>
-        }
-        <li class="divider"></li>
-        <li><a id="split" href="/Person2/Split/@Model.displayperson.PeopleId">Put in own family</a></li>
-        <li><a id="merge" href="/Person2/Merge/@Model.displayperson.PeopleId">Merge this duplicate</a></li>
-        <li><a id="deletePerson" href="/Person2/Delete/@Model.displayperson.PeopleId">Delete this duplicate</a></li>
-        <li><a id="recordDeath" href="#">Mark As Deceased</a></li>
-    </ul>
-
+    <div class="btn btn-inverse dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i></a>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Add New User</a></li>
+            <li><a href="#">Impersonate</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Add New Address</a></li>
+            <li><a href="#">Mark As Deceased</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Split</a></li>
+            <li><a href="#">Merge</a></li>
+            <li><a href="#">Delete</a></li>
+        </ul>
+    </div>
 </div>
 <div class="contact">
     <h3>Primary Address</h3>
     <p id="primaryaddress">
         @Html.Partial("DisplayTemplates/Address", Model.primaryaddress)
     </p>
+    @*    <h3>Primary Phone</h3>*@
+    @*    <p>(345) 128-5566</p>*@
 </div>

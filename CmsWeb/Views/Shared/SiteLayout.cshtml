@@ -1,5 +1,7 @@
 ﻿@{
     var newlook = DbUtil.Db.UserPreference("newlook3", "false") == "true";
+    CassetteBundleConfiguration.BundleRefCss();
+    CassetteBundleConfiguration.BundleRefJs();
     var bkcolor = DbUtil.Db.Setting("HeaderBackground", "#e4e2d5");
 }
 <!DOCTYPE html>
@@ -7,7 +9,7 @@
 <head>
     <title>@ViewBag.Title</title>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    @Helper.IncludeCss()
+    @Bundles.RenderStylesheets()
     @RenderSection("head", required: false)
     @if (bkcolor.HasValue())
     {
@@ -15,8 +17,7 @@
         #header { background-color: @bkcolor; }
     </style>
     }
-    @Helper.IncludeJs()
-    @RenderSection("scripts", required: false)
+    @Bundles.RenderScripts()
     @Html.Partial("DatePickerDefaults")
 </head>
 <body>

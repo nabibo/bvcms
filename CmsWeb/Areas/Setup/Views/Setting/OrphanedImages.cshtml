@@ -2,19 +2,18 @@
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "OrphanedImage";
-}
-@section scripts
-{
-    <script type="text/javascript">
-        $(function() {
-            $("a.delete").click(function(ev) {
-                $.post("/Setting/DeleteImage/" + $(this).attr("id"), {}, function(ret) {
-                    $(ret).remove();
-                });
-                return false;
-            });
-        });
-    </script>
+    CassetteBundleConfiguration.BundleRefJs();
+    Bundles.AddInlineScript(
+        @<script type="text/javascript">
+             $(function() {
+                 $("a.delete").click(function(ev) {
+                     $.post("/Setting/DeleteImage/" + $(this).attr("id"), {}, function(ret) {
+                         $(ret).remove();
+                     });
+                     return false;
+                 });
+             });
+         </script>);
 }
 <h2>OrphanedImages</h2>
 <table>
@@ -35,5 +34,12 @@
 
 }
 </table>
+
+
+
+@section head {
+
+
+}
 
 

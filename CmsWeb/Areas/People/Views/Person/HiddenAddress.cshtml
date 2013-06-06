@@ -1,0 +1,13 @@
+﻿@model CmsWeb.Areas.People.Models.Person.AddressInfo
+<input name="Address1" type="hidden" value="@Model.Address1"/>
+<input name="Address2" type="hidden" value="@Model.Address2"/>
+<input name="City" type="hidden" value="@Model.City"/>
+<input name="Zip" type="hidden" value="@Model.Zip"/>
+<input name="State.Value" type="hidden" value="@Model.State.Value"/>
+<input name="Country.Value" type="hidden" value="@Model.Country.Value"/>
+<input name="ResCode.Value" type="hidden" value="@Model.ResCode.Value"/>
+<input name="Preferred" type="hidden" value="@(Model.Preferred ? "true" : "false")"/>
+<input name="FromDt" type="hidden" value="@Model.FromDt"/>
+<input name="ToDt" type="hidden" value="@Model.ToDt"/>
+<input name="BadAddress" type="hidden" value="@(Model.BadAddress == true ? "true" : "false")"/>
+<input name="Preferred" type="hidden" value="@(Model.Preferred ? "true" : "false")"/>

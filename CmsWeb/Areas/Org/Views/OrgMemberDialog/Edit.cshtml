@@ -1,73 +1,89 @@
-﻿@using CmsData
+﻿@using CmsData.Registration
 @using UtilityExtensions
-@model CmsWeb.Areas.Org.Models.OrgMemberModel
-<form class="form-horizontal onecol ajax" method="POST">
-    <div class="modal-header">
-        <a class="close" data-dismiss="modal">x</a>
-        <h4>@Model.Name</h4>
-        <h4>@Model.OrgName</h4>
-    </div>
-    <div class="modal-body">
-        <a href="/TransactionHistory/Index/@Model.PeopleId?oid=@Model.OrgId" target="_blank" 
-            style="font-family: Courier New">Attendance</a>: @Model.AttendStr
-        <a class="helplink pull-right" target="_blank" href='@Util.HelpLink("UpdateOrgMember")'>help</a>
-        <fieldset class="display">
-            @Html.HiddenFor(m => m.OrgId)
-            @Html.HiddenFor(m => m.PeopleId)
-            @Html.EditorFor(m => m.MemberType)
-            @Html.EditorFor(m => m.InactiveDate)
-            @Html.EditorFor(m => m.Enrollment)
-            @Html.EditorFor(m => m.Pending)
-            @if (Model.RegisterEmail.HasValue())
-            {
-                @Html.EditorFor(m => m.RegisterEmail)
-            }
-            @if (Model.Setting.AskVisible("AskRequest"))
-            {
-                @Html.EditorFor(m => m.Request)
-            }
-            @if (Model.Grade.HasValue)
-            {
-                @Html.EditorFor(m => m.Grade)
-            }
-            @if (Model.Setting.AskVisible("AskTickets"))
-            {
-                @Html.EditorFor(m => m.Tickets)
-            }
-            @if (Model.Amount.HasValue)
-            {
-                @Html.EditorFor(m => m.Amount)
-                @Html.DisplayFor(m => m.AmountDue)
-                if (Model.AmountDue > 0)
-                {
-                    @Html.DisplayFor(m => m.PayLink)
-                }
-            }
-            @if (Model.Setting.AskVisible("AskSize"))
-            {
-                @Html.EditorFor(m => m.ShirtSize)
-            }
-            @Html.EditorFor(m => m.UserData)
-        </fieldset>
-    </div>
-    <div class="modal-footer">
-        <a href="/OrgMemberDialog2/Display/@Model.OrgId/@Model.PeopleId" class="btn ajax">Cancel Edit</a>
-        <a href="/OrgMemberDialog2/Update" class="btn btn-primary ajax">Save</a>
-    </div>
-</form>
+@using CmsData
+@model CmsData.OrganizationMember
+@{ 
+    var comboid = "-" + Model.OrganizationId + "-" + Model.PeopleId;
+    var setting = new Settings(Model.Organization.RegSetting, DbUtil.Db, Model.OrganizationId);
+}
 
-@* Dave: how should I display the groups in the org member dialog?
-<div style="border: solid 1px #555; padding: 1em">
-    <strong>Groups:</strong><br />
-    <table>
-        @foreach (var mt in Model.Organization.MemberTags.OrderBy(t => t.Name))
-        { 
-            <tr>
-                <td>
-                    <input id="smallgroup@(comboid)-@mt.Id" class="ckbox" type="checkbox" @(Model.OrgMemMemTags.Any(omt => omt.MemberTagId == mt.Id) ? "checked='checked'" : "") /></td>
-                <td>@mt.Name</td>
-            </tr>
-        }
-    </table>
-</div>
-*@
+<table class="Design2" cellspacing="5">
+    <tr>
+        <td><b>@Model.Person.Name</b></td>
+        <td class="right"></td>
+    </tr>
+    <tr>
+        <th class='right'>Member Type:</th>
+        <td>@Html.DropDownList("MemberTypeId", (IEnumerable<SelectListItem>)ViewData["MemberTypes"])</td>
+    </tr>
+    <tr>
+        <th class='right'>Inactive Date:</th>
+        <td>@Html.TextBox("InactiveDate", Model.InactiveDate.FormatDate(), new { @class = "datepicker" })
+        <br /><span style="color:Red">@Html.ValidationMessage("InactiveDate")</span></td>
+    </tr>
+    <tr>
+        <th class='right'>Enrollment Date:</th>
+        <td>@Html.TextBox("EnrollmentDate", Model.EnrollmentDate.FormatDate(), new { @class = "datepicker" })</td>
+    </tr>
+    <tr>
+        <th class='right'>Pending:</th>
+        <td>@Html.CheckBox("Pending")</td>
+    </tr>
+@if (Model.RegisterEmail.HasValue())
+{     
+    <tr>
+        <th class='right'>RegisterEmail:</th>
+        <td>@Html.TextBox("RegisterEmail")</td>
+    </tr>
+}
+@if (setting.AskVisible("AskRequest"))
+{ 
+    <tr>
+        <th class='right'>Request:</th>
+        <td>@Html.TextBox("Request")</td>
+    </tr>
+} 
+    <tr>
+        <th class='right'>Grade:</th>
+        <td>@Html.TextBox("Grade", Model.Grade)</td>
+    </tr>
+@if (setting.AskVisible("AskTickets"))
+{ 
+    <tr>
+        <th class='right'>No. Items:</th>
+        <td>@Html.TextBox("Tickets", Model.Tickets)</td>
+    </tr>
+}
+@if (Model.Organization.RegistrationTypeId > 0)
+{ 
+    <tr>
+        <th class='right'>Total Amount:</th>
+        <td>@Html.TextBox("Amount", Model.Amount.ToString2("f2"))
+        <br /><span style="color:Red">@Html.ValidationMessage("Amount")</span></td>
+    </tr>
+    <tr>
+        <th class='right'>Amount Paid:</th>
+        <td>@Html.TextBox("AmountPaid", Model.AmountPaid.ToString2("f2"))
+        <br /><span style="color:Red">@Html.ValidationMessage("AmountPaid")</span></td>
+    </tr>
+}
+@if (setting.AskVisible("AskSize"))
+{ 
+    <tr>
+        <th class='right'>ShirtSize:</th>
+        <td>@Html.DropDownList("ShirtSize",
+                CmsWeb.Models.OnlineRegPersonModel.ShirtSizes(DbUtil.Db, Model.Organization))</td>
+    </tr>
+}
+    <tr>
+        <th class='right top'>Extra Member Info:</th>
+        <td>@Html.TextArea("UserData", new { style = "height:100px;width:100%" })</td>
+    </tr>
+<tr><td></td></tr>
+    <tr><td colspan="2" class="right">
+            <a class="display btn" href="/OrgMemberDialog2/Display/@Model.OrganizationId?pid=@Model.PeopleId">cancel</a>
+            <a class="submitbutton btn btn-primary" href="/OrgMemberDialog2/Update/@Model.OrganizationId?pid=@Model.PeopleId">Save Changes</a>
+        </td>
+    </tr>
+</table>
+

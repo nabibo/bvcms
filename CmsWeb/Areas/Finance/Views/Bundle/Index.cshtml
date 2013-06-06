@@ -2,8 +2,10 @@
 @using CmsWeb
 @using UtilityExtensions
 @{
-    ViewBag.Title = "Contribution Bundle";
+    ViewBag.Title = "Contribution Bundles";
     Layout = "/Views/Shared/SiteLayout.cshtml";
+    CassetteBundleConfiguration.BundleRefJs();
+    Bundles.Reference("bundle");
 }
 @section head 
 {
@@ -31,10 +33,6 @@
             max-width: 20em;
         }
     </style>
-}
-@section scripts
-{
-    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Finance/Bundle.js")"></script>
 }
 <div class="roundbox">
     <a href="/Bundles">Back to Bundle List</a>

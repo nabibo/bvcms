@@ -1,0 +1,38 @@
+﻿@using UtilityExtensions
+@model CmsData.OrganizationMember
+@{ 
+    string comboid = "-" + Model.OrganizationId + "-" + Model.PeopleId; 
+}
+@Html.Hidden("from")
+<div><strong>@Model.Person.Name</strong></div>
+@*<a class="helplink" target="_blank" href='@Util.HelpLink("UpdateOrgMember")'>help</a>*@
+<table class="table">
+    <tr>
+        <td colspan="3"><a href="/TransactionHistory/Index/@Model.PeopleId?oid=@Model.OrganizationId" 
+                                   target="_blank" style="font-family: Courier New">Attendance</a>: @Model.AttendStr
+        </td>
+    </tr>
+    <tr>
+        <td class="top">
+            <form class="DisplayEdit" action="/OrgMemberDialog2/Update/@Model.OrganizationId&pid=@Model.PeopleId" method="post">
+                @Html.Partial("Display", Model)
+            </form>
+        </td>
+        <td></td>
+        <td class="top">
+            <div style="border: solid 1px #555; padding: 1em">
+                <strong>Groups:</strong><br />
+                <table>
+                    @foreach (var mt in Model.Organization.MemberTags.OrderBy(t => t.Name))
+                    { 
+                        <tr>
+                            <td>
+                                <input id="smallgroup@(comboid)-@mt.Id" class="ckbox" type="checkbox" @(Model.OrgMemMemTags.Any(omt => omt.MemberTagId == mt.Id) ? "checked='checked'" : "") /></td>
+                            <td>@mt.Name</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>

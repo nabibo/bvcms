@@ -7,6 +7,8 @@
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "Totals By Fund";
     var qbh = new QuickBooksHelper();
+    CassetteBundleConfiguration.BundleRefJs();
+    Bundles.Reference("TotalsByFund");
 }
 @section head
 {
@@ -14,10 +16,6 @@
         input.noPrint { display: none; }
         span.noPrint { display: none; }
     </style>
-}
-@section scripts
-{
-    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Finance/TotalsByFund.js")"></script>
 }
 
 <div class="roundbox floatleft">

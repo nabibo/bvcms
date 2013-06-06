@@ -1,10 +1,11 @@
 ﻿@model CmsWeb.Areas.People.Models.Person.EmailInfo
 <div class="control-group">
+    @* Dave: Look at what is happening with a long email address, e.g. Pam Yarbrough *@
     @Html.LabelFor(m=> m, new { @class = "control-label nwrap"})
     <div class="controls">
         <p>
             @Model.Address
-            @* todo: use help text *@
+            @* Dave: need way to indicate what this checkbox means *@
             @if (Model.Send)
             {
                 <i class="icon-check"></i>

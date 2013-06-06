@@ -1,8 +1,13 @@
 ﻿@model CmsData.UploadPeopleRun
+@using CmsWeb
+@using UtilityExtensions
+@{
+    CassetteBundleConfiguration.BundleRefJs();
+}
 <html>
 <head>
     <title>Upload People</title>
-    @Helper.IncludeJs()
+    @Bundles.RenderScripts()
 </head>
 <body>
     <h2>

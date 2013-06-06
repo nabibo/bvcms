@@ -28,11 +28,11 @@
 {
     if (target.HasValue())
     {
-    <a href="@href" target="@target">@text</a>
+        <a href="@href" target="@target">@text</a>
     }
     else
     {
-    <a href="@href">@text</a>
+        <a href="@href">@text</a>
     }
 }
 @helper JQueryIdLink(string text, string id)
@@ -47,121 +47,10 @@
 {
     if (target.HasValue())
     {
-    <a href="@href" target="@target">@text</a>
+        <a href="@href" target="@target">@text</a>
     }
     else
     {
-    <a href="@href">@text</a>
-    }
-}
-@helper IncludeCss()
-{
-    var newlook = DbUtil.Db.UserPreference("newlook3", "false") == "true";
-    if (Util.IsDebug())
-    {
-        if (newlook)
-        {
-    @Fingerprint.Css("/content/styles/newcss.css")
-    <link rel="stylesheet" href="@Fingerprint.Tag("/content/css/font-awesome.css")" />
-        }
-        else
-        {
-    @Fingerprint.Css("/content/styles/css.css")
-    <link rel="stylesheet" href="@Fingerprint.Tag("/content/css/font-awesome.css")" />
-        }
-    }
-    else // not debug
-    {
-        if (newlook)
-        {
-    <link rel="stylesheet" href="@Fingerprint.Tag("/content/styles/newcss.css")" />
-    <link rel="stylesheet" href="@Fingerprint.Tag("/content/css/font-awesome.css")" />
-        }
-        else
-        {
-    <link rel="stylesheet" href="@Fingerprint.Tag("/content/styles/css.css")" />
-    <link rel="stylesheet" href="@Fingerprint.Tag("/content/css/font-awesome.css")" />
-        }
-    }
-}
-@helper IncludeJs2()
-{
-    if (Util.IsDebug())
-    {
-    <script src="@Fingerprint.Tag("/Scripts/jquery/main2.js")"></script>
-    <script src="@Fingerprint.Tag("/Scripts/bootstrap/bootstrap-bundle.js")"></script>
-    <script src="@Fingerprint.Tag("/Scripts/moment/moment-bundle.js")"></script>
-    <script src="@Fingerprint.Tag("/Scripts/chosen/chosen.jquery.js")"></script>
-@*    <script src="@Fingerprint.Tag("/Scripts/js/Pager3.js")"></script>*@
-@*    <script src="@Fingerprint.Tag("/Scripts/js/headermenu2.js")"></script>*@
-        @Fingerprint.Script("/Scripts/js/main2.custom.js")
-    }
-    else
-    {
-    <script src="@Fingerprint.Tag("/Scripts/jquery/main2.js")"></script>
-    <script src="@Fingerprint.Tag("/Scripts/bootstrap/bootstrap-bundle.js")"></script>
-    <script src="@Fingerprint.Tag("/Scripts/moment/moment-bundle.js")"></script>
-    <script src="@Fingerprint.Tag("/Scripts/chosen/chosen.jquery.js")"></script>
-    <script src="@Fingerprint.Tag("/Scripts/js/main2.custom.js")"></script>
-    }
-}
-@helper IncludeJs()
-{
-    if (Util.IsDebug())
-    {
-    <script src="@Fingerprint.Tag("/Scripts/jquery/main.js")"></script>
-    <script src="@Fingerprint.Tag("/Scripts/chosen/chosen.jquery.js")"></script>
-    <script src="@Fingerprint.Tag("/Scripts/js/dropdown.js")"></script>        
-    <script src="@Fingerprint.Tag("/Scripts/js/Pager.js")"></script>
-    <script src="@Fingerprint.Tag("/Scripts/js/ExportToolBar.js")"></script>
-    <script src="@Fingerprint.Tag("/Scripts/js/headermenu.js")"></script>
-    }
-    else
-    {
-    <script src="@Fingerprint.Tag("/Scripts/jquery/main.js")"></script>
-    <script src="@Fingerprint.Tag("/Scripts/chosen/chosen.jquery.js")"></script>
-    <script src="@Fingerprint.Tag("/Scripts/js/main.custom.js")"></script>
-    }
-}
-
-@helper IncludeOrgJs()
-{
-    if (Util.IsDebug())
-    {
-    <script src="/ckeditor2/ckeditor.js" type="text/javascript"></script>
-    <script src="@Fingerprint.Tag("/Scripts/jQuery/jquery-ui-timepicker-addon.js")"></script>
-    <script src="@Fingerprint.Tag("/Scripts/Org/Organization.js")"></script>
-    <script src="@Fingerprint.Tag("/Scripts/Dialog/SearchUsers.js")"></script>
-    <script src="@Fingerprint.Tag("/Scripts/js/RegSetting.js")"></script>
-    }
-    else
-    {
-    <script src="/ckeditor2/ckeditor.js" type="text/javascript"></script>
-    <script src="@Fingerprint.Tag("/Scripts/org.js")"></script>
-    }
-}
-@helper IncludeQueryBuilderJs()
-{
-    if (Util.IsDebug())
-    {
-    <script src="@Fingerprint.Tag("/Scripts/jQuery/jquery.contextmenu.r2.js")"></script>
-    <script src="@Fingerprint.Tag("/Scripts/Search/QueryBuilder.js")"></script>
-    }
-    else
-    {    
-    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/querybuilder.js")"></script>
-    }
-}
-@helper IncludeTaskJs()
-{
-    if (Util.IsDebug())
-    {
-    <script src="@Fingerprint.Tag("/Scripts/jQuery/jquery.form.js")"></script>
-    <script src="@Fingerprint.Tag("/Scripts/jQuery/jquery.form2.js")"></script>
-    <script src="@Fingerprint.Tag("/Scripts/js/Task.js")"></script>
-    }
-    else
-    {
-    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/task.js")"></script>
+        <a href="@href">@text</a>
     }
 }

@@ -64,8 +64,7 @@ namespace CmsWeb.Areas.People.Models.Person
                          Color = m.DeceasedDate != null ? "red" : "auto",
                          PositionInFamily = m.FamilyPosition.Code,
                          SpouseIndicator = m.PeopleId == Person.SpouseId ? "*" : "&nbsp;",
-                         Email = m.EmailAddress,
-                         MemberStatus = m.MemberStatus.Description
+                         Email = m.EmailAddress
                      };
             var list = q2.ToList();
             foreach (var m in list)

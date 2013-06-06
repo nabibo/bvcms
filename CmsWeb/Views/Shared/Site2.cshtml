@@ -1,3 +1,7 @@
+@{
+    Bundles.Reference("onlineregister");
+    Bundles.Reference("onlinereg");
+}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -5,9 +9,6 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <link href="/Content/styles/Site2.css?v=3" rel="stylesheet" type="text/css" />
     @RenderSection("head", required: false)
-    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/jquery/onlineregister.js")"></script>
-    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/onlinereg/onlinereg.js")"></script>
-    @RenderSection("scripts", required: false)
 </head>
 <body>
     <div class="page">
@@ -16,6 +17,7 @@
             @RenderBody()
         </div>
     </div>
+    @Bundles.RenderScripts()
 </body>
 </html>
 

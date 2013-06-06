@@ -180,6 +180,35 @@
     $.fn.alert = function (message) {
         this.html('<div class="alert"><a class="close" data-dismiss="alert">×</a><span>' + message + '</span></div>');
     };
+    $('form.ajax').live('submit', function(event) {
+        var $form = $(this);
+        var $target = $form.closest("div.modal");
+        $.ajax({
+            type: 'POST',
+            url: $form.attr('action'),
+            data: $form.serialize(),
+            success: function(data, status) {
+                $target.html(data);
+                $target.css({ 'margin-top': ($(window).height() - $target.height()) / 2, 'top': '0' });
+            }
+        });
+        event.preventDefault();
+    });
+    $('form.ajax a.ajax').live('click', function(event) {
+        var $this = $(this);
+        var $form = $this.closest("form.ajax");
+        var $target = $form.closest("div.modal");
+        $.ajax({
+            type: 'POST',
+            url: $this[0].href,
+            data: $form.serialize(),
+            success: function(data, status) {
+                $target.html(data);
+                $target.css({ 'margin-top': ($(window).height() - $target.height()) / 2, 'top': '0' });
+            }
+        });
+        event.preventDefault();
+    });
 });
 
 function dimOff() {

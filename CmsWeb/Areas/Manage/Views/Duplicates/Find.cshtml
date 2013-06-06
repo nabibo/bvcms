@@ -2,15 +2,14 @@
 @{
     Layout = "/Views/Shared/Reports.cshtml";
     ViewBag.Title = "Contribution Statements";
-}
-@section scripts
-{
-    <script>
-        $(function() {
-            $(".datepicker").datepicker();
-            $("a.bt").button();
-        });
-    </script>
+    CassetteBundleConfiguration.BundleRefJs();
+    Bundles.AddInlineScript(
+        @<script>
+             $(function() {
+                 $(".datepicker").datepicker();
+                 $("a.bt").button();
+             });
+         </script>);
 }
 <!DOCTYPE html>
 <html>

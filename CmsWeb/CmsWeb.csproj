@@ -81,6 +81,19 @@
     <Reference Include="AttributeRouting.Web.Mvc">
       <HintPath>..\packages\AttributeRouting.3.5.6\lib\net40\AttributeRouting.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="Cassette, Version=2.0.0.17974, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Cassette.2.0.0\lib\net40-client\Cassette.dll</HintPath>
+    </Reference>
+    <Reference Include="Cassette.Aspnet">
+      <HintPath>..\packages\Cassette.Aspnet.2.0.0\lib\net40\Cassette.Aspnet.dll</HintPath>
+    </Reference>
+    <Reference Include="Cassette.MSBuild">
+      <HintPath>..\packages\Cassette.MSBuild.2.0.0\lib\net40\Cassette.MSBuild.dll</HintPath>
+    </Reference>
+    <Reference Include="Cassette.Views">
+      <HintPath>..\packages\Cassette.Views.2.0.0\lib\net40\Cassette.Views.dll</HintPath>
+    </Reference>
     <Reference Include="Dapper">
       <HintPath>..\packages\Dapper.1.12.1\lib\net40\Dapper.dll</HintPath>
     </Reference>
@@ -322,7 +335,6 @@
     <Compile Include="Areas\Main\Controllers\ExportController.cs" />
     <Compile Include="Areas\Manage\Models\VolunteerRequestModel.cs" />
     <Compile Include="Areas\OnlineReg\Models\OnlineReg\VolSubModel.cs" />
-    <Compile Include="Areas\Org\Models\OrgMemberModel.cs" />
     <Compile Include="Areas\Org\Models\OrgMembersDialogModel.cs" />
     <Compile Include="Areas\Org\OrgAreaRegistration.cs" />
     <Compile Include="Areas\People\Controllers\PersonController.cs" />
@@ -363,7 +375,7 @@
     </Compile>
     <Compile Include="Areas\Org\Models\VolunteerCommitmentsModel.cs" />
     <Compile Include="Areas\Org\Models\VolunteerRequestModel.cs" />
-    <Compile Include="Areas\Search\Models\SearchAdd\SearchPersonModel.cs" />
+    <Compile Include="Areas\People\Models\SearchAdd\SearchPersonModel.cs" />
     <Compile Include="Areas\People\PeopleAreaRegistration.cs" />
     <Compile Include="Areas\Public\Controllers\APIContributionController.cs" />
     <Compile Include="Areas\Public\Controllers\APIMetaController.cs" />
@@ -375,7 +387,7 @@
     <Compile Include="Areas\Main\Controllers\OrgSearchController.cs" />
     <Compile Include="Areas\Finance\Controllers\PostBundleController.cs" />
     <Compile Include="Areas\Main\Controllers\QuickSearchController.cs" />
-    <Compile Include="Areas\Search\Controllers\SearchAddController.cs" />
+    <Compile Include="Areas\People\Controllers\SearchAddController.cs" />
     <Compile Include="Areas\Dialog\Controllers\OrgMemberDialogController.cs" />
     <Compile Include="Areas\Main\Controllers\OrganizationController.cs" />
     <Compile Include="Areas\Main\Controllers\PersonController.cs" />
@@ -439,7 +451,7 @@
     <Compile Include="Areas\Main\Models\Other\TaskNotesExcelResult.cs" />
     <Compile Include="Areas\Main\Models\Other\CouponModel.cs" />
     <Compile Include="Areas\Main\Models\Export\OrgExcelResult.cs" />
-    <Compile Include="Areas\Search\Models\SearchAdd\SearchAddModel.cs" />
+    <Compile Include="Areas\People\Models\SearchAdd\SearchAddModel.cs" />
     <Compile Include="Areas\Dialog\Models\SearchPersonModel.cs" />
     <Compile Include="Areas\Main\Models\Person\FamilyMemberInfo.cs" />
     <Compile Include="Areas\Main\Models\Person\DuplicatesModel.cs" />
@@ -488,6 +500,7 @@
     <Compile Include="Areas\Search\SearchAreaRegistration.cs" />
     <Compile Include="Areas\Setup\Controllers\RolesController.cs" />
     <Compile Include="Areas\Setup\Controllers\TwilioController.cs" />
+    <Compile Include="CassetteConfiguration.cs" />
     <Compile Include="Code\BundleModel.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -495,7 +508,6 @@
     <Compile Include="Code\CodeValueModel.cs" />
     <Compile Include="Code\CodeValueItem.cs" />
     <Compile Include="Code\FamilyExtraValues.cs" />
-    <Compile Include="Code\Fingerprint.cs" />
     <Compile Include="Code\LabelMetaData.cs" />
     <Compile Include="Code\Payments.cs" />
     <Compile Include="Code\SmartBinder.cs" />
@@ -513,19 +525,7 @@
     <Content Include="Content\css\bootstrap-responsive.min.css" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
-    <Content Include="Content\css\images\ajax-loader.gif" />
-    <Content Include="Content\css\img\ajax-loader.gif" />
     <Content Include="Content\css\main.css" />
-    <Content Include="Content\css\main.min.css">
-      <DependentUpon>main.css</DependentUpon>
-    </Content>
-    <Content Include="Content\img\ajax-loader.gif" />
-    <Content Include="Content\css\new2css.css">
-      <DependentUpon>new2css.css.bundle</DependentUpon>
-    </Content>
-    <Content Include="Content\css\new2css.min.css">
-      <DependentUpon>new2css.css.bundle</DependentUpon>
-    </Content>
     <Content Include="Content\css\person.css" />
     <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\images\icons-18-black.png" />
@@ -541,28 +541,8 @@
     <Content Include="Content\img\alert.gif" />
     <Content Include="Content\img\clear.png" />
     <Content Include="Content\img\loading.gif" />
-    <Content Include="Content\css\jquery.dialog2.css" />
-    <Content Include="Content\styles\css.css">
-      <DependentUpon>css.css.bundle</DependentUpon>
-    </Content>
-    <Content Include="Content\styles\css.min.css">
-      <DependentUpon>css.css.bundle</DependentUpon>
-    </Content>
-    <Content Include="Content\styles\Dialog.min.css">
-      <DependentUpon>Dialog.css</DependentUpon>
-    </Content>
-    <Content Include="Content\styles\newcss.css">
-      <DependentUpon>newcss.css.bundle</DependentUpon>
-    </Content>
-    <Content Include="Content\styles\newcss.min.css">
-      <DependentUpon>newcss.css.bundle</DependentUpon>
-    </Content>
-    <Content Include="Content\styles\organization.min.css">
-      <DependentUpon>organization.css</DependentUpon>
-    </Content>
-    <Content Include="Content\styles\person.min.css">
-      <DependentUpon>person.css</DependentUpon>
-    </Content>
+    <Content Include="Content\jquery-dialog2\images\ajax-loader.gif" />
+    <Content Include="Content\jquery-dialog2\jquery.dialog2.css" />
     <Content Include="images\chosen-sprite.png" />
     <Content Include="Content\css\chosen.css" />
     <Content Include="Content\css\font-awesome-ie7.min.css" />
@@ -731,27 +711,9 @@
     <Content Include="ckeditor2\skins\kama\images\toolbar_start.gif" />
     <Content Include="ckeditor2\styles.js" />
     <Content Include="Content\autocomplete\jquery-ui-1.10.2.custom.css" />
-    <Content Include="Scripts\Admin\Divisions.min.js">
-      <DependentUpon>Divisions.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Admin\merge.min.js">
-      <DependentUpon>merge.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Admin\TransactionHistory.min.js">
-      <DependentUpon>TransactionHistory.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Admin\Users.min.js">
-      <DependentUpon>Users.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\Bootstrap\bootbox.js" />
     <Content Include="Scripts\Bootstrap\bootbox.min.js" />
     <Content Include="Scripts\Bootstrap\bootstrap-ajax.js" />
-    <Content Include="Scripts\Bootstrap\bootstrap-bundle.js">
-      <DependentUpon>bootstrap-bundle.js.bundle</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Bootstrap\bootstrap-bundle.min.js">
-      <DependentUpon>bootstrap-bundle.js.bundle</DependentUpon>
-    </Content>
     <Content Include="Scripts\Bootstrap\bootstrap-editable.js" />
     <Content Include="Scripts\Bootstrap\bootstrap-editable.min.js" />
     <Content Include="Scripts\Bootstrap\bootstrap.min.js.map">
@@ -761,54 +723,6 @@
     <Content Include="Scripts\Bootstrap\spin.min.js" />
     <Content Include="Scripts\Chosen\chosen.jquery.min.js.map">
       <DependentUpon>chosen.jquery.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Dialog\OrgMemberDialog.min.js">
-      <DependentUpon>OrgMemberDialog.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Dialog\OrgMembersDialog.min.js">
-      <DependentUpon>OrgMembersDialog.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Dialog\SearchAdd.min.js">
-      <DependentUpon>SearchAdd.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Dialog\SearchDivisions.min.js">
-      <DependentUpon>SearchDivisions.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Dialog\SearchUsers.min.js">
-      <DependentUpon>SearchUsers.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Dialog\UserDialog.min.js">
-      <DependentUpon>UserDialog.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Email\compose.min.js">
-      <DependentUpon>compose.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Email\Email.min.js">
-      <DependentUpon>Email.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Finance\Bundle.min.js">
-      <DependentUpon>Bundle.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Finance\Bundles.min.js">
-      <DependentUpon>Bundles.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Finance\Contributions.min.js">
-      <DependentUpon>Contributions.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Finance\Funds.min.js">
-      <DependentUpon>Funds.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Finance\PostBundle.min.js">
-      <DependentUpon>PostBundle.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Finance\TotalsByFund.min.js">
-      <DependentUpon>TotalsByFund.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Finance\TotalsByRange.min.js">
-      <DependentUpon>TotalsByRange.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Finance\Transactions.min.js">
-      <DependentUpon>Transactions.js</DependentUpon>
     </Content>
     <Content Include="Scripts\jQuery\jquery-1.9.1.min.js.map">
       <DependentUpon>jquery-1.9.1.js</DependentUpon>
@@ -826,8 +740,9 @@
     <Content Include="Areas\Org\Views\OrgMembersDialog\Index.cshtml" />
     <Content Include="Areas\Org\Views\OrgMembersDialog\Rows.cshtml" />
     <Content Include="Areas\Org\Views\OrgMembersDialog\Update.cshtml" />
-    <Content Include="Areas\Org\Views\OrgMemberDialog\Edit.cshtml" />
     <Content Include="Areas\Org\Views\OrgMemberDialog\Display.cshtml" />
+    <Content Include="Areas\Org\Views\OrgMemberDialog\Edit.cshtml" />
+    <Content Include="Areas\Org\Views\OrgMemberDialog\Index.cshtml" />
     <Content Include="Areas\Org\Views\OrgMemberDialog\Move.cshtml" />
     <Content Include="Areas\People\Views\Person\DisplayTemplates\InlineCode.cshtml" />
     <Content Include="Areas\People\Views\Person\EditorTemplates\InlineCode.cshtml" />
@@ -848,350 +763,11 @@
     <Content Include="Areas\Dialog\Views\SearchAdd\ResultsFamily.cshtml" />
     <Content Include="Areas\Dialog\Views\SearchAdd\SearchFamily.cshtml" />
     <Content Include="Areas\Dialog\Views\SearchAdd\SearchPerson.cshtml" />
-    <Content Include="Areas\Search\Views\SearchAdd\EditorTemplates\HiddenMeta.cshtml" />
-    <Content Include="Areas\Search\Views\SearchAdd\EditorTemplates\HiddenSearch.cshtml" />
-    <Content Include="Areas\Search\Views\SearchAdd\EditorTemplates\HiddenPeople.cshtml" />
-    <Content Include="Areas\Search\Views\SearchAdd\DisplayTemplates\DisplayPeople.cshtml" />
-    <Content Include="Areas\People\Views\Person\EditorTemplates\HiddenAddress.cshtml" />
-    <Content Include="Areas\People\Views\Person\EditorTemplates\CellPhone.cshtml" />
-    <Content Include="Areas\People\Views\Person\DisplayTemplates\CellPhone.cshtml" />
-    <Content Include="Scripts\jQuery\main.js">
-      <DependentUpon>main.js.bundle</DependentUpon>
-    </Content>
-    <Content Include="Scripts\jQuery\main.min.js">
-      <DependentUpon>main.js.bundle</DependentUpon>
-    </Content>
-    <Content Include="Scripts\jQuery\main2.js">
-      <DependentUpon>main2.js.bundle</DependentUpon>
-    </Content>
-    <Content Include="Scripts\jQuery\main2.min.js">
-      <DependentUpon>main2.js.bundle</DependentUpon>
-    </Content>
-    <Content Include="Scripts\jQuery\onlineregister.js">
-      <DependentUpon>onlineregister.js.bundle</DependentUpon>
-    </Content>
-    <Content Include="Scripts\jQuery\onlineregister.min.js">
-      <DependentUpon>onlineregister.js.bundle</DependentUpon>
-    </Content>
-    <Content Include="Scripts\js\CheckIn.min.js">
-      <DependentUpon>CheckIn.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\js\CheckinActivity.min.js">
-      <DependentUpon>CheckinActivity.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\js\ChurchAttendance.min.js">
-      <DependentUpon>ChurchAttendance.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\js\form-ajax.js" />
-    <Content Include="Scripts\js\HomeTest.min.js">
-      <DependentUpon>HomeTest.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\js\main.custom.js">
-      <DependentUpon>main.custom.js.bundle</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Scripts\js\main.custom.min.js">
-      <DependentUpon>main.custom.js.bundle</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Scripts\js\main2.custom.js">
-      <DependentUpon>main2.custom.js.bundle</DependentUpon>
-    </Content>
-    <Content Include="Scripts\js\main2.custom.min.js">
-      <DependentUpon>main2.custom.js.bundle</DependentUpon>
-    </Content>
-    <Content Include="Scripts\js\RegSettings.min.js">
-      <DependentUpon>RegSettings.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\js\Tags.min.js">
-      <DependentUpon>Tags.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\js\TestAPI.min.js">
-      <DependentUpon>TestAPI.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Meeting\meeting-ipad.min.js">
-      <DependentUpon>meeting-ipad.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Meeting\meeting-ticket.min.js">
-      <DependentUpon>meeting-ticket.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Meeting\meeting.min.js">
-      <DependentUpon>meeting.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Meeting\Meetings.min.js">
-      <DependentUpon>Meetings.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Moment\moment-bundle.js">
-      <DependentUpon>moment-bundle.js.bundle</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Moment\moment-bundle.min.js">
-      <DependentUpon>moment-bundle.js.bundle</DependentUpon>
-    </Content>
-    <Content Include="Areas\Search\Views\SearchAdd\EditorTemplates\EditAddress.cshtml" />
-    <Content Include="Areas\Search\Views\SearchAdd\EditorTemplates\EditPerson.cshtml" />
-    <Content Include="Areas\Search\Views\SearchAdd\ResultsFamily.cshtml" />
-    <Content Include="Areas\Search\Views\SearchAdd\SearchFamily.cshtml" />
-    <Content Include="Areas\Search\Views\SearchAdd\NewAddress.cshtml" />
-    <Content Include="Areas\Search\Views\SearchAdd\EditorTemplates\HiddenAddress.cshtml" />
-    <Content Include="Areas\People\Views\Person\DeletedPerson.cshtml" />
-    <Content Include="Areas\People\Views\Person\AddressSaved.cshtml" />
-    <None Include="Content\css\new2css.css.bundle" />
-    <None Include="Content\styles\css.css.bundle" />
-    <None Include="Content\styles\newcss.css.bundle" />
-    <Content Include="Scripts\Admin\Divisions.min.js.map">
-      <DependentUpon>Divisions.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Admin\merge.min.js.map">
-      <DependentUpon>merge.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Admin\TransactionHistory.min.js.map">
-      <DependentUpon>TransactionHistory.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Admin\Users.min.js.map">
-      <DependentUpon>Users.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Dialog\OrgMemberDialog.min.js.map">
-      <DependentUpon>OrgMemberDialog.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Dialog\OrgMembersDialog.min.js.map">
-      <DependentUpon>OrgMembersDialog.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Dialog\UserDialog.min.js.map">
-      <DependentUpon>UserDialog.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Dialog\SearchAdd.min.js.map">
-      <DependentUpon>SearchAdd.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Dialog\SearchDivisions.min.js.map">
-      <DependentUpon>SearchDivisions.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Dialog\SearchUsers.min.js.map">
-      <DependentUpon>SearchUsers.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Email\compose.min.js.map">
-      <DependentUpon>compose.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Email\Email.min.js.map">
-      <DependentUpon>Email.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Finance\Bundle.min.js.map">
-      <DependentUpon>Bundle.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Finance\Bundles.min.js.map">
-      <DependentUpon>Bundles.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Finance\Funds.min.js.map">
-      <DependentUpon>Funds.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Finance\PostBundle.min.js.map">
-      <DependentUpon>PostBundle.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Finance\TotalsByFund.min.js.map">
-      <DependentUpon>TotalsByFund.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Finance\TotalsByRange.min.js.map">
-      <DependentUpon>TotalsByRange.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Finance\Transactions.min.js.map">
-      <DependentUpon>Transactions.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Finance\Contributions.min.js.map">
-      <DependentUpon>Contributions.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\js\CheckIn.min.js.map">
-      <DependentUpon>CheckIn.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\js\CheckinActivity.min.js.map">
-      <DependentUpon>CheckinActivity.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\js\ChurchAttendance.min.js.map">
-      <DependentUpon>ChurchAttendance.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\js\HomeTest.min.js.map">
-      <DependentUpon>HomeTest.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\js\RegSettings.min.js.map">
-      <DependentUpon>RegSettings.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\js\Tags.min.js.map">
-      <DependentUpon>Tags.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\js\TestAPI.min.js.map">
-      <DependentUpon>TestAPI.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Meeting\meeting-ipad.min.js.map">
-      <DependentUpon>meeting-ipad.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Meeting\meeting-ticket.min.js.map">
-      <DependentUpon>meeting-ticket.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Meeting\meeting.min.js.map">
-      <DependentUpon>meeting.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Meeting\Meetings.min.js.map">
-      <DependentUpon>Meetings.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\OnlineReg\OnlineReg.min.js">
-      <DependentUpon>OnlineReg.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\OnlineReg\OnlineReg.min.js.map">
-      <DependentUpon>OnlineReg.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\OnlineReg\OnlineRegPayment.min.js">
-      <DependentUpon>OnlineRegPayment.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\OnlineReg\OnlineRegPayment.min.js.map">
-      <DependentUpon>OnlineRegPayment.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Bootstrap\bootbox.min.js.map">
-      <DependentUpon>bootbox.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Bootstrap\bootstrap-editable.min.js.map">
-      <DependentUpon>bootstrap-editable.js</DependentUpon>
-    </Content>
-    <None Include="Scripts\Bootstrap\bootstrap-bundle.js.bundle" />
-    <Content Include="Scripts\Bootstrap\bootstrap-bundle.min.js.map">
-      <DependentUpon>bootstrap-bundle.js.bundle</DependentUpon>
-    </Content>
-    <None Include="Scripts\jQuery\main.js.bundle" />
-    <Content Include="Scripts\jQuery\main.min.js.map">
-      <DependentUpon>main.js.bundle</DependentUpon>
-    </Content>
-    <None Include="Scripts\jQuery\main2.js.bundle" />
-    <Content Include="Scripts\jQuery\main2.min.js.map">
-      <DependentUpon>main2.js.bundle</DependentUpon>
-    </Content>
-    <None Include="Scripts\jQuery\onlineregister.js.bundle" />
-    <Content Include="Scripts\jQuery\onlineregister.min.js.map">
-      <DependentUpon>onlineregister.js.bundle</DependentUpon>
-    </Content>
-    <None Include="Scripts\js\main.custom.js.bundle">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <Content Include="Scripts\js\main.custom.min.js.map">
-      <DependentUpon>main.custom.js.bundle</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Include="Scripts\js\main2.custom.js.bundle" />
-    <Content Include="Scripts\js\main2.custom.min.js.map">
-      <DependentUpon>main2.custom.js.bundle</DependentUpon>
-    </Content>
-    <None Include="Scripts\Moment\moment-bundle.js.bundle" />
-    <Content Include="Scripts\Moment\moment-bundle.min.js.map">
-      <DependentUpon>moment-bundle.js.bundle</DependentUpon>
-    </Content>
-    <None Include="Scripts\org.js.bundle" />
-    <Content Include="Scripts\org.js">
-      <DependentUpon>org.js.bundle</DependentUpon>
-    </Content>
-    <Content Include="Scripts\org.min.js">
-      <DependentUpon>org.js.bundle</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Org\OrgChildren.min.js">
-      <DependentUpon>OrgChildren.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Org\OrgChildren.min.js.map">
-      <DependentUpon>OrgChildren.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Org\OrgGroups.min.js">
-      <DependentUpon>OrgGroups.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Org\OrgGroups.min.js.map">
-      <DependentUpon>OrgGroups.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Org\OrgMemberDialog2.min.js">
-      <DependentUpon>OrgMemberDialog2.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Org\OrgMemberDialog2.min.js.map">
-      <DependentUpon>OrgMemberDialog2.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Org\OrgMembers.min.js">
-      <DependentUpon>OrgMembers.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Org\OrgMembers.min.js.map">
-      <DependentUpon>OrgMembers.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Org\OrgSearch.min.js">
-      <DependentUpon>OrgSearch.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\People\family.min.js">
-      <DependentUpon>family.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\People\family.min.js.map">
-      <DependentUpon>family.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\People\Person.min.js">
-      <DependentUpon>Person.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\People\Person.min.js.map">
-      <DependentUpon>Person.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\People\Person1.min.js">
-      <DependentUpon>Person1.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\People\Person2.min.js">
-      <DependentUpon>Person2.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\People\Person2.min.js.map">
-      <DependentUpon>Person2.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\org.min.js.map">
-      <DependentUpon>org.js.bundle</DependentUpon>
-    </Content>
-    <Content Include="Scripts\People\Person1.min.js.map">
-      <DependentUpon>Person1.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Org\OrgSearch.min.js.map">
-      <DependentUpon>OrgSearch.js</DependentUpon>
-    </Content>
-    <None Include="Scripts\querybuilder.js.bundle" />
-    <Content Include="Scripts\querybuilder.js">
-      <DependentUpon>querybuilder.js.bundle</DependentUpon>
-    </Content>
-    <Content Include="Scripts\querybuilder.min.js">
-      <DependentUpon>querybuilder.js.bundle</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Search\AdvancedSearch.min.js">
-      <DependentUpon>AdvancedSearch.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Search\AdvancedSearch.min.js.map">
-      <DependentUpon>AdvancedSearch.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Search\ContactSearch.min.js">
-      <DependentUpon>ContactSearch.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Search\ContactSearch.min.js.map">
-      <DependentUpon>ContactSearch.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Search\PeopleSearch.min.js">
-      <DependentUpon>PeopleSearch.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Search\PeopleSearch.min.js.map">
-      <DependentUpon>PeopleSearch.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Search\QuickSearch.min.js">
-      <DependentUpon>QuickSearch.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Search\QuickSearch.min.js.map">
-      <DependentUpon>QuickSearch.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Search\SavedQuery.min.js">
-      <DependentUpon>SavedQuery.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Search\SavedQuery.min.js.map">
-      <DependentUpon>SavedQuery.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Search\SearchAdd.js" />
-    <Content Include="Scripts\Search\SearchOrgs.min.js">
-      <DependentUpon>SearchOrgs.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Search\SearchOrgs.min.js.map">
-      <DependentUpon>SearchOrgs.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\querybuilder.min.js.map">
-      <DependentUpon>querybuilder.js.bundle</DependentUpon>
-    </Content>
-    <None Include="Scripts\task.js.bundle" />
+    <Content Include="Areas\People\Views\SearchAdd\HiddenMeta.cshtml" />
+    <Content Include="Areas\People\Views\SearchAdd\HiddenSearch.cshtml" />
+    <Content Include="Areas\People\Views\SearchAdd\HiddenPeople.cshtml" />
+    <Content Include="Areas\People\Views\SearchAdd\DisplayPeople.cshtml" />
+    <Content Include="Areas\People\Views\Person\HiddenAddress.cshtml" />
     <Content Include="Areas\Manage\Views\Batch\UpdateStatusFlags.cshtml" />
     <Content Include="Areas\Main\Views\Reports\EnrollmentControl2.cshtml" />
     <None Include="Scripts\Mobile\jquery-1.6.4-vsdoc.js" />
@@ -1202,7 +778,7 @@
     <Content Include="Scripts\Mobile\jquery.mobile-1.3.1.min.js" />
     <Content Include="Scripts\jQuery\jquery-ui-1.10.0.custom.js" />
     <Content Include="Scripts\jQuery\jquery-ui-1.10.0.custom.min.js" />
-    <Content Include="Scripts\jQuery\jquery-ui-autocomplete.js" />
+    <Content Include="Scripts\Autocomplete\jquery-ui-1.10.2.custom.js" />
     <Content Include="Content\bootstrap-modal\css\bootstrap-modal.css" />
     <Content Include="Content\bootstrap-modal\img\ajax-loader.gif" />
     <Content Include="Scripts\Bootstrap\bootstrap-modal.js" />
@@ -1224,11 +800,13 @@
     <Content Include="Content\styles\datepicker.css" />
     <Content Include="Scripts\jQuery\jquery-ui-timepicker-addon.js" />
     <Content Include="Scripts\jQuery\jquery.address-1.5.js" />
+    <Content Include="Scripts\jQuery\jquery.alerts.js" />
     <Content Include="Content\styles\jquery.alerts.css" />
     <Content Include="Content\styles\person.css" />
     <Content Include="Content\styles\jquery.contextMenu.css" />
     <Content Include="Content\styles\images\animated-overlay.gif" />
     <Content Include="Content\styles\jquery-ui-1.10.0.custom.css" />
+    <Content Include="Content\styles\jquery-ui-1.10.0.custom.min.css" />
     <Content Include="Areas\Public\Views\APITest\EditorTemplates\ApiTestInfo.cshtml">
     </Content>
     <Content Include="Areas\Public\Views\APITest\Index.cshtml">
@@ -1361,6 +939,7 @@
     <Content Include="Content\styles\images\wait.gif" />
     <Content Include="Content\styles\joyride-1.0.5.css" />
     <Content Include="Content\styles\jqModal.css" />
+    <Content Include="Content\styles\jquery-ui-1.9.2.custom.css" />
     <Content Include="Content\styles\jquery-ui-timepicker.css" />
     <Content Include="Content\styles\jquery.autocomplete.css" />
     <Content Include="Content\styles\jquery.cluetip.css" />
@@ -1416,36 +995,26 @@
     <Content Include="Scripts\Finance\Bundle.js" />
     <Content Include="Scripts\Org\enroll-control-ipad.js" />
     <Content Include="Scripts\Org\OrgMemberDialog2.js" />
+    <Content Include="Scripts\Org\OrgSearch.min.js">
+      <DependentUpon>OrgSearch.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\People\SearchAdd2.js" />
     <Content Include="Scripts\Search\AdvancedSearch.js" />
-    <Content Include="Scripts\task.js">
-      <DependentUpon>task.js.bundle</DependentUpon>
-    </Content>
-    <Content Include="Scripts\task.min.js">
-      <DependentUpon>task.js.bundle</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Volunteer\Calendar.min.js">
-      <DependentUpon>Calendar.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\Volunteer\Calendar2.js" />
     <Content Include="Content\css\font\fontawesome-webfont.woff" />
     <Content Include="Content\css\font\fontawesome-webfont.ttf" />
     <Content Include="Content\css\font\fontawesome-webfont.eot" />
     <Content Include="Content\css\font\FontAwesome.otf" />
+    <Content Include="Cassette.targets" />
     <Content Include="Areas\Manage\Views\Users\LastActivity.cshtml" />
     <Content Include="Areas\Manage\Views\Transactions\ReportByBatchDescription.cshtml" />
     <None Include="Scripts\jQuery\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jQuery\jquery-1.9.1.js" />
     <Content Include="Scripts\jQuery\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jQuery\jquery-migrate-1.1.1.js" />
-    <Content Include="Scripts\Volunteer\Calendar2.min.js">
-      <DependentUpon>Calendar2.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Volunteer\ManageVolunteer.min.js">
-      <DependentUpon>ManageVolunteer.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\Volunteer\ManageVolunteer2.js" />
     <Content Include="Scripts\js\headermenu2.js" />
-    <Content Include="Scripts\js\modernizr-2.6.2.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Moment\moment-datepicker.js" />
     <Content Include="Scripts\Moment\moment-datepicker.min.js" />
     <Content Include="Scripts\Moment\moment.js" />
@@ -1455,7 +1024,7 @@
     <Content Include="Scripts\Finance\TotalsByRange.js" />
     <Content Include="Scripts\js\dropdown.js" />
     <Content Include="Scripts\jQuery\jquery.joyride-1.0.5.js" />
-    <Content Include="Scripts\js\tutorial.js" />
+    <Content Include="Scripts\tutorial.js" />
     <Compile Include="Code\Word2Pdf.cs" />
     <Compile Include="Areas\Finance\Controllers\QuickBooksController.cs" />
     <Compile Include="Models\HomeModel.cs" />
@@ -1748,48 +1317,19 @@
     <Content Include="Scripts\Moment\moment.min.js.map">
       <DependentUpon>moment.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\Volunteer\ManageVolunteer2.min.js">
-      <DependentUpon>ManageVolunteer2.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Volunteer\volunteering.min.js">
-      <DependentUpon>volunteering.js</DependentUpon>
-    </Content>
     <Content Include="Views\Shared\Pager3.cshtml" />
     <Content Include="Views\Shared\NotFound.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Bool.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\CodeInfo.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Code.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Date.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Text.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Bool.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\CodeInfo.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Code.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Text.cshtml" />
-    <Content Include="Scripts\Volunteer\ManageVolunteer.min.js.map">
-      <DependentUpon>ManageVolunteer.js</DependentUpon>
+    <Content Include="Scripts\Org\OrgSearch.min.js.map">
+      <DependentUpon>OrgSearch.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\Volunteer\ManageVolunteer2.min.js.map">
-      <DependentUpon>ManageVolunteer2.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Volunteer\Calendar.min.js.map">
-      <DependentUpon>Calendar.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Volunteer\Calendar2.min.js.map">
-      <DependentUpon>Calendar2.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Volunteer\volunteering.min.js.map">
-      <DependentUpon>volunteering.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\task.min.js.map">
-      <DependentUpon>task.js.bundle</DependentUpon>
-    </Content>
-    <Content Include="Views\Shared\EditorTemplates\Decimal.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\Decimal.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\Int.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Int.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\TextArea.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\TextArea.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\HiddenCodeInfo.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Typeahead.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Manage\Views\Batch\UpdatePeople.cshtml">
@@ -2346,17 +1886,17 @@
     </Content>
     <Content Include="Areas\Main\Views\QueryBuilder\TryConditions.cshtml">
     </Content>
-    <Content Include="Areas\Search\Views\SearchAdd\NewPerson.cshtml">
+    <Content Include="Areas\People\Views\SearchAdd\FormFull.cshtml">
     </Content>
-    <Content Include="Areas\Search\Views\SearchAdd\EditorTemplates\HiddenPerson.cshtml">
+    <Content Include="Areas\People\Views\SearchAdd\HiddenPerson.cshtml">
     </Content>
-    <Content Include="Areas\Search\Views\SearchAdd\List.cshtml">
+    <Content Include="Areas\People\Views\SearchAdd\List.cshtml">
     </Content>
-    <Content Include="Areas\Search\Views\SearchAdd\DisplayTemplates\PersonDisplay.cshtml">
+    <Content Include="Areas\People\Views\SearchAdd\PersonDisplay.cshtml">
     </Content>
-    <Content Include="Areas\Search\Views\SearchAdd\Results.cshtml">
+    <Content Include="Areas\People\Views\SearchAdd\Results.cshtml">
     </Content>
-    <Content Include="Areas\Search\Views\SearchAdd\SearchPerson.cshtml">
+    <Content Include="Areas\People\Views\SearchAdd\SearchPerson.cshtml">
       <SubType>Code</SubType>
     </Content>
     <Content Include="Areas\Main\Views\Reports\Attendance.cshtml">
@@ -2779,6 +2319,7 @@
     <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Shared\DatePickerDefaults.cshtml" />
     <Content Include="Views\Shared\MainMenu.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Decimal.cshtml" />
     <Content Include="App_Code\Helper.cshtml" />
     <Content Include="Views\Shared\NewHeader.cshtml" />
     <Content Include="Views\Shared\OldHeader.cshtml" />
@@ -2787,6 +2328,7 @@
     <Content Include="Views\Shared\Dialogs.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Shared\Notices.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\NewHeader2.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -2858,7 +2400,7 @@
       <Name>UtilityExtensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\WebControls\CustomControls.csproj">
-      <Project>{e6957022-e83c-4fe9-94fc-6e9f8adeb68c}</Project>
+      <Project>{E6957022-E83C-4FE9-94FC-6E9F8ADEB68C}</Project>
       <Name>CustomControls</Name>
     </ProjectReference>
   </ItemGroup>
@@ -2911,7 +2453,6 @@
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
-      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -2923,6 +2464,8 @@
     <Folder Include="Areas\OnlineReg\Models\Payments\" />
     <Folder Include="Areas\OnlineReg\Views\Shared\" />
     <Folder Include="Areas\Org\Views\Shared\" />
+    <Folder Include="Areas\People\Views\SearchAdd\DisplayTemplates\" />
+    <Folder Include="Areas\People\Views\SearchAdd\EditorTemplates\" />
     <Folder Include="Areas\People\Views\Shared\" />
     <Folder Include="Areas\Public\Views\Shared\" />
     <Folder Include="Areas\Search\Views\Shared\" />
@@ -2967,4 +2510,6 @@
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <Import Project="Cassette.targets" />
+  <Import Project="Cassette.targets" />
 </Project>

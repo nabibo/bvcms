@@ -5,6 +5,8 @@
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "Donor Totals By Range";
+    CassetteBundleConfiguration.BundleRefJs();
+    Bundles.Reference("TotalsByRange");
 }
 @section head
 {
@@ -12,10 +14,6 @@
         input.noPrint { display: none; }
         span.noPrint { display: none; }
     </style>
-}
-@section scripts
-{
-    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Finance/TotalsByRange.js")"></script>
 }
 <div class="roundbox floatleft">
     <h2>Donor Totals By Range</h2>

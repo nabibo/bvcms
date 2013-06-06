@@ -7,10 +7,8 @@
 	ViewBag.Title = "Quick Search";
 	Layout = "~/Views/Shared/SiteLayout.cshtml";
     var target = Util2.TargetLinkPeople ? "target='people'" : "";
-}
-@section scripts
-{
-    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Search/quicksearch.js")"></script>
+    CassetteBundleConfiguration.BundleRefJs();
+    Bundles.Reference("QuickSearch");
 }
 <form id="quicksearch" method="post" action="/QuickSearch/Index">
 <input id='q' name='q' value="@Model.text"/>

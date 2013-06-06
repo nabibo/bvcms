@@ -1,5 +1,11 @@
 ﻿@model SearchDivisionsModel
 @using CmsWeb.Models
+@using CmsWeb
+@{
+    CassetteBundleConfiguration.BundleRefCss();
+    CassetteBundleConfiguration.BundleRefJs();
+    Bundles.Reference("SearchDivisions");
+}
 <html>
 <head>
 <title>Index</title>
@@ -8,9 +14,7 @@
         window.location.reload();
     }
 </script>
-    @Helper.IncludeCss()
-    @Helper.IncludeJs()
-    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Dialog/SearchDivisions.js")"></script>
+    @Bundles.RenderStylesheets()
 </head>
 <body>
 <form name="form1">
@@ -35,5 +39,6 @@
   </table>
 @Html.Partial("Results", Model)
 </form>
+    @Bundles.RenderScripts()
 </body>
 </html>

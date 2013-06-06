@@ -4,10 +4,8 @@
 @{
     ViewBag.Title = "ContactSearch";
     Layout = "~/Views/Shared/SiteLayout.cshtml";
-}
-@section scripts
-{
-    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Search/ContactSearch.js")"></script>
+    CassetteBundleConfiguration.BundleRefJs();
+    Bundles.Reference("ContactSearch");
 }
 <form action="" id="form" method="POST">
 <div class="roundbox floatleft">

@@ -1,0 +1,9 @@
+﻿@model CmsWeb.Areas.People.Models.SearchPersonModel
+<tr>
+    <td>@Model.First @Model.Last</td>
+    <td class="addrcol" title="@Model.ToolTip">@Model.Address</td>
+    <td>@Model.CityStateZip</td>
+    <td>@Model.age</td>
+    <td class="right"><a class="formlink" href="/SearchAdd2/PersonCancel/@Model.index" title="remove this person from the list">remove</a></td>
+</tr>
+

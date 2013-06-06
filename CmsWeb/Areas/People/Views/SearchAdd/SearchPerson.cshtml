@@ -1,0 +1,30 @@
+﻿@model CmsWeb.Areas.People.Models.SearchAddModel
+@* Dave: note the onecol class, I had to put that in because basic forms from bootstrap seem to have been globally changed *@
+<form class="form-horizontal onecol ajax" action="/SearchAdd2/Results" method="POST">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>Search for Person</h3>
+    </div>
+    <div class="modal-body">
+        <fieldset class="display">
+            @Html.Partial("HiddenMeta", Model)
+
+            @Html.EditorFor(m => m.Name)
+            <span class="help-inline">Starting letters of First <span class="label">space</span> Last or just Last</span>
+
+            @Html.EditorFor(m => m.Phone)
+            <span class="help-inline">Any part of any phone or email</span>
+
+            @Html.EditorFor(m => m.Address)
+            <span class="help-inline">Any part of the address, city or zip</span>
+
+            @Html.EditorFor(m => m.dob)
+            <span class="help-inline">YYYY or MM or MM/DD or MM/DD/YY</span>
+            @Html.Partial("HiddenPeople", Model)
+        </fieldset>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+        <input type="submit" class="btn btn-primary" value="Search" />
+    </div>
+</form>

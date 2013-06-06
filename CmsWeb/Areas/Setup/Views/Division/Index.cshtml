@@ -1,11 +1,10 @@
-﻿@model CmsWeb.Models.DivisionModel
+﻿@using CmsWeb
+@model CmsWeb.Models.DivisionModel
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "Divisions";
-}
-@section scripts
-{
-    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Admin/Divisions.js")"></script>
+    CassetteBundleConfiguration.BundleRefJs();
+    Bundles.Reference("Divisions");
 }
 <form id="progform">
 Filter for Program: @Html.DropDownList("ProgramId", Model.ProgramIds())

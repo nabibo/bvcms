@@ -4,10 +4,8 @@
 @{
     ViewBag.Title = "Contribution Bundles";
     Layout = "/Views/Shared/SiteLayout.cshtml";
-}
-@section scripts
-{
-    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Finance/Bundles.js")"></script>
+    CassetteBundleConfiguration.BundleRefJs();
+    Bundles.Reference("bundles");
 }
 <table class="roundbox">
     <tr><td nowrap="nowrap"><h2>Contribution Bundles</h2></td></tr>

@@ -17,7 +17,10 @@
             border-bottom: 2px solid black;
         }
     </style>
-    <%: Helper.IncludeJs() %>
+    <% 
+        Bundles.Reference(DbUtil.Db.UserPreference("newlook3", "false") == "true" ? "main" : "js");
+    %>
+    <%: Bundles.RenderScripts() %>
     <script type="text/javascript">
         $(function () {
             $("input.datepicker").datepicker();

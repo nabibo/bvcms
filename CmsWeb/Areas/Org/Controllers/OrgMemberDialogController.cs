@@ -3,25 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using AttributeRouting;
-using AttributeRouting.Web.Mvc;
 using CmsData;
-using CmsWeb.Areas.Org.Models;
 using CmsWeb.Code;
 using UtilityExtensions;
 using CmsWeb.Models.OrganizationPage;
 using CmsData.Codes;
 
 namespace CmsWeb.Areas.Org.Controllers
-{    
-    [RouteArea("Org", AreaUrl = "OrgMemberDialog2")]
+{
     public class OrgMemberDialogController : CmsStaffController
     {
-        [POST("OrgMemberDialog2/Display/{oid}/{pid}")]
-        public ActionResult Display(int oid, int pid)
+        public ActionResult Index(int id, int pid, string from, string page)
         {
-            var m = new OrgMemberModel {OrgId = oid, PeopleId = pid};
+            var m = DbUtil.Db.OrganizationMembers.SingleOrDefault(om => om.OrganizationId == id && om.PeopleId == pid);
+            ViewData["from"] = from;
+            if (m == null)
+                return Content("cannot find membership: id={0} pid={1}".Fmt(id, pid));
             return View(m);
+
         }
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CheckBoxChanged(string id, bool ck)
@@ -42,25 +41,36 @@ namespace CmsWeb.Areas.Org.Controllers
             DbUtil.Db.SubmitChanges();
             return Content("ok");
         }
-
-        [POST("OrgMemberDialog2/Edit")]
-        public ActionResult Edit(OrgMemberModel m)
+        
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Edit(int id, int pid)
         {
-            return View(m);
+            ViewData["MemberTypes"] = CodeValueModel.ConvertToSelect(CodeValueModel.MemberTypeCodes(), "Id");
+            var om = DbUtil.Db.OrganizationMembers.Single(m => m.PeopleId == pid && m.OrganizationId == id);
+            return View(om);
         }
-        [POST("OrgMemberDialog2/Update")]
-        public ActionResult Update(OrgMemberModel m)
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Display(int id, int pid)
         {
+            var om = DbUtil.Db.OrganizationMembers.Single(m => m.PeopleId == pid && m.OrganizationId == id);
+            return View(om);
+        }
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Update(int id, int pid)
+        {
+            var om = DbUtil.Db.OrganizationMembers.Single(m => m.PeopleId == pid && m.OrganizationId == id);
             try
             {
+                UpdateModel(om);
+                om.ShirtSize = om.ShirtSize.MaxString(20);
                 DbUtil.Db.SubmitChanges();
             }
             catch (Exception)
             {
                 ViewData["MemberTypes"] = CodeValueModel.ConvertToSelect(CodeValueModel.MemberTypeCodes(), "Id");
-                return View("Edit", m);
+                return View("Edit", om);
             }
-            return View("Display", m);
+            return View("Display", om);
         }
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Drop(string id)

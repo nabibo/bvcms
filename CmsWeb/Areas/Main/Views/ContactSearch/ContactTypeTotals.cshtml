@@ -3,11 +3,10 @@
 @{
     ViewBag.Title = "ContactTypeTotals";
     Layout = "~/Views/Shared/SiteLayout.cshtml";
-}
-@section scripts
-{
-    <script>
-        $(function () {
+    CassetteBundleConfiguration.BundleRefJs();
+    Bundles.AddInlineScript(
+    @<script>
+        $(function() {
             $("a.delete").click(function (ev) {
                 ev.preventDefault();
                 if (confirm("are you sure?"))
@@ -15,8 +14,7 @@
                 return false;
             });
         });
-    </script>
-);
+    </script> );
 }
 <h2>Contact Type Totals</h2>
 <table class="grid table-striped">
@@ -40,8 +38,7 @@
                 <td>
                     @if (ViewBag.candelete == true)
                     {
-                        <a class="delete" href="/ContactSearch/DeleteContactsForType/@i.Id">
-                            <img src="~/images/delete.gif" /></a>
+                        <a class="delete" href="/ContactSearch/DeleteContactsForType/@i.Id"><img src="~/images/delete.gif"/></a>
                     }
                 </td>
             </tr>

@@ -1,0 +1,7 @@
+﻿@model CmsWeb.Code.CodeInfo
+<div class="control-group">
+    @Html.LabelFor(m => m, new { @class="control-label"})
+    <div class="controls">
+        @Html.DropDownListFor(m => m.Value, Model.Items)
+    </div>
+</div>

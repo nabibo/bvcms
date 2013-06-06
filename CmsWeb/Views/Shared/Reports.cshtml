@@ -1,14 +1,19 @@
-﻿<!DOCTYPE html>
+﻿@using CmsWeb
+@{
+    CassetteBundleConfiguration.BundleRefCss();
+    CassetteBundleConfiguration.BundleRefJs();
+}
+<!DOCTYPE html>
 <html>
 <head>
     <title></title>
-    @Helper.IncludeCss()
+    @Bundles.RenderStylesheets()
     <style type="text/css" media="print">
        input.noPrint { display: none; }
        span.noPrint { display:none; }
     </style>
     @RenderSection("head", required: false)
-    @Helper.IncludeJs()
+    @Bundles.RenderScripts()
     @Html.Partial("DatePickerDefaults")
     @RenderSection("scripts", required: false)
 </head>

@@ -1,4 +1,5 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Contact.aspx.cs"
+﻿
+<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Contact.aspx.cs"
     Inherits="CmsWeb.Contact" Title="Person" EnableEventValidation="false" %>
 
 <%@ Register Assembly="CustomControls" Namespace="CustomControls" TagPrefix="cc1" %>
@@ -300,6 +301,9 @@
     <div id="contactDialog" style="display:none">
     <iframe style="width:100%;height:99%;border-width:0px;"></iframe>
     </div>
+</asp:Content>
+
+<asp:Content ID="Contentscr" ContentPlaceHolderID="scripts" runat="server">
     <script type="text/javascript">
         $(function () {
             $('#contactDialog').dialog({

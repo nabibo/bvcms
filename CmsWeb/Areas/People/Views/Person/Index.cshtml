@@ -1,16 +1,19 @@
-﻿@model CmsWeb.Areas.People.Models.Person.PersonModel
+﻿@using CmsWeb
+@using CmsWeb.Models
+@using CmsData
+@using UtilityExtensions
+@model CmsWeb.Areas.People.Models.Person.PersonModel
 @{
     Layout = "/Views/Shared/SiteLayout2.cshtml";
     ViewBag.Title = "Person";
-}
-@section scripts
-{
-    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/People/person1.js")"></script>
-    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Org/OrgMemberDialog2.js")"></script>
+    Bundles.Reference("main2");
+    Bundles.Reference("person12");
+    Bundles.Reference("OrgMemberDialog");
 }
 @section head
 {
-    <link href="@Fingerprint.Tag("/Content/css/person.css")" rel="stylesheet" />
+    <link href="~/Content/css/person.css" rel="stylesheet" />
+    <script src="http://use.edgefonts.net/asap.js"></script>
 }
 @Html.Hidden("newlook", "true")
 @Html.Hidden("PeopleId", Model.displayperson.PeopleId)
@@ -19,13 +22,9 @@
     <div class="row-fluid">
         <div class="span3">
             <div id="sidebar">
-                <div id="family-div">
-                    @Html.Partial("FamilyGrid", Model)
-                </div>
+                @Html.Partial("FamilyGrid", Model)
                 @Html.Partial("Addresses", Model)
-                <div id="related-families-div">
-                    @Html.Partial("RelatedFamilies", Model)
-                </div>
+                @Html.Partial("RelatedFamilies", Model)
             </div>
         </div>
         <div class="span9">
@@ -53,7 +52,7 @@
 
                         <div class="tab-content">
                             <div class="tab-pane active" id="personal">
-                                <form class="form form-horizontal ajax" method="post">
+                                <form class="form form-horizontal DisplayEdit">
                                     @Html.Partial("BasicPersonInfoDisplay", Model.displayperson.basic)
                                 </form>
                             </div>
@@ -67,24 +66,24 @@
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="current">
-                                        <form action="/Person2/EnrollGrid/@Model.displayperson.PeopleId" class="non-modal ajax">
+                                        <form action="/Person2/EnrollGrid/@Model.displayperson.PeopleId">
                                         </form>
                                     </div>
                                     <div class="tab-pane" id="previous">
-                                        <form action="/Person2/PrevEnrollGrid/@Model.displayperson.PeopleId" class="non-modal ajax">
+                                        <form action="/Person2/PrevEnrollGrid/@Model.displayperson.PeopleId">
                                         </form>
                                     </div>
                                     <div class="tab-pane" id="pending">
-                                        <form action="/Person2/EnrollGrid/@Model.displayperson.PeopleId" class="non-modal ajax">
+                                        <form action="/Person2/EnrollGrid/@Model.displayperson.PeopleId">
                                         </form>
                                     </div>
                                     <div class="tab-pane" id="attends">
-                                        <form action="/Person2/EnrollGrid/@Model.displayperson.PeopleId" class="non-modal ajax">
+                                        <form action="/Person2/EnrollGrid/@Model.displayperson.PeopleId">
                                         </form>
                                     </div>
                                     <div class="tab-pane" id="registrations">
                                         <h2>Registrations</h2>
-                                        <form action="/Person2/EnrollGrid/@Model.displayperson.PeopleId" class="non-modal ajax">
+                                        <form action="/Person2/EnrollGrid/@Model.displayperson.PeopleId">
                                         </form>
                                     </div>
                                 </div>

@@ -4,10 +4,8 @@
 @{
     ViewBag.Title = "Meetings";
     Layout = "~/Views/Shared/SiteLayout.cshtml";
-}
-@section scripts
-{
-    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Meeting/meetings.js")"></script>
+    CassetteBundleConfiguration.BundleRefJs();
+    Bundles.Reference("Meetings");
 }
 <h2>Meetings</h2>
 <form>

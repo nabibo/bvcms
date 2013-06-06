@@ -1,0 +1,27 @@
+﻿@using UtilityExtensions
+@model CmsWeb.Areas.People.Models.SearchPersonModel
+<input type="hidden" name="List.Index" value="@Model.index" />
+<input type="hidden" name="List[@Model.index].PeopleId" value="@Model.PeopleId" />
+<input type="hidden" name="List[@Model.index].FamilyId" value="@Model.FamilyId" />
+<input type="hidden" name="List[@Model.index].first" value="@Model.First" />
+<input type="hidden" name="List[@Model.index].goesby" value="@Model.GoesBy" />
+<input type="hidden" name="List[@Model.index].middle" value="@Model.Middle" />
+<input type="hidden" name="List[@Model.index].last" value="@Model.Last" />
+<input type="hidden" name="List[@Model.index].dob" value="@Model.birthday.FormatDate()" />
+<input type="hidden" name="List[@Model.index].email" value="@Model.Email" />
+<input type="hidden" name="List[@Model.index].phone" value="@Model.Phone" />
+<input type="hidden" name="List[@Model.index].title" value="@Model.Title" />
+<input type="hidden" name="List[@Model.index].suffix" value="@Model.Suffix" />
+<input type="hidden" name="List[@Model.index].marital" value="@Model.Marital.Value" />
+<input type="hidden" name="List[@Model.index].gender" value="@Model.Gender.Value" />
+<input type="hidden" name="List[@Model.index].homephone" value="@Model.HomePhone" />
+<input type="hidden" name="List[@Model.index].address" value="@Model.Address" />
+<input type="hidden" name="List[@Model.index].address2" value="@Model.Address2" />
+<input type="hidden" name="List[@Model.index].zip" value="@Model.Zip" />
+<input type="hidden" name="List[@Model.index].city" value="@Model.City" />
+<input type="hidden" name="List[@Model.index].state" value="@Model.State.Value" />
+<input type="hidden" name="List[@Model.index].country" value="@Model.Country.Value" />
+<input type="hidden" name="List[@Model.index].campus" value="@Model.Campus.Value" />
+@*<input type="hidden" name="List[@Model.index].entrypoint" value="@Model.EntryPoint.Value" />*@
+<input type="hidden" name="List[@Model.index].context" value="@Model.context" />
+

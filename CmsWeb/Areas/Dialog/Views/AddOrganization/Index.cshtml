@@ -1,10 +1,15 @@
 ﻿@model CmsWeb.Models.NewOrganizationModel
+@using CmsWeb
 @using UtilityExtensions
+@{
+    CassetteBundleConfiguration.BundleRefCss();
+    CassetteBundleConfiguration.BundleRefJs();
+}
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Add Organization</title>
-    @Helper.IncludeCss()
-    @Helper.IncludeJs()
+    @Bundles.RenderStylesheets()
+    @Bundles.RenderScripts()
     @Html.Partial("DatePickerDefaults")
 </head>
 <body>

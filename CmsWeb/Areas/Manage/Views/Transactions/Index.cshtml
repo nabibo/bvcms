@@ -4,10 +4,8 @@
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "Transactions";
-}
-@section scripts
-{
-    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Finance/Transactions.js")"></script>
+    CassetteBundleConfiguration.BundleRefJs();
+    Bundles.Reference("Transactions");
 }
 <form id="form" method="post" action="/Manage/Transactions/List">
 <div class="roundbox floatleft">

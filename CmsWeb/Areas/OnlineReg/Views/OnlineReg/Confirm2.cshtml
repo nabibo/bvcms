@@ -1,10 +1,8 @@
 ﻿@{
     Layout = "/Views/Shared/onlinereg.cshtml";
     ViewBag.Title = "Online Registration";
-}
-@section scripts
-{
-    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/onlinereg/onlinereg.js")"></script>
+    Bundles.Reference("OnlineRegister");
+    Bundles.Reference("onlinereg");
 }
 <div class="confirm">
     <h2>Transaction Completed</h2>

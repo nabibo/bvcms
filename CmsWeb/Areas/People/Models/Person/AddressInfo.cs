@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Linq;
-using System.Linq.Expressions;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -15,17 +14,9 @@ namespace CmsWeb.Areas.People.Models.Person
 {
     public class AddressInfo
     {
-        public int PeopleId
-        {
-            get { return _peopleId; }
-            set
-            {
-                if (_peopleId != value)
-                    person = DbUtil.Db.LoadPersonById(value);
-                _peopleId = value;
-            }
-        }
+        private CmsWeb.Code.CodeValueModel cv = new CmsWeb.Code.CodeValueModel();
 
+        public int PeopleId { get; set; }
         public CmsData.Person person { get; set; }
 
         public string Name { get; set; }
@@ -44,8 +35,6 @@ namespace CmsWeb.Areas.People.Models.Person
                         case "FamilyAddr":
                             _CanUserEditAddress = person.CanUserEditFamilyAddress;
                             break;
-                        default:
-                            return true;
                     }
                 }
                 return _CanUserEditAddress.Value;
@@ -76,11 +65,13 @@ namespace CmsWeb.Areas.People.Models.Person
         [UIHint("Text")]
         public string City { get; set; }
 
+        [UIHint("Code")]
         public CodeInfo State { get; set; }
 
         [UIHint("Text")]
         public string Zip { get; set; }
 
+        [UIHint("Code")]
         public CodeInfo Country { get; set; }
 
         public string AddrCityStateZip()
@@ -103,6 +94,7 @@ namespace CmsWeb.Areas.People.Models.Person
         [DisplayName("Bad Address Flag")]
         public bool? BadAddress { get; set; }
 
+        [UIHint("Code")]
         [DisplayName("Resident Code")]
         public CodeInfo ResCode { get; set; }
 
@@ -132,29 +124,12 @@ namespace CmsWeb.Areas.People.Models.Person
             list.Insert(0, new SelectListItem { Text = "(not specified)", Value = "" });
             return list;
         }
-
-        public AddressInfo()
-        {
-            Result = new AddressVerify.AddressResult();
-            State = new CodeInfo("", "State");
-            Country = new CodeInfo("", "Country");
-        }
-        public AddressInfo(string address1, string address2, string city, string state, string zip, string country)
-        {
-            Result = new AddressVerify.AddressResult();
-            Address1 = address1;
-            Address2 = address2;
-            City = city;
-            State = new CodeInfo(state, "State");
-            Zip = zip;
-            Country = new CodeInfo(country, "Country");
-        }
-
         public static AddressInfo GetAddressInfo(int id, string typeid)
         {
             var p = DbUtil.Db.LoadPersonById(id);
             DbUtil.Db.Refresh(RefreshMode.OverwriteCurrentValues, p);
-            var a = new AddressInfo { PeopleId = id };
+            var a = new AddressInfo();
+            a.person = p;
             switch (typeid)
             {
                 case "PrimaryAddr":
@@ -165,9 +140,9 @@ namespace CmsWeb.Areas.People.Models.Person
                     a.BadAddress = p.PrimaryBadAddrFlag == 1;
                     a.City = p.PrimaryCity;
                     a.Zip = p.PrimaryZip;
-                    a.State = new CodeInfo(p.PrimaryState, "State");
-                    a.Country = new CodeInfo(p.PrimaryCountry, "Country");
-                    a.ResCode = new CodeInfo(p.PrimaryResCode, "ResCode");
+                    a.State = new CodeInfo(p.PrimaryState, StateCodes());
+                    a.Country = new CodeInfo(p.PrimaryCountry, Countries());
+                    a.ResCode = new CodeInfo(p.PrimaryResCode, ResCodes());
                     break;
                 case "FamilyAddr":
                     a.Name = typeid;
@@ -178,9 +153,9 @@ namespace CmsWeb.Areas.People.Models.Person
                     a.BadAddress = p.Family.BadAddressFlag;
                     a.City = p.Family.CityName;
                     a.Zip = p.Family.ZipCode;
-                    a.State = new CodeInfo(p.Family.StateCode, "State");
-                    a.Country = new CodeInfo(p.Family.CountryName, "Country");
-                    a.ResCode = new CodeInfo(p.Family.ResCodeId, "ResCode");
+                    a.State = new CodeInfo(p.Family.StateCode, StateCodes());
+                    a.Country = new CodeInfo(p.Family.CountryName, Countries());
+                    a.ResCode = new CodeInfo(p.Family.ResCodeId, ResCodes());
                     a.Preferred = p.AddressTypeId == 10;
                     break;
                 case "PersonalAddr":
@@ -192,46 +167,68 @@ namespace CmsWeb.Areas.People.Models.Person
                     a.BadAddress = p.BadAddressFlag;
                     a.City = p.CityName;
                     a.Zip = p.ZipCode;
-                    a.State = new CodeInfo(p.StateCode, "State");
-                    a.Country = new CodeInfo(p.CountryName, "Country");
-                    a.ResCode = new CodeInfo(p.ResCodeId, "ResCode");
+                    a.State = new CodeInfo(p.StateCode, StateCodes());
+                    a.Country = new CodeInfo(p.CountryName, Countries());
+                    a.ResCode = new CodeInfo(p.ResCodeId, ResCodes());
                     a.Preferred = p.AddressTypeId == 30;
                     break;
             }
             return a;
         }
-        public void SetAddressInfo()
+        public void SetAddressInfo(int id, string typeid)
         {
             Address1 = Result.Line1;
             Address2 = Result.Line2;
             City = Result.City;
             Zip = Result.Zip;
-            State = new CodeInfo(Result.State, "State");
+            State = new CodeInfo(Result.State, StateCodes());
         }
 
-        public bool? Addrok { get; set; }
-        public string Error { get; set; }
-        public bool Saved { get; set; }
-        public bool ResultChanged { get; set; }
-        public bool ResultNotFound
+        public bool addrok
         {
-            get { return Result.found == false || Result.error.HasValue(); }
+            get { return City.HasValue() && State.Value.HasValue() || Zip.HasValue(); }
         }
 
-        public bool IsValid
+        public string error { get; set; }
+        public bool saved { get; set; }
+        public bool? resultok { get; set; }
+        public bool resultchanged { get; set; }
+        public bool resultnotfound
         {
-            get
-            {
-                if (Result.found == null) // not checked, don't report as invalid yet
-                    return Addrok != false;
-                return Addrok == true && !ResultChanged && !ResultNotFound;
-            }
+            get { return Result != null && !Result.found; }
         }
 
-        public void UpdateAddress(ModelStateDictionary modelState, bool forceSave = false)
+        public void UpdateAddress(bool forceSave = false)
         {
             var p = DbUtil.Db.LoadPersonById(PeopleId);
             var f = p.Family;
+
+            if (!forceSave)
+            {
+                if (!addrok)
+                    return;
+
+                if (Address1.HasValue() && (City.HasValue() || State.Value.HasValue() || Zip.HasValue())
+                    && (Country.Value == "United States" || !Country.Value.HasValue()))
+                {
+                    Result = AddressVerify.LookupAddress(Address1, Address2, City, State.Value, Zip);
+                    if (Result.Line1 == "error")
+                    {
+                        error = "network error";
+                        Result.address = AddrCityStateZip();
+                        return;
+                    }
+                    if (resultnotfound)
+                        return;
+                    if (Result.Changed(Address1, Address2, City, State.Value, Zip))
+                    {
+                        resultchanged = true;
+                        SetAddressInfo(PeopleId, Name);
+                        return;
+                    }
+                }
+                // at this point the address validated just fine.
+            }
 
             int? ResCodeId = ResCode.Value.ToInt();
             if (ResCodeId == 0)
@@ -302,10 +299,10 @@ namespace CmsWeb.Areas.People.Models.Person
             }
             catch (InvalidOperationException ex)
             {
-                Error = ex.Message;
+                error = ex.Message;
                 return;
             }
-            Saved = true;
+            saved = true;
 
             if (!HttpContext.Current.User.IsInRole("Access"))
                 if (psb.Length > 0 || fsb.Length > 0)
@@ -316,42 +313,6 @@ namespace CmsWeb.Areas.People.Models.Person
                         .Fmt(Util.UserName, psb.ToString(), fsb.ToString()));
                 }
         }
-
-        public string GetNameFor<M, P>(M model, Expression<Func<M, P>> ex)
-        {
-            return ExpressionHelper.GetExpressionText(ex);
-        }
-        public bool ValidateAddress(ModelStateDictionary modelState)
-        {
-            if (!Address1.HasValue())
-                modelState.AddModelError(this.GetNameFor(m => m.Address1), "Street Address Required");
-            if ((!City.HasValue() || !State.Value.HasValue()) && !Zip.HasValue())
-                modelState.AddModelError(this.GetNameFor(m => m.Zip), "Require either Zip Code or City/State");
-
-            Addrok = modelState.IsValid;
-            if (Addrok == false)
-                return false;
-
-            if ((Country.Value == "United States" || !Country.Value.HasValue()))
-            {
-                Result = AddressVerify.LookupAddress(Address1, Address2, City, State.Value, Zip);
-                const string alertdiv = @" <div class=""alert"">{0}</div>";
-                if (Result.Line1 == "error")
-                    Error = alertdiv.Fmt("<h4>Network Error</h4>");
-                else if (ResultNotFound)
-                    Error = alertdiv.Fmt("<h4>Address Not Validated</h4><h6>{0}</h6>".Fmt(Result.error));
-                else if (Result.Changed(Address1, Address2, City, State.Value, Zip))
-                {
-                    var msg = @"<h4>Address Found and Adjusted by USPS</h4><h6>What you entered</h6>"
-                              + AddrCityStateZip().Replace("\n", "<br/>\n");
-                    ResultChanged = true;
-                    SetAddressInfo();
-                    Error = alertdiv.Fmt(msg);
-                }
-            }
-            return !Error.HasValue();
-        }
-
         private StringBuilder fsb = new StringBuilder();
         private void UpdateValue(Family f, string field, object value)
         {
@@ -364,8 +325,6 @@ namespace CmsWeb.Areas.People.Models.Person
             Util.SetProperty(f, field, value);
         }
         private StringBuilder psb = new StringBuilder();
-        private int _peopleId;
-
         private void UpdateValue(CmsData.Person p, string field, object value)
         {
             var o = Util.GetProperty(p, field);

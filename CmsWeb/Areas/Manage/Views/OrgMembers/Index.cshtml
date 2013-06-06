@@ -3,13 +3,11 @@
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "Org Members Management";
+    CassetteBundleConfiguration.BundleRefJs();
+    Bundles.Reference("OrgMembers");
 }
-@section scripts
-{
-    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Org/OrgMembers.js")"></script>
-}
-<form id="form" method="post" action="/OrgMembers/Move">
-    @Html.Partial("List", Model)
-</form>
+    <form id="form" method="post" action="/OrgMembers/Move">
+     @Html.Partial("List", Model) 
+    </form>
 
 

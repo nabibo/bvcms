@@ -4,11 +4,9 @@
 @{
 	ViewBag.Title = "Tags";
 	Layout = "~/Views/Shared/SiteLayout.cshtml";
-}
-@section scripts
-{
-    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Dialog/SearchUsers.js")"></script>
-    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/js/Tags.js")"></script>
+    CassetteBundleConfiguration.BundleRefJs();
+    Bundles.Reference("SearchUsers");
+    Bundles.Reference("Tags");
 }
 <form id="managetags" method="post" action="/Tags/Index">
     <div class="roundbox floatleft">

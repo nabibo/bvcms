@@ -195,7 +195,7 @@ namespace CmsWeb.Models
                     var r = AddressVerify.LookupAddress(address, address2, city, state, zip);
                     if (r.Line1 != "error")
                     {
-                        if (r.found == false)
+                        if (!r.found)
                         {
                             ModelState.AddModelError("zip",
                                                      r.address +
