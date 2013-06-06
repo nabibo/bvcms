@@ -4,20 +4,20 @@
 @{
     ViewBag.Title = "RegSetting";
     Layout = "~/Views/Shared/SiteLayout.cshtml";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-@<script type="text/javascript">
-    $(function () {
-        $(".bt").button();
-        $("#editgui").click(function(ev) {
-            ev.preventDefault();
-            $("form").attr("action", '/RegSetting/EditGui/@(ViewData["OrganizationId"])');
-            $("form").submit();
-        });
-    });
-</script>);
 }
-
+@section scripts
+{
+    <script type="text/javascript">
+        $(function() {
+            $(".bt").button();
+            $("#editgui").click(function(ev) {
+                ev.preventDefault();
+                $("form").attr("action", '/RegSetting/EditGui/@(ViewData["OrganizationId"])');
+                $("form").submit();
+            });
+        });
+    </script>
+}
 <h2>Registration Settings for <a href="/Organization/Index/@ViewData["OrganizationId"]">@ViewData["orgname"]</a></h2>
 <h4 style="color:Red">The main editor for these is now located under the Settings tab on the Organization Page</h4>
 <form action="/RegSetting/Edit/@ViewData["OrganizationId"]" method="post">

@@ -1,23 +1,22 @@
-﻿@using CmsWeb
-@model CmsWeb.Models.PaymentModel
+﻿@model CmsWeb.Models.PaymentModel
 @{
     Layout = "/Views/Shared/onlinereg.cshtml";
     ViewBag.Title = "Online Registration";
-    Bundles.Reference("OnlineRegister");
-    Bundles.Reference("onlineregpayment");
-    Bundles.AddInlineScript(
-        @<script type="text/javascript">
-             $(function() {
-                 $(document).bind("idle.idleTimer", function() {
-                     window.location.href = '@Model._URL';
-                 });
-                 var tmout = parseInt('@Model._timeout');
-                 $.idleTimer(tmout);
-             });
-         </script>);
+}
+@section scripts
+{
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/onlinereg/onlineregpayment.js")"></script>
+    <script type="text/javascript">
+        $(function() {
+            $(document).bind("idle.idleTimer", function() {
+                window.location.href = '@Model._URL';
+            });
+            var tmout = parseInt('@Model._timeout');
+            $.idleTimer(tmout);
+        });
+    </script>
  }  
     <h2>Payment Processing</h2>
-    
     <form action="https://public.serviceu.com/transaction/pay.asp" method="post">
     @Html.Hidden("OrgID")
     @Html.Hidden("OrgAccountID")

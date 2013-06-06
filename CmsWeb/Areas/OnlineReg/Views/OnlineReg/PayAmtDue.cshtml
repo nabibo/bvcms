@@ -1,5 +1,4 @@
 ﻿@using UtilityExtensions
-@using CmsWeb
 @using CmsData
 @model CmsWeb.Models.PaymentForm
 @{
@@ -8,18 +7,19 @@
 
     var ServiceUOrgID = (Model.testing) ? DbUtil.Db.Setting("ServiceUOrgIDTest", "0") : DbUtil.Db.Setting("ServiceUOrgID", "0");
     var ServiceUOrgAccountID = (Model.testing) ? DbUtil.Db.Setting("ServiceUOrgAccountIDTest", "0") : DbUtil.Db.Setting("ServiceUOrgAccountID", "0");
-    Bundles.Reference("OnlineRegister");
-    Bundles.Reference("onlineregpayment");
-    Bundles.AddInlineScript(
-        @<script type="text/javascript">
-             $(function() {
-                 $(document).bind("idle.idleTimer", function() {
-                     window.location.href = '@ViewBag.Url';
-                 });
-                 var tmout = parseInt('@ViewBag.timeout');
-                 $.idleTimer(tmout);
-             });
-         </script>);
+}
+@section scripts
+{
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/onlinereg/onlineregpayment.js")"></script>
+    <script type="text/javascript">
+        $(function() {
+            $(document).bind("idle.idleTimer", function() {
+                window.location.href = '@ViewBag.Url';
+            });
+            var tmout = parseInt('@ViewBag.timeout');
+            $.idleTimer(tmout);
+        });
+    </script>
 }   
     <h2>Payment Processing</h2>
     

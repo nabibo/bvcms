@@ -2,26 +2,27 @@
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "Ministry";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-        @<script type="text/javascript">
-             $(function() {
-                 $(".clickEdit").editable("/Setup/Ministry/Edit/", {
-                     indicator: "<img src='/images/loading.gif'>",
-                     tooltip: "Click to edit...",
-                     style: 'display: inline',
-                     width: '200px',
-                     height: 25
-                 });
-                 $("a.delete").click(function(ev) {
-                     if (confirm("are you sure?"))
-                         $.post("/Setup/Ministry/Delete/" + $(this).attr("id"), null, function(ret) {
-                             window.location = "/Setup/Ministry/";
-                         });
-                 });
-                 $(".bt").button();
-             });
-         </script>);
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $(function() {
+            $(".clickEdit").editable("/Setup/Ministry/Edit/", {
+                indicator: "<img src='/images/loading.gif'>",
+                tooltip: "Click to edit...",
+                style: 'display: inline',
+                width: '200px',
+                height: 25
+            });
+            $("a.delete").click(function(ev) {
+                if (confirm("are you sure?"))
+                    $.post("/Setup/Ministry/Delete/" + $(this).attr("id"), null, function(ret) {
+                        window.location = "/Setup/Ministry/";
+                    });
+            });
+            $(".bt").button();
+        });
+    </script>
 }
 <h2>Ministries</h2>
 

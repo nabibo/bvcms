@@ -4,35 +4,6 @@
 @{
     ViewBag.Title = "Member Directory";
     Layout = "/Views/Shared/Reports.cshtml";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-    @<script type="text/javascript">
-        $(function() {
-            $(".bt").button();
-            $("#search").click(function(ev) {
-                ev.preventDefault();
-                $.getTable();
-                return false;
-            });
-            $.gotoPage = function(ev, pg) {
-                $("#Page").val(pg);
-                $.getTable();
-                return false;
-            };
-            $.setPageSize = function(ev) {
-                $('#Page').val(1);
-                $("#PageSize").val($(ev).val());
-                return $.getTable();
-            };
-            $.getTable = function() {
-                var f = $('#results').closest('form');
-                var q = f.serialize();
-                $.post('/MemberDirectory/Results', q, function(ret) {
-                    $('#results').replaceWith(ret);
-                });
-            };
-        });
-    </script>);
 }
 @section head
 {
@@ -62,6 +33,36 @@
             display: inline-block;
         }
     </style>
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $(function() {
+            $(".bt").button();
+            $("#search").click(function(ev) {
+                ev.preventDefault();
+                $.getTable();
+                return false;
+            });
+            $.gotoPage = function(ev, pg) {
+                $("#Page").val(pg);
+                $.getTable();
+                return false;
+            };
+            $.setPageSize = function(ev) {
+                $('#Page').val(1);
+                $("#PageSize").val($(ev).val());
+                return $.getTable();
+            };
+            $.getTable = function() {
+                var f = $('#results').closest('form');
+                var q = f.serialize();
+                $.post('/MemberDirectory/Results', q, function(ret) {
+                    $('#results').replaceWith(ret);
+                });
+            };
+        });
+    </script>
 }
 <form action="" id="form">
     @Html.Hidden("OrgId")

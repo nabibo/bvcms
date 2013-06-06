@@ -3,9 +3,10 @@
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "AttendanceReport";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-    @<script type="text/javascript">
+}
+@section scripts
+{
+    <script type="text/javascript">
         $(function() {
             $('#Attendances > thead a.sortable').click(function(ev) {
                 ev.preventDefault();
@@ -24,7 +25,7 @@
             var q = $('form').serialize();
             $.navigate("/Reports/Attendance/@Model.OrgId", q);
         }
-    </script>);
+    </script>
 }
     <h2>Attendance for <a href="/Organization/Index/@Model.OrgId">@Model.OrgName</a></h2>
     @using (Html.BeginForm())

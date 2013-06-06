@@ -4,31 +4,31 @@
 @{
     Layout = "/Views/Shared/onlinereg.cshtml";
     ViewBag.Title = "Online Transaction";
-    Bundles.Reference("OnlineRegister");
-    Bundles.Reference("OnlineReg");
-    Bundles.AddInlineScript(
-        @<script type="text/javascript"> $.dateFormat = '@Util.jQueryDateFormat'; </script>);
-    Bundles.AddInlineScript(
-        @<script type="text/javascript">
-             $(function() {
-                 $.refreshenabled = false; // false until something happens
-                 $(document).bind("idle.idleTimer", function() {
-                     if ($.refreshenabled)
-                         window.location.href = '/OnlineReg/Timeout?ret=' + encodeURI('@Model.URL');
-                     else
-                         $.idleTimer(tmout);
-                 });
-                 var tmout = parseInt('@ViewData["timeout"]');
+}
+@section scripts
+{
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/OnlineReg/OnlineReg.js")"></script>
+    <script type="text/javascript">
+        $.dateFormat = '@Util.jQueryDateFormat';
+        $(function() {
+            $.refreshenabled = false; // false until something happens
+            $(document).bind("idle.idleTimer", function() {
+                if ($.refreshenabled)
+                    window.location.href = '/OnlineReg/Timeout?ret=' + encodeURI('@Model.URL');
+                else
+                    $.idleTimer(tmout);
+            });
+            var tmout = parseInt('@ViewData["timeout"]');
 
-                 if ($('input:text[value!=""]').length == 0)
-                     $(document).bind("keydown", function() {
-                         $(document).unbind("keydown");
-                         $.idleTimer(tmout);
-                     });
-                 else
-                     $.idleTimer(tmout);
-             });
-         </script>);
+            if ($('input:text[value!=""]').length == 0)
+                $(document).bind("keydown", function() {
+                    $(document).unbind("keydown");
+                    $.idleTimer(tmout);
+                });
+            else
+                $.idleTimer(tmout);
+        });
+    </script>
 }
 <style type="text/css">
     .wider {width:70%;}

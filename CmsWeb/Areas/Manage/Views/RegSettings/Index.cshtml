@@ -4,8 +4,10 @@
 @{
     ViewBag.Title = "RegSettings";
     Layout = "~/Views/Shared/SiteLayout.cshtml";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.Reference("RegSettings");
+}
+@section scripts
+{
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/js/RegSettings.js")"></script>
 }
 <h2>RegSettings</h2>
 

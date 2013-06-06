@@ -3,8 +3,10 @@
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "OrgSearch";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.Reference("OrgSearch");
+}
+@section scripts
+{
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Org/OrgSearch.js")"></script>
 }
 <form id="orgsearchform" method="post">
   <table id="searchvalues" cellspacing="5" class="roundbox floatleft">

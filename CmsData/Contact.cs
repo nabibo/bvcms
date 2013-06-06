@@ -72,5 +72,20 @@ namespace CmsData
 			return m;
 		}
 
+
+        public static ContactReason FetchOrCreateContactReason(CMSDataContext db, string reason)
+        {
+            var r = db.ContactReasons.SingleOrDefault(pp => pp.Description == reason);
+            if (r == null)
+            {
+                var max = db.ContactReasons.Max(mm => mm.Id) + 10;
+                if (max < 1000)
+                    max = 1010;
+                r = new ContactReason { Id = max, Description = reason, Code = reason.Truncate(20) };
+                db.ContactReasons.InsertOnSubmit(r);
+                db.SubmitChanges();
+            }
+            return r;
+        }
     }
 }

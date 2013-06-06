@@ -3,8 +3,6 @@
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "OrgChildren";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.Reference("OrgChildren");
 }
 @section head
 {
@@ -14,6 +12,10 @@
         width: 98%;
     }
 </style>
+}
+@section scripts
+{
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Org/orgChildren.js")"></script>
 }
 @if (Model.canedit)
 {

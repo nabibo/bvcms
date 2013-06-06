@@ -684,13 +684,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UtilityExtensions\UtilityExtensions.csproj">
-      <Project>{C504E3D2-5498-451B-BF82-309623706F11}</Project>
-      <Name>UtilityExtensions</Name>
-    </ProjectReference>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
+    <ProjectReference Include="..\UtilityExtensions\UtilityExtensions.csproj">
+      <Project>{c504e3d2-5498-451b-bf82-309623706f11}</Project>
+      <Name>UtilityExtensions</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

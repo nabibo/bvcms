@@ -1,0 +1,8 @@
+﻿@model CmsWeb.Areas.Search.Models.SearchPersonModel
+@Html.HiddenFor(m => m.HomePhone)
+@Html.HiddenFor(m => m.AddressInfo.Address1)
+@Html.HiddenFor(m => m.AddressInfo.Address2)
+@Html.HiddenFor(m => m.AddressInfo.Zip)
+@Html.HiddenFor(m => m.AddressInfo.City)
+@Html.EditorFor(m => m.AddressInfo.State, "HiddenCodeInfo")
+@Html.EditorFor(m => m.AddressInfo.Country, "HiddenCodeInfo")

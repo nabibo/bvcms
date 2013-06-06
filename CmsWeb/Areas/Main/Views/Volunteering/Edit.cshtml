@@ -7,17 +7,18 @@
     Layout = "/Views/Shared/SiteLayout.cshtml";
     var s = from e in DbUtil.Db.VolApplicationStatuses
             select e;
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-@<script type="text/javascript">
-    $(function () {
-        $(".bt").button();
-        $(".datepicker").datepicker();
-    });
-    function redirect() {
-        window.location = "/Volunteering/Index/@Model.V.PeopleId";
-    }
-</script>);
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $(".bt").button();
+            $(".datepicker").datepicker();
+        });
+        function redirect() {
+            window.location = "/Volunteering/Index/@Model.V.PeopleId";
+        }
+    </script>
 }
 <a href="/Person/Index/@Model.V.PeopleId">@Model.V.Person.Name</a><br />
 <br />

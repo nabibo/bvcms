@@ -4,7 +4,6 @@
 <img src="@Model.Picture.SmallUrl" alt="" />
 <h2>@Model.Name</h2>
 <ul class="meta unstyled">
-    @* Dave: We need to show position in family on each family member, probably just edit them there *@
     <li class="role"><a class="edit-inline" id="position" data-value="@Model.basic.person.PositionInFamilyId" data-pk="@Model.PeopleId" title="Family Position">
                          @Html.DisplayFor(m => m.basic.FamilyPosition)
                      </a></li>

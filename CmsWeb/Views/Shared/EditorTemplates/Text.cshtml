@@ -1,7 +1,10 @@
 ﻿@model string
-<div class="control-group">
+@{
+    var help = Html.HelpMessageFor(m => m, "help-block");
+}
+<div class="control-group @help.errorClass">
     @Html.LabelFor(m => m, new { @class = "control-label"})
     <div class="controls">
-        @Html.TextBoxFor(m => m)
+        @Html.TextBoxFor(m => m)@Html.Raw(help.message)
     </div>
 </div>

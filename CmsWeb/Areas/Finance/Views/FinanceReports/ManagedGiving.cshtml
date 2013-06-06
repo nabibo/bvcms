@@ -3,24 +3,24 @@
 @model System.Linq.IOrderedEnumerable<CmsData.ManagedGiving>
 
 @{
-	ViewBag.Title = "ManagedGiving";
+    ViewBag.Title = "ManagedGiving";
     Layout = "/Views/Shared/SiteLayout.cshtml";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-        @<script type="text/javascript">
-            $(function () {
-                $('table.grid tbody tr:even').addClass('alt');
-                $("a.delete").click(function (ev) {
-                    ev.preventDefault();
-                    if (confirm("are you sure?")) {
-                        $.post($(this).attr("href"), {}, function (ret) {
-                            window.location = "/FinanceReports/ManagedGiving";
-                        });
-                    }
-                });
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $(function() {
+            $('table.grid tbody tr:even').addClass('alt');
+            $("a.delete").click(function(ev) {
+                ev.preventDefault();
+                if (confirm("are you sure?")) {
+                    $.post($(this).attr("href"), {}, function(ret) {
+                        window.location = "/FinanceReports/ManagedGiving";
+                    });
+                }
             });
-        </script>
-        );
+        });
+    </script>
 }
 <h2>Managed Giving</h2>
 <table class="grid" cellpadding="5">

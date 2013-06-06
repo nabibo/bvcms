@@ -1,23 +1,21 @@
 ﻿@using UtilityExtensions;
-@using CmsWeb;
 @model CmsWeb.Models.EmailModel
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/SiteLayout.cshtml";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-        @<script type="text/javascript">
-             $(function() {
-                 $("#filter").change(function() {
-                     window.location = window.location.pathname + "?filter=" + $(this).val();
-                 });
-                 $("table.grid > tbody > tr:even").addClass("alt");
-                 $(".bt").button();
-             });
-
-         </script>);
 }
-
+@section scripts
+{
+    <script type="text/javascript">
+        $(function() {
+            $("#filter").change(function() {
+                window.location = window.location.pathname + "?filter=" + $(this).val();
+            });
+            $("table.grid > tbody > tr:even").addClass("alt");
+            $(".bt").button();
+        });
+    </script>
+}
 @Html.ActionLink("Back to List", "Index")
 @{
     var ts = new TimeSpan(0);

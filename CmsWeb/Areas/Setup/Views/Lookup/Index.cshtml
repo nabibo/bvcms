@@ -2,30 +2,31 @@
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "Lookups";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-        @<script type="text/javascript">
-             $(function() {
-                 $(".clickEdit").editable("/Setup/Lookup/Edit/", {
-                     indicator: "<img src='/images/loading.gif'>",
-                     tooltip: "Click to edit...",
-                     style: 'display: inline',
-                     width: '200px',
-                     height: 25
-                 });
-                 $("a.delete").click(function(ev) {
-                     ev.preventDefault();
-                     if (confirm("are you sure?"))
-                         $.post("/Setup/Lookup/Delete/" + $(this).attr("id"), { type: $('#type').val() }, function(ret) {
-                             if (ret && ret.error)
-                                 alert(ret.error);
-                             else
-                                 window.location = "/Setup/Lookup/Index/" + $('#type').val();
-                         });
-                 });
-                 $(".bt").button();
-             });
-         </script>);
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $(function() {
+            $(".clickEdit").editable("/Setup/Lookup/Edit/", {
+                indicator: "<img src='/images/loading.gif'>",
+                tooltip: "Click to edit...",
+                style: 'display: inline',
+                width: '200px',
+                height: 25
+            });
+            $("a.delete").click(function(ev) {
+                ev.preventDefault();
+                if (confirm("are you sure?"))
+                    $.post("/Setup/Lookup/Delete/" + $(this).attr("id"), { type: $('#type').val() }, function(ret) {
+                        if (ret && ret.error)
+                            alert(ret.error);
+                        else
+                            window.location = "/Setup/Lookup/Index/" + $('#type').val();
+                    });
+            });
+            $(".bt").button();
+        });
+    </script>
 }
 <h2>@ViewData["type"]</h2>
 <blockquote style="max-width:40em"><i>Click to edit the Code or Name. The items that cannot be deleted are expected to be there by the system. The description for those can be edited as long as the meaning is the same.</i></blockquote>

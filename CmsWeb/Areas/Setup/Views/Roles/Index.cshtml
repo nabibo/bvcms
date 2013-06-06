@@ -2,34 +2,35 @@
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "Roles";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-        @<script type="text/javascript">
-             $(function() {
-                 $(".clickEdit").editable("/Setup/Roles/Edit/", {
-                     indicator: "<img src='/images/loading.gif'>",
-                     tooltip: "Click to edit...",
-                     style: 'display: inline',
-                     width: '200px',
-                     height: 25,
-                     callback: function(value) {
-                         if (value.startsWith("/")) {
-                             window.location = value;
-                         }
-                     }
-                 });
-                 $("a.delete").click(function(ev) {
-                     if (confirm("are you sure?"))
-                         $.post("/Setup/Roles/Delete/" + $(this).attr("id"), null, function(ret) {
-                             if (ret)
-                                 alert(ret);
-                             else
-                                 window.location = "/Setup/Roles/";
-                         });
-                 });
-                 $(".bt").button();
-             });
-         </script>);
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $(function() {
+            $(".clickEdit").editable("/Setup/Roles/Edit/", {
+                indicator: "<img src='/images/loading.gif'>",
+                tooltip: "Click to edit...",
+                style: 'display: inline',
+                width: '200px',
+                height: 25,
+                callback: function(value) {
+                    if (value.startsWith("/")) {
+                        window.location = value;
+                    }
+                }
+            });
+            $("a.delete").click(function(ev) {
+                if (confirm("are you sure?"))
+                    $.post("/Setup/Roles/Delete/" + $(this).attr("id"), null, function(ret) {
+                        if (ret)
+                            alert(ret);
+                        else
+                            window.location = "/Setup/Roles/";
+                    });
+            });
+            $(".bt").button();
+        });
+    </script>
 }
 <h2>Roles</h2>
 

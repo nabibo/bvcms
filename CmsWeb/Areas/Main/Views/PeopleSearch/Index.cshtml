@@ -6,8 +6,6 @@
 @{
 	ViewBag.Title = "People Search";
 	Layout = "~/Views/Shared/SiteLayout.cshtml";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.Reference("PeopleSearch");
 }
 @section head 
 {
@@ -17,6 +15,10 @@
             width: 275px;
         }
     </style>
+}
+@section scripts
+{
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Search/PeopleSearch.js")"></script>
 }
 <form id="peoplesearch" method="post" action="/PeopleSearch/Index">
 <table id="searchvalues" cellspacing="5" class="roundbox">

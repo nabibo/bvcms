@@ -3,15 +3,16 @@
 @{
     ViewBag.Title = "EditRegSetting";
     Layout = "~/Views/Shared/SiteLayout.cshtml";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-    @<script type="text/javascript">
+}
+@section scripts
+{
+    <script type="text/javascript">
         $(function () {
             $("textarea").css("height", this.scrollHeight + "px");
             $("textarea").tabby();
             $(".bt").button();
         });
-    </script>);
+    </script>
 }
 <h2>
     Editing Registration Settings for <a href="/Organization/Index/@ViewData["OrganizationId"]">@ViewData["orgname"]</a></h2>

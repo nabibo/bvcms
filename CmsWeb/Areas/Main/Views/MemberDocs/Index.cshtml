@@ -4,9 +4,18 @@
 @{
     ViewBag.Title = "MembershipDocs";
     Layout = "~/Views/Shared/SiteLayout.cshtml";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-    @<script type="text/javascript">
+}
+@section head
+{
+    <style>
+        div.name {
+            padding: 1em;
+        }
+    </style>
+}
+@section scripts
+{
+    <script type="text/javascript">
         $(function () {
             $("a.delete").click(function (e) {
                 e.preventDefault();
@@ -25,15 +34,7 @@
                 height: 25
             });
         });
-    </script>);
-}
-@section head
-{
-    <style>
-        div.name {
-            padding: 1em;
-        }
-    </style>
+    </script>
 }
 <h2>Membership Docs</h2>
 <div>

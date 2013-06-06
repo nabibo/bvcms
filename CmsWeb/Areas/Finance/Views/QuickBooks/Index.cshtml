@@ -1,17 +1,13 @@
-@using CmsData;
 @using CmsData.Classes.QuickBooks
-@using CmsWeb.Models;
-@using UtilityExtensions;
 @{
 	Layout = "/Views/Shared/SiteLayout.cshtml";
 	ViewBag.Title = "QuickBooks Connect/Disconnect";
     var qbh = new QuickBooksHelper(Request);
-    Bundles.AddInlineScript(
-        @<script type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"></script>
-        );
-    Bundles.AddInlineScript(
-        @<script> intuit.ipp.anywhere.setup({ menuProxy: '@qbh.getBaseURL()/QuickBooks/BlueDotMenu', grantUrl: '@qbh.getBaseURL()/QuickBooks/RequestOAuthToken' }); </script>
-        );
+}
+@section scripts
+{
+    <script type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"></script>
+    <script> intuit.ipp.anywhere.setup({ menuProxy: '@qbh.getBaseURL()/QuickBooks/BlueDotMenu', grantUrl: '@qbh.getBaseURL()/QuickBooks/RequestOAuthToken' }); </script>
 }
 <center>
 <br />

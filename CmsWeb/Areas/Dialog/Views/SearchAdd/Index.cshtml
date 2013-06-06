@@ -1,31 +1,22 @@
 ﻿@model CmsWeb.Models.SearchModel
-@using CmsWeb
-@{
-    CassetteBundleConfiguration.BundleRefCss();
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-        @<text>
-            @Html.Partial("DatePickerDefaults")
-        </text>
-    );
-    Bundles.Reference("SearchAdd");
-}
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
-    @Bundles.RenderStylesheets()
+    @Helper.IncludeCss()
     <style>
         table.form > tbody > tr > td:nth-child(1) {
             text-align: right;
             white-space: nowrap;
         }
     </style>
+    @Helper.IncludeJs()
+    @Html.Partial("DatePickerDefaults")
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Dialog/SearchAdd.js")"></script>
 </head>
 
 <body>
     <form action="/SearchAdd/Complete/" method="post" class="DisplayEdit">
         @Html.Partial("SearchPerson", Model) 
     </form>
-    @Bundles.RenderScripts()
 </body>
 </html>

@@ -9,6 +9,7 @@ namespace CmsWeb.Areas.People.Models.Person
         public string PositionInFamily { get; set; }
         public string SpouseIndicator { get; set; }
         public string Email { get; set; }
+        public string MemberStatus { get; set; }
         public CmsData.Picture Pictures { get; set; }
     }
 }

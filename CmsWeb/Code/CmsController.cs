@@ -167,6 +167,8 @@ namespace CmsWeb
 	{
 		public override void OnActionExecuting(ActionExecutingContext filterContext)
 		{
+#if DEBUG
+#else
 			var context = filterContext.HttpContext;
 			if (context.Session != null)
 				if (context.Session.IsNewSession)
@@ -175,7 +177,9 @@ namespace CmsWeb
 					if ((sessionCookie != null) && (sessionCookie.IndexOf("ASP.NET_SessionId") >= 0))
 						filterContext.Result = new RedirectResult("/Errors/SessionTimeout.htm");
 				}
+#endif
 			base.OnActionExecuting(filterContext);
+		    return;
 		}
 	}
 	public class DataGridResult : ActionResult

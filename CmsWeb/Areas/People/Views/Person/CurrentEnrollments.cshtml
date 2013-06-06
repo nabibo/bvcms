@@ -1,17 +1,17 @@
 ﻿@using UtilityExtensions
 @model CmsWeb.Areas.People.Models.Person.CurrentEnrollments
 @{
-    var pOrgType = "Other";
+    var pOrgType = "---";
     var rownum = 0;
 }
 @Html.Partial("Pager3", Model.Pager)
-<table class="enrollments table table-condensed table-hover">
+<table class="expanding table table-condensed table-hover">
     <thead>
         <tr>
             <th></th>
-            <th><a href="#" class="active asc sortable">Organization</a></th>
+            <th>@Model.Pager.SortLink("Organization")</th>
             <th>Leader</th>
-            <th><a href="#" class="active sortable">Enroll Date</a></th>
+            <th>@Model.Pager.SortLink("Enroll Date")</th>
             <th>MemberType</th>
             <th>AttendPct</th>
         </tr>
@@ -25,18 +25,18 @@
             {
                 pOrgType = om.OrgType;
                 <tr class="section notshown">
-                    <td><a rel="reveal" title="More Information" href="#"><i class="icon-info-sign"></i></a></td>
+                    <td><a rel="reveal" title="More Information" href="#" class="reveal"><i class="icon-info-sign"></i></a></td>
                     <td colspan="4"><span>@om.OrgType</span></td>
                 </tr>
             }
             if (User.IsInRole("Access"))
             {
-                <tr class="organization @oddrow">
-                    <td> <a rel="reveal" class="evlink" title="More Information" href="#" ><i class="icon-info-sign"></i> </a> </td>
+                <tr class="master @oddrow">
+                    <td> <a rel="reveal" title="More Information" href="#" class="reveal"><i class="icon-info-sign"></i> </a> </td>
                     <td class="indent"><a href="/Organization/Index/@om.OrgId">@om.Name</a></td>
                     <td><a href="/Person/Index/@om.LeaderId">@om.LeaderName</a></td>
                     <td>@om.EnrollDate.FormatDate()</td>
-                    <td><a class="membertype evlink" href="/OrgMemberDialog2/Index/@om.OrgId?pid=@om.PeopleId&from=na">
+                    <td><a class="membertype" href="/OrgMemberDialog2/Display/@om.OrgId/@om.PeopleId">
                             @om.MemberType
                         </a>
                     </td>

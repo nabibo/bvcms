@@ -29,7 +29,14 @@
                         <li>@Html.ActionLink("Search", "Index", "PeopleSearch", new { Area = "Main" }, null)</li>
                         @if (DbUtil.Db.Setting("MenuAddPeople", "true") == "true")
                         {
-                            <li>@Helper.JQueryIdLink("Add People", "addpeople")</li>
+                            if (Request.Url.PathAndQuery.Contains("Person2", ignoreCase: true))
+                            {
+                                <li><a href="/SearchAdd2/Dialog/Menu" class="searchadd">Add People</a></li>
+                            }
+                            else
+                            {
+                                <li>@Helper.JQueryIdLink("Add People", "addpeople")</li>
+                            }
                         }
                         else
                         {

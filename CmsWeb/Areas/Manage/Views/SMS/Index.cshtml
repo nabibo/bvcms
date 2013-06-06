@@ -3,41 +3,42 @@
 @{
     ViewBag.Title = "Index";
     Layout = "/Views/Shared/SiteLayout.cshtml";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-        @<script type="text/javascript">
-             $(document).ready(function() {
-                 $(".datepicker").datepicker();
-                 $(".bt").button();
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".datepicker").datepicker();
+            $(".bt").button();
 
-                 $("form a.submitbutton").on("click", function(event) {
-                     $("#form").submit();
-                 });
+            $("form a.submitbutton").on("click", function(event) {
+                $("#form").submit();
+            });
 
-                 $('a.sortable').on("click", function() {
-                     var newsort = $(this).text();
-                     var sort = $("#Sort");
-                     var dir = $("#Direction");
+            $('a.sortable').on("click", function() {
+                var newsort = $(this).text();
+                var sort = $("#Sort");
+                var dir = $("#Direction");
 
-                     if ($(sort).val() == newsort && $(dir).val() == 'asc')
-                         $(dir).val('desc');
-                     else
-                         $(dir).val('asc');
+                if ($(sort).val() == newsort && $(dir).val() == 'asc')
+                    $(dir).val('desc');
+                else
+                    $(dir).val('asc');
 
-                     $(sort).val(newsort);
-                     $("#form").submit();
-                     return false;
-                 });
-             });
+                $(sort).val(newsort);
+                $("#form").submit();
+                return false;
+            });
+        });
 
-             $.gotoPage = function(e, pg) {
-                 $("#form").submit();
-             };
+        $.gotoPage = function(e, pg) {
+            $("#form").submit();
+        };
 
-             $.setPageSize = function(e) {
-                 $("#form").submit();
-             };
-         </script>);
+        $.setPageSize = function(e) {
+            $("#form").submit();
+        };
+    </script>
 }
 <form id="form" method="post" action="/Manage/SMS/Index">
 <div class="roundbox floatleft">

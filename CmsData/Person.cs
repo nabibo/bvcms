@@ -188,6 +188,10 @@ namespace CmsData
                 et.PeopleId = targetid;
             TrySubmit(db, "EnrollmentTransactions");
 
+            foreach (var t in this.TransactionPeople)
+                t.PeopleId = targetid;
+            TrySubmit(db, "TransactionPeople");
+
             var q = from a in db.Attends
                     where a.PeopleId == this.PeopleId
                     let oa = db.Attends.SingleOrDefault(a2 => a2.MeetingId == a.MeetingId && a2.PeopleId == targetid)

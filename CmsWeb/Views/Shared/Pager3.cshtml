@@ -3,7 +3,7 @@
     <ul>
         @if (Model.Page > 1)
         {
-            <li><a href='#' onclick=' return $.gotoPage(this, (@Model.Page - 1)) '>Prev</a></li>
+            <li>@Model.PageLink("Prev", Model.Page - 1)</li>
         }
         else
         {
@@ -11,13 +11,13 @@
         }
         @if (Model.Page < Model.LastPage())
         {
-            <li><a href='#' onclick=' return $.gotoPage(this, @(Model.Page + 1)) '>Next</a></li>
+            <li>@Model.PageLink("Next", Model.Page + 1)</li>
         }
         else
         {
             <li class="disabled"><a>Next</a></li>
         }
-            
+
         @foreach (var p in Model.PageList())
         {
             if (p == 0)
@@ -26,7 +26,7 @@
             }
             if (p > 0 && Model.Page != p)
             { 
-                <li><a href='#' onclick='return $.gotoPage(this,@p)'>@p</a></li>
+                <li>@Model.PageLink(p.ToString(), p)</li>
             }
             if (Model.Page == p)
             { 
@@ -38,12 +38,12 @@
             <li class="disabled"><a>&nbsp;Page Size:</a></li>
             foreach (var i in Model.PageSizeList())
             {
-                <li @(i.Selected ? "class=disabled" : "")><a href="#" onclick="$.setPageSize(this, @i.Text)">@i.Text</a></li>
+                @Model.PageSizeItem(i.Text, 1, i.Text.ToInt(), i.Selected)
             }
+        }
+        else
+        {
+            <li class="disabled"><a>@Model.ShowCount()</a></li>
         }
     </ul>
 </div>
-@Html.Hidden("PageSize")
-@Html.Hidden("Page")
-@Html.Hidden("Sort")
-@Html.Hidden("Direction")

@@ -4,8 +4,10 @@
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "Volunteer Calendar";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.Reference("Calendar");
+}
+@section scripts
+{
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Volunteer/Calendar.js")"></script>
 }
 @section head
 {

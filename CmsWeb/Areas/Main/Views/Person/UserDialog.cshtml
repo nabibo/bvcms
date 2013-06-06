@@ -2,28 +2,24 @@
 @using CmsData
 @using CmsWeb
 @model CmsData.User
-@{
-    CassetteBundleConfiguration.BundleRefCss();
-    Bundles.Reference("dialogcss");
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.Reference("UserDialog");
-}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>Index</title>
-    @Bundles.RenderStylesheets()
-    <style type="text/css">
-        .wrap {
-            float: left;
-            width: 13.3em;
-            margin: 0 2em 0 0;
-            border-right: 1px solid #eee;
-            padding: 0 0 5px 0;
-        }
-    </style>
-    @Bundles.RenderScripts()
-</head>
+    <head>
+        <title>Index</title>
+        @Helper.IncludeCss()
+        <link rel="stylesheet" href="@Fingerprint.Tag("/Content/styles/dialog.css")"/>
+        <style type="text/css">
+            .wrap {
+                float: left;
+                width: 13.3em;
+                margin: 0 2em 0 0;
+                border-right: 1px solid #eee;
+                padding: 0 0 5px 0;
+            }
+        </style>
+        @Helper.IncludeJs()
+        <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Dialog/UserDialog.js")"></script>
+    </head>
 <body>
     <a class="helplink" target="_blank" href='@Util.HelpLink("UserUpdate")'>help</a>
     <form class="DisplayEdit" action="">

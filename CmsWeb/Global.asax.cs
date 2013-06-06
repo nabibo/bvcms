@@ -2,6 +2,7 @@ using System;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -107,6 +108,7 @@ namespace CmsWeb
             var url = Request.Url.OriginalString;
             if (url.Contains("/Errors/") || url.Contains("healthcheck.txt"))
                 return;
+
             if (Util.AppOffline)
             {
                 Response.Redirect("/Errors/AppOffline.htm");
@@ -117,6 +119,15 @@ namespace CmsWeb
                 Response.Redirect("/Errors/DatabaseNotFound.aspx?dbname=" + Util.Host);
                 return;
             }
+//            var match = Regex.Match(url, @"([\S]+)(/v-[0-9]+/)([\S]+)", RegexOptions.IgnorePatternWhitespace);
+//            if (match.Success)
+//            {
+//                url = "{0}/{1}".Fmt(match.Groups[1].Value, match.Groups[3].Value);
+//                var uri = new Uri(url);
+//                url = "/" + uri.Host + uri.PathAndQuery;
+//                Context.RewritePath(url, false);
+//            }
+
             var cul = DbUtil.Db.Setting("Culture", "en-US");
 
             var df = DbUtil.Db.Setting("CulturejQueryDateFormat2", "M/D/YYYY").ToUpper();

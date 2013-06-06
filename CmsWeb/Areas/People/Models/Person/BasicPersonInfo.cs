@@ -24,6 +24,16 @@ namespace CmsWeb.Areas.People.Models.Person
         public string Address { get; set; }
         public bool Send { get; set; }
     }
+    public class CellPhoneInfo
+    {
+        public CellPhoneInfo(string number, bool active)
+        {
+            Number = number;
+            ReceiveText = active;
+        }
+        public string Number { get; set; }
+        public bool ReceiveText { get; set; }
+    }
 
     public class BasicPersonInfo
     {
@@ -49,8 +59,8 @@ namespace CmsWeb.Areas.People.Models.Person
         public int PeopleId { get; set; }
         public CmsData.Person person { get; set; }
 
-        [UIHint("Code")]
         public CodeInfo Title { get; set; }
+
         [UIHint("Text")]
         [DisplayName("First Name")]
         public string FirstName { get; set; }
@@ -78,7 +88,6 @@ namespace CmsWeb.Areas.People.Models.Person
         [UIHint("Text")]
         public string Suffix { get; set; }
 
-        [UIHint("Code")]
         public CodeInfo Gender { get; set; }
 
         [UIHint("InlineCode")]
@@ -88,7 +97,6 @@ namespace CmsWeb.Areas.People.Models.Person
         [UIHint("Date")]
         public string Birthday { get; set; }
 
-        [UIHint("Code")]
         public CodeInfo Marital { get; set; }
 
         [UIHint("Date")]
@@ -135,8 +143,8 @@ namespace CmsWeb.Areas.People.Models.Person
         [UIHint("Text")]
         [DisplayName("Home Phone")]
         public string HomePhone { get; set; }
-        [UIHint("Text")]
-        public string Mobile { get; set; }
+        [UIHint("CellPhone")]
+        public CellPhoneInfo Mobile { get; set; }
         [UIHint("Text")]
         public string Work { get; set; }
 
@@ -188,7 +196,7 @@ namespace CmsWeb.Areas.People.Models.Person
                 Age = p.Age.ToString(),
                 Birthday = p.DOB,
                 CampusId = p.CampusId ?? 0,
-                Mobile = p.CellPhone.FmtFone(),
+                Mobile = new CellPhoneInfo(p.CellPhone.FmtFone(), p.ReceiveSMS),
                 DeceasedDate = p.DeceasedDate,
                 DoNotCallFlag = p.DoNotCallFlag,
                 DoNotMailFlag = p.DoNotMailFlag,
@@ -205,10 +213,10 @@ namespace CmsWeb.Areas.People.Models.Person
                 LastName = p.LastName,
                 AltName = p.AltName,
                 FormerName = p.MaidenName,
-                Gender = new CodeInfo(p.GenderId, cv.GenderCodesWithUnspecified()),
-                Marital = new CodeInfo(p.MaritalStatusId, cv.MaritalStatusCodes99()),
-                MemberStatus = new CodeInfo(p.MemberStatusId, cv.MemberStatusCodes0()),
-                FamilyPosition = new CodeInfo(p.PositionInFamilyId, cv.FamilyPositionCodes()),
+                Gender = new CodeInfo(p.GenderId, "Gender"),
+                Marital = new CodeInfo(p.MaritalStatusId, "Marital"),
+                MemberStatus = new CodeInfo(p.MemberStatusId, "MemberStatus"),
+                FamilyPosition = new CodeInfo(p.PositionInFamilyId, "FamilyPosition"),
                 MiddleName = p.MiddleName,
                 GoesBy = p.NickName,
                 Occupation = p.OccupationOther,
@@ -216,7 +224,7 @@ namespace CmsWeb.Areas.People.Models.Person
                 School = p.SchoolOther,
                 Spouse = p.SpouseName(DbUtil.Db),
                 Suffix = p.SuffixCode,
-                Title = new CodeInfo(p.TitleCode, cv.TitleCodes(), "Value"),
+                Title = new CodeInfo(p.TitleCode, "Title"),
                 WeddingDate = p.WeddingDate.FormatDate(),
                 Work = p.WorkPhone.FmtFone(),
                 ReceiveSMS = p.ReceiveSMS,
@@ -248,7 +256,8 @@ namespace CmsWeb.Areas.People.Models.Person
             p.UpdateValue(psb, "AltName", AltName);
             p.UpdateValue(psb, "GenderId", Gender.Value.ToInt2());
             p.UpdateValue(psb, "Grade", Grade.ToInt2());
-            p.UpdateValue(psb, "CellPhone", Mobile.GetDigits());
+            p.UpdateValue(psb, "CellPhone", Mobile.Number.GetDigits());
+            p.UpdateValue(psb, "ReceiveSMS", Mobile.ReceiveText);
             p.Family.UpdateValue(fsb, "HomePhone", HomePhone.GetDigits());
             p.UpdateValue(psb, "MaidenName", FormerName);
             p.UpdateValue(psb, "MaritalStatusId", Marital.Value.ToInt2());

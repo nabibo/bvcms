@@ -3,14 +3,14 @@
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "Coupon";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-@<script>
-    $(function () {
-        $(".bt").button();
-    });
-</script>
-    );
+}
+@section scripts
+{
+    <script>
+        $(function() {
+            $(".bt").button();
+        });
+    </script>
 }
     <h2>Coupons</h2>
     <form action="/Coupon/Create" method="post">

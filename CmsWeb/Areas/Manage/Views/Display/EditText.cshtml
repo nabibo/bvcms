@@ -2,22 +2,23 @@
 @model CmsData.Content
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-@<script type="text/javascript">
-    $(function () {
-        $(".bt").button();
-        $("#delete").click(function (ev) {
-            ev.preventDefault();
-            if (confirm("Are you sure you want to delete this entry?")) {
-                $.post("/Display/ContentDelete", { id: "@Model.Id" }, function () {
-                    window.location = "/Manage/Display/";
-                });
-            }
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $(".bt").button();
+            $("#delete").click(function (ev) {
+                ev.preventDefault();
+                if (confirm("Are you sure you want to delete this entry?")) {
+                    $.post("/Display/ContentDelete", { id: "@Model.Id" }, function () {
+                        window.location = "/Manage/Display/";
+                    });
+                }
+            });
+            $("textarea").tabby();
         });
-        $("textarea").tabby();
-    });
-</script>);
+    </script>
 }
 @using (Html.BeginForm("ContentUpdate", "Display", FormMethod.Post))
 { 

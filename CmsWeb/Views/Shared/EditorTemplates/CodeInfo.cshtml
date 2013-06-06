@@ -1,0 +1,14 @@
+﻿@model CmsWeb.Code.CodeInfo
+@{
+    if (Model == null)
+    {
+        throw new Exception("model is null in CodeInfo for " + ViewData.TemplateInfo.HtmlFieldPrefix);
+    }
+}
+<div class="control-group">
+    @Html.LabelFor(m => m, new { @class="control-label"})
+    <div class="controls">
+        @Html.DropDownListFor(m => m.Value, Model.Items)
+        @Html.HiddenFor(m => m.ListName)
+    </div>
+</div>

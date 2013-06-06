@@ -37,10 +37,8 @@
             @Html.Partial("DisplayTemplates/Address", p.FamilyAddr)        
         </p>
     </li>
-    @* Dave: Should we put email address in this section? *@
     <li class="phone landline">
         <i class="icon-phone"></i>
-        @* Dave: How do we distinguish between personal (cell) and home? *@
         <p>@p.basic.HomePhone.FmtFone()</p>
     </li>
 
@@ -66,7 +64,7 @@
         </p>
     </li>
     }
-    @if (p.basic.Mobile.HasValue())
+    @if (p.basic.Mobile.Number.HasValue())
     {
     <li class="phone mobile">
         <div class="btn-group">
@@ -78,7 +76,7 @@
                 <li><a href="#">Send SMS</a></li>
             </ul>
         </div>
-        <p>@p.basic.Mobile.FmtFone()</p>
+        <p>@p.basic.Mobile.Number.FmtFone()</p>
     </li>
     }
 </ul>

@@ -148,7 +148,7 @@ namespace CmsWeb.Models.PersonPage
                 var r = AddressVerify.LookupAddress(Address1, Address2, City, State, Zip);
                 if (r.Line1 != "error")
                 {
-                    if (!r.found)
+                    if (r.found == false)
                     {
                         ModelState.AddModelError("zip", r.address + ", if your address will not validate, change the country to 'USA, Not Validated'");
                         return;

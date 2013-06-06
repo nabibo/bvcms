@@ -1,11 +1,11 @@
 ﻿@model CmsWeb.Models.VolunteerModel 
-@using UtilityExtensions
-@using CmsWeb
 @{
     Layout = "/Views/Shared/onlinereg.cshtml";
     ViewBag.Title = "Online Registration";
-    Bundles.Reference("OnlineRegister");
-    Bundles.Reference("ManageVolunteer");
+}
+@section scripts
+{
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Volunteer/ManageVolunteer.js")"></script>
 }
 @section head
 {

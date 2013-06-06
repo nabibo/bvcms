@@ -4,8 +4,6 @@
 @{
     Layout = "/Views/Shared/Reports.cshtml";
     ViewBag.Title = "ChurchAttendanceReport";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.Reference("ChurchAttendance");
 }
 @section head {
     <style type="text/css">
@@ -29,6 +27,10 @@
             font-size: 100%;
         }
     </style>
+}
+@section scripts
+{
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/js/ChurchAttendance.js")"></script>
 }
 <div style="text-align: center">
     <h1>Week at a Glance Attendance Report</h1>

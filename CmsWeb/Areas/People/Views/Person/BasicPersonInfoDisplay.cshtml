@@ -38,6 +38,6 @@
 @helper FormAction()
 {
     <div class="form-actions">
-        @Html.ActionLink("Edit", "BasicEdit", "Person", Model.RouteVals, Model.Classes("btn btn-neutral pull-right displayedit"))
+        <a href="/Person2/BasicEdit/@Model.PeopleId" class="edit-basic btn pull-right ajax">Edit</a>
     </div>
 }

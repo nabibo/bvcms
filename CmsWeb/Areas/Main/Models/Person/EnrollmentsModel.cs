@@ -65,7 +65,8 @@ namespace CmsWeb.Models.PersonPage
                          EnrollDate = om.EnrollmentDate,
                          AttendPct = om.AttendPct,
                          DivisionName = om.Organization.Division.Program.Name + "/" + om.Organization.Division.Name,
-						 OrgType = om.Organization.OrganizationType.Description ?? "Other"
+						 OrgType = om.Organization.OrganizationType.Description ?? "Other",
+                         HasDirectory = (om.Organization.PublishDirectory ?? 0) > 0
                      };
             return q2;
         }

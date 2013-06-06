@@ -1,13 +1,11 @@
-@{
-    Bundles.Reference("OnlineRegister");
-}
 @if ((bool?)ViewData["hasshell"] == true)
 {
 @Html.Raw((string)ViewData["top"])
 @RenderSection("head", false)
 @RenderBody()
 @Html.Raw((string)ViewData["bottom"])
-@Bundles.RenderScripts()
+<script type="text/javascript" src="@Fingerprint.Tag("/Scripts/jquery/onlineregister.js")"></script>
+@RenderSection("scripts", false)
 }
 else
 {
@@ -26,7 +24,8 @@ else
 @Html.Raw((string)ViewData["top"])
 @RenderBody()
 @Html.Raw((string)ViewData["bottom"])
-@Bundles.RenderScripts()
+<script type="text/javascript" src="@Fingerprint.Tag("/Scripts/jquery/onlineregister.js")"></script>
+@RenderSection("scripts", false)
 </body>
 </html>
 }

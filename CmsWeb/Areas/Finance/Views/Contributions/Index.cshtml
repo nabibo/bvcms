@@ -4,9 +4,6 @@
 @{
     ViewBag.Title = "Contributions";
     Layout = "/Views/Shared/SiteLayout.cshtml";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-        @<script src="/Scripts/Finance/Contributions.js"></script>);
 }
 @section head
 {
@@ -16,6 +13,10 @@
             font-weight: bold;
         }
     </style>
+}
+@section scripts
+{
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Finance/Contributions.js")"></script>
 }
 
 <form action="" id="form">

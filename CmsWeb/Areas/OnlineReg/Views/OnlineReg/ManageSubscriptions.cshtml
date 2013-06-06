@@ -3,8 +3,10 @@
 @{
     Layout = "/Views/Shared/onlinereg.cshtml";
     ViewBag.Title = "Online Registration";
-    Bundles.Reference("OnlineRegister");
-    Bundles.Reference("onlinereg");
+}
+@section scripts
+{
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/OnlineReg/OnlineReg.js")"></script>
 }
 <h2>@Model.Description()</h2>
 <div>@Html.Raw(Model.Instructions)</div>

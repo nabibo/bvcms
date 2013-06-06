@@ -3,45 +3,46 @@
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "Emails";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-        @<script type="text/javascript">
-             $(document).ready(function() {
-                 $(".datepicker").datepicker();
-                 $('td.tip').tooltip({
-                     delay: 0,
-                     showURL: false,
-                     showBody: "|"
-                 });
-                 $("form").on('click', 'a.submitbutton', function(ev) {
-                     ev.preventDefault();
-                     var f = $(this).closest('form');
-                     var q = f.serialize();
-                     $.post(f.attr('action'), q, function(ret) {
-                         $(f).html(ret).ready(function() {
-                             $('table.grid > tbody > tr:even').addClass('alt');
-                             $(".bt").button();
-                             $(".datepicker").datepicker();
-                         });
-                     });
-                     return false;
-                 });
-                 $('table.grid > tbody > tr:even').addClass('alt');
-                 $(".bt").button();
-             });
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".datepicker").datepicker();
+            $('td.tip').tooltip({
+                delay: 0,
+                showURL: false,
+                showBody: "|"
+            });
+            $("form").on('click', 'a.submitbutton', function(ev) {
+                ev.preventDefault();
+                var f = $(this).closest('form');
+                var q = f.serialize();
+                $.post(f.attr('action'), q, function(ret) {
+                    $(f).html(ret).ready(function() {
+                        $('table.grid > tbody > tr:even').addClass('alt');
+                        $(".bt").button();
+                        $(".datepicker").datepicker();
+                    });
+                });
+                return false;
+            });
+            $('table.grid > tbody > tr:even').addClass('alt');
+            $(".bt").button();
+        });
 
-             function GotoPage(pg) {
-                 var q = $('#form').formSerialize2();
-                 q = q.appendQuery("Page=" + pg);
-                 $.navigate("/Manage/Emails", q);
-             }
+        function GotoPage(pg) {
+            var q = $('#form').formSerialize2();
+            q = q.appendQuery("Page=" + pg);
+            $.navigate("/Manage/Emails", q);
+        }
 
-             function SetPageSize(sz) {
-                 var q = $('#form').formSerialize2();
-                 q = q.appendQuery("PageSize=" + sz);
-                 $.navigate("/Manage/Emails", q);
-             }
-         </script>);
+        function SetPageSize(sz) {
+            var q = $('#form').formSerialize2();
+            q = q.appendQuery("PageSize=" + sz);
+            $.navigate("/Manage/Emails", q);
+        }
+    </script>
 }
 <form id="form" method="post" action="/Manage/Emails/List">
 @{Html.RenderPartial("List", Model);}

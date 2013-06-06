@@ -4,8 +4,6 @@
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "PostBundle";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.Reference("PostBundle");
 }
 @section head 
 {
@@ -35,6 +33,10 @@
             max-width: 25em;
         }
     </style>
+}
+@section scripts
+{
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Finance/PostBundle.js")"></script>
 }
 @Html.Hidden("fundid", Model.bundle.FundId)
 @Html.Hidden("fundispledge", Model.FundName)

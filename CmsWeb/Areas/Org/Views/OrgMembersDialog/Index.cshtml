@@ -1,15 +1,11 @@
 ﻿@model CmsWeb.Models.OrgMembersDialogModel
-@using CmsWeb
-@{
-    CassetteBundleConfiguration.BundleRefCss();
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.Reference("OrgMembersDialog");
-}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head>
     <title>Index</title>
-    @Bundles.RenderStylesheets()
+    @Helper.IncludeCss()
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Dialog/OrgMembersDialog.js")"></script>
+    @Html.Partial("DatePickerDefaults")
 </head>
 <body>
 <form action="/OrgMembersDialog/Update" method="post">
@@ -78,8 +74,6 @@
 </table>
 </div>
 </form>
-    @Bundles.RenderScripts()
-    @Html.Partial("DatePickerDefaults")
 </body>
 </html>
 

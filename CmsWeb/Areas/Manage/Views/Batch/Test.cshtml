@@ -1,34 +1,27 @@
-﻿@using CmsWeb
-@{
-    Layout = null;
-    CassetteBundleConfiguration.BundleRefJs();
-}
-
-<!DOCTYPE html>
-
+﻿<!DOCTYPE html>
 <html>
 <head>
     <title>Test</title>
     <style type="text/css">
-#statusBorder
-{
-    position:relative;
-    height:5px;
-    width:100px;
-    border:solid 1px gray;
-    display:none;
-}
-#statusFill
-{
-    position:absolute;
-    top:0;
-    left:0;
-    width:0px;
-    background-color:Blue;
-    height:5px;
-}
-</style>
-    @Bundles.RenderScripts()
+        #statusBorder
+        {
+            position:relative;
+            height:5px;
+            width:100px;
+            border:solid 1px gray;
+            display:none;
+        }
+        #statusFill
+        {
+            position:absolute;
+            top:0;
+            left:0;
+            width:0px;
+            background-color:Blue;
+            height:5px;
+        }
+    </style>
+    @Helper.IncludeJs()
     <script type="text/javascript">
         $(document).ready(function (ev) {
             $('#start').click(function () {

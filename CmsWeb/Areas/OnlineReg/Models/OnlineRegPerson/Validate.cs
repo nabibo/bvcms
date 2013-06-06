@@ -252,7 +252,7 @@ Please search with a different email, phone, or birthday.";
 						var r = AddressVerify.LookupAddress(address, address2, city, state, zip);
 						if (r.Line1 != "error")
 						{
-							if (!r.found)
+							if (r.found == false)
 							{
 								ModelState.AddModelError(Parent.GetNameFor(mm => mm.List[i].zip), r.address + ", if your address will not validate, change the country to 'USA, Not Validated'");
 								return;

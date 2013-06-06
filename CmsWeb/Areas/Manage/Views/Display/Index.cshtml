@@ -9,35 +9,35 @@
     var roleList = ContentModel.fetchRoles();
     const int WRAP_COUNT = 6;
     var wrapAt = WRAP_COUNT;
-
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-        @<script type="text/javascript">
-             $(function() {
-                 $("a[newtype]").click(function(e) {
-                     e.preventDefault();
-                     $("#newType", $("#askName")).val($(this).attr("newtype"));
-                     $("#newMessage", $("#askName")).html($(this).attr("newmessage"));
-                     $.block($('#askName'));
-                 });
-
-                 $("a[newtypewithrole]").click(function(e) {
-                     e.preventDefault();
-                     $("#newType", $("#askNameWithRole")).val($(this).attr("newtypewithrole"));
-                     $("#newMessage", $("#askNameWithRole")).html($(this).attr("newmessage"));
-                     $.block($('#askNameWithRole'));
-                 });
-
-                 $("a.bt").button();
-                 $("#tabs").tabs();
-             });
-         </script>);
 }
 @section head {
 	<style type="text/css">
 		div.templateItem { width:100px; height:150px; border:1px solid black; overflow:hidden;margin-left: auto;margin-right: auto; }
 		div.templateItem:hover { border-color:#0000ff; }
 	</style>
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $(function() {
+            $("a[newtype]").click(function(e) {
+                e.preventDefault();
+                $("#newType", $("#askName")).val($(this).attr("newtype"));
+                $("#newMessage", $("#askName")).html($(this).attr("newmessage"));
+                $.block($('#askName'));
+            });
+
+            $("a[newtypewithrole]").click(function(e) {
+                e.preventDefault();
+                $("#newType", $("#askNameWithRole")).val($(this).attr("newtypewithrole"));
+                $("#newMessage", $("#askNameWithRole")).html($(this).attr("newmessage"));
+                $.block($('#askNameWithRole'));
+            });
+
+            $("a.bt").button();
+            $("#tabs").tabs();
+        });
+    </script>
 }
 <h2>Special Content</h2>
 <div id="tabs">

@@ -1,57 +1,64 @@
 ﻿@using UtilityExtensions
 @using CmsData
-@using CmsWeb
 @model CmsData.User
-@{
-    CassetteBundleConfiguration.BundleRefCss();
-    Bundles.Reference("dialogcss");
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.Reference("UserDialog");
-}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" >
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Index</title>
-    @Bundles.RenderStylesheets()
-<style type="text/css">
-.item
-{
-    float: left;
-    width: 13.3em;
-    margin: 0 2em 0 0;
-    border-right: 1px solid #eee;
-    padding: 0 0 5px 0;
-}
-</style>
-    @Bundles.RenderScripts()
+    @Helper.IncludeCss()
+    <link rel="stylesheet" href="@Fingerprint.Tag("/Content/styles/Dialog.css")" />
+    <style type="text/css">
+        .item {
+            float: left;
+            width: 13.3em;
+            margin: 0 2em 0 0;
+            border-right: 1px solid #eee;
+            padding: 0 0 5px 0;
+        }
+    </style>
+    @Helper.IncludeJs()
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Dialog/UserDialog.js")"></script>
 </head>
 <body>
-<a class="helplink" target="_blank" href='@Util.HelpLink("UserUpdate")'>help</a>
-<form class="DisplayEdit" action="">
-<table class="Design2">
-    <tr><td>Username:</td><td>@Html.TextBox("Username")</td></tr>
-    <tr><td>Password:</td><td>@Html.TextBox("Password2")</td></tr>
-    <tr><td>LockedOut:</td><td>@Html.CheckBox("IsLockedOut")</td></tr>
-    <tr><td>Created:</td><td>@Model.CreationDate.FormatDateTm()</td></tr>
-</table>
-<hr />
-<div class="wrapper">
-@foreach (var r in CmsData.User.AllRoles(DbUtil.Db).Select(rr => rr.RoleName))
-{ 
-    <div class="item" >
-       <input name="role" value="@r" class="ckbox" type="checkbox" @(Model.Roles.Any(ro => ro == r) ? "checked='checked'" : "") />
-            @if (r == "OrgLeadersOnly" || r == "OrgMembersOnly")
-            { <span class="red tip" title="Limiting role|See documentation on help link above">@r</span> }
-            else { <span>@r</span> }
-    </div>
-}
-</div>
-<div style="clear:both"></div>
-<hr />
-<a href="/Person/UserUpdate/@Model.UserId" class="submitbutton save bt blue">Save Changes</a>
-<a href="/Person/UserWelcome/@Model.UserId" class="submitbutton save bt blue">Save Changes, Send Welcome Email</a>
-<a id="deluser" href="/Person/UserDelete/@Model.UserId" class="submitbutton bt">Delete User</a>
-</form>
+    <a class="helplink" target="_blank" href='@Util.HelpLink("UserUpdate")'>help</a>
+    <form class="DisplayEdit" action="">
+        <table class="Design2">
+            <tr>
+                <td>Username:</td>
+                <td>@Html.TextBox("Username")</td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td>@Html.TextBox("Password2")</td>
+            </tr>
+            <tr>
+                <td>LockedOut:</td>
+                <td>@Html.CheckBox("IsLockedOut")</td>
+            </tr>
+            <tr>
+                <td>Created:</td>
+                <td>@Model.CreationDate.FormatDateTm()</td>
+            </tr>
+        </table>
+        <hr />
+        <div class="wrapper">
+            @foreach (var r in CmsData.User.AllRoles(DbUtil.Db).Select(rr => rr.RoleName))
+            { 
+                <div class="item">
+                    <input name="role" value="@r" class="ckbox" type="checkbox" @(Model.Roles.Any(ro => ro == r) ? "checked='checked'" : "") />
+                    @if (r == "OrgLeadersOnly" || r == "OrgMembersOnly")
+                    { <span class="red tip" title="Limiting role|See documentation on help link above">@r</span> }
+                    else
+                    { <span>@r</span> }
+                </div>
+            }
+        </div>
+        <div style="clear: both"></div>
+        <hr />
+        <a href="/Person/UserUpdate/@Model.UserId" class="submitbutton save bt blue">Save Changes</a>
+        <a href="/Person/UserWelcome/@Model.UserId" class="submitbutton save bt blue">Save Changes, Send Welcome Email</a>
+        <a id="deluser" href="/Person/UserDelete/@Model.UserId" class="submitbutton bt">Delete User</a>
+    </form>
 </body>
 </html>
 

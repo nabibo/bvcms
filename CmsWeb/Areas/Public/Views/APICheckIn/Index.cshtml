@@ -1,18 +1,15 @@
-﻿@using CmsWeb
-@{
-    CassetteBundleConfiguration.BundleRefJs();
-}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<body>
-    @Bundles.RenderScripts()
+<head>
+    <title></title>
+    @Helper.IncludeJs()
     <script type="text/javascript">
-        $(function() {
-            $('a.btn').click(function() {
+        $(function () {
+            $('a.btn').click(function () {
                 keypadpress(this);
                 return false;
             });
-            $('a.btn').dblclick(function() {
+            $('a.btn').dblclick(function () {
                 keypadpress(this);
                 return false;
             });
@@ -22,25 +19,25 @@
             var t = $('#tb').text();
             if (d.length > 1)
                 switch (d) {
-                case 'star':
-                    d = '*';
-                    break;
-                case 'pound':
-                    d = '#';
-                    break;
-                case 'clear':
-                    $('#tb').text('');
-                    break;
-                case 'bs':
-                    var len = t.length - 1;
-                    if (len == 4)
-                        len--;
-                    $('#tb').text(t.substring(0, len));
-                    break;
-                case 'search':
-                    window.location = '/Checkin/Match/' + t;
-                    break;
-            }
+                    case 'star':
+                        d = '*';
+                        break;
+                    case 'pound':
+                        d = '#';
+                        break;
+                    case 'clear':
+                        $('#tb').text('');
+                        break;
+                    case 'bs':
+                        var len = t.length - 1;
+                        if (len == 4)
+                            len--;
+                        $('#tb').text(t.substring(0, len));
+                        break;
+                    case 'search':
+                        window.location = '/Checkin/Match/' + t;
+                        break;
+                }
             if (d.length == 1 && t.length < 8) {
                 if (t.length == 3)
                     $('#tb').text(t + '-' + d);
@@ -50,7 +47,8 @@
         }
 
     </script>
-
+</head>
+<body>
     <div style="text-align: center">
         <table>
             <tr>
@@ -109,8 +107,7 @@
                     <a id="dclear" href="#" class="btn"><span>C</span></a>
                 </td>
                 <td>
-                    <a id="dsearch" href="#" class="btn"><span style="background-color: #60B735; color: #FFFFFF">
-                        GO</span></a>
+                    <a id="dsearch" href="#" class="btn"><span style="background-color: #60B735; color: #FFFFFF">GO</span></a>
                 </td>
                 <td>
                     <a id="dbs" href="#" class="btn"><span style="font-family: Wingdings">�</span></a>

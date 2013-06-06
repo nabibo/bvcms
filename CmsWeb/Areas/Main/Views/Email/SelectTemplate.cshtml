@@ -5,22 +5,23 @@
     Layout = "~/Views/Shared/SiteLayout.cshtml";
 	 const int WRAP_COUNT = 3;
 	 var wrapAt = WRAP_COUNT;
-     CassetteBundleConfiguration.BundleRefJs();
-     Bundles.AddInlineScript(
-	@<script type="text/javascript">
-		$(document).ready(function () {
-		    $("body").on("click", '[bvtemplate]', function (e) {
-				$("#templateID").val($(this).attr("template"));
-				$("#selectTemplate").submit();
-			});
-		});
-	</script> );
 }
 @section head {
 	<style type="text/css">
 		div.templateItem { width:100px; height:150px; border:1px solid black; overflow:hidden; }
 		div.templateItem:hover { border-color:#0000ff; }
 	</style>
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("body").on("click", '[bvtemplate]', function(e) {
+                $("#templateID").val($(this).attr("template"));
+                $("#selectTemplate").submit();
+            });
+        });
+    </script>
 }
 <h2>Select An Email Option</h2>
 <table width="100%" cellspacing="10">

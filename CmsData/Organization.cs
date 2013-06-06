@@ -263,6 +263,13 @@ namespace CmsData
 				Db.ProgDivs.InsertOnSubmit(progdiv);
 				Db.SubmitChanges();
 			}
+			else
+			{
+			    var pd = Db.ProgDivs.SingleOrDefault(dd => dd.ProgId == program.Id && dd.DivId == d.Id);
+                if (pd == null)
+                    program.Divisions.Add(d);
+                Db.SubmitChanges();
+			}
 			return d;
 		}
 		public static MemberType FetchOrCreateMemberType(CMSDataContext Db, string type)
@@ -278,6 +285,13 @@ namespace CmsData
 				Db.SubmitChanges();
 			}
 			return mt;
+		}
+		public static Organization FetchOrCreateOrganization(CMSDataContext db, int divid, string organization)
+		{
+			var o = db.LoadOrganizationByName(organization);
+			if (o == null)
+				return CreateOrganization(db, divid, organization);
+			return o;
 		}
 		public static Organization FetchOrCreateOrganization(CMSDataContext Db, Division division, string organization)
 		{

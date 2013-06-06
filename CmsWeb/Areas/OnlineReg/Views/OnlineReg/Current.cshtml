@@ -1,12 +1,9 @@
 ﻿@model System.Collections.Generic.IEnumerable<CmsWeb.Areas.OnlineReg.Controllers.OnlineRegController.CurrentRegistration>
-@{
-	Layout = null;
-    CassetteBundleConfiguration.BundleRefCss();
-}
 <html>
-	<head>
-    @Bundles.RenderStylesheets()
-	</head>
+    <head>
+        <title></title>
+        @Helper.IncludeCss()
+    </head>
 	<body>
 <h2>Current Registrations</h2>
 			<table class="grid" cellpadding="5">

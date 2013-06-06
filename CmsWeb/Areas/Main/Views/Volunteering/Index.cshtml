@@ -5,8 +5,6 @@
 @{
     ViewBag.Title = "Volunteer";
     Layout = "/Views/Shared/SiteLayout.cshtml";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.Reference("volunteering");
 
     IQueryable<BackgroundCheck> bg = null;
     IQueryable<BackgroundCheck> credit = null;
@@ -45,6 +43,10 @@
             padding: 1em;
         }
     </style>
+}
+@section scripts
+{
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Volunteer/volunteering.js")"></script>
 }
 <a href="/Person/Index/@Model.V.PeopleId">@Model.V.Person.Name</a><br />
 <br />

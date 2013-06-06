@@ -6,33 +6,34 @@
     var gl = from e in DbUtil.Db.SMSGroups
              select e;
     int count = 0;
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-        @<script type="text/javascript">
-             $(document).ready(function() {
-                 $(".bt").button();
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".bt").button();
 
-                 $("a[dialogurl]").on("click", function(e) {
-                     e.preventDefault();
+            $("a[dialogurl]").on("click", function(e) {
+                e.preventDefault();
 
-                     $("#dialog").attr("title", $(this).attr("dialogtitle"));
-                     $("#dialog").load($(this).attr("dialogurl"), contentLoaded);
-                 });
+                $("#dialog").attr("title", $(this).attr("dialogtitle"));
+                $("#dialog").load($(this).attr("dialogurl"), contentLoaded);
+            });
 
-             });
+        });
 
-             function contentLoaded(responseText, statusText, xmlRequest) {
-                 $("#dialog").dialog({ width: "auto", modal: true });
-                 $(".bt").button();
-                 enableClose();
-             }
+        function contentLoaded(responseText, statusText, xmlRequest) {
+            $("#dialog").dialog({ width: "auto", modal: true });
+            $(".bt").button();
+            enableClose();
+        }
 
-             function enableClose() {
-                 $("input[cancelbutton]").on("click", function(e) {
-                     $("#" + $(this).attr("cancelbutton")).dialog("destroy");
-                 });
-             }
-         </script>);
+        function enableClose() {
+            $("input[cancelbutton]").on("click", function(e) {
+                $("#" + $(this).attr("cancelbutton")).dialog("destroy");
+            });
+        }
+    </script>
 }
 <br />
 <center><a href="#" dialogurl="/Setup/Twilio/Dialog?name=GroupDialog" dialogtitle="Create New Group" class="bt">New Group</a></center><br />

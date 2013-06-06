@@ -8,9 +8,10 @@
 
     var groups = TwilioHelper.getAvailableLists(Util.UserId);
     var count = TwilioHelper.getSendCount(ViewBag.QBID);
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-    @<script type="text/javascript">
+}
+@section scripts
+{
+    <script type="text/javascript">
         var maxSMS = 160;
 
         $(document).ready(function () {
@@ -20,7 +21,7 @@
                 $("#charCount").html(($(this).val().length + "/" + maxSMS));
             });
         });
-    </script>);
+    </script>
 }
 <br />
 <b>Sending to @(count) @( count == 1 ? "person" : "people" )</b>

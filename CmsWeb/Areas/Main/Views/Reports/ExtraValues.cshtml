@@ -3,9 +3,10 @@
 @{
     ViewBag.Title = "ExtraValues";
     Layout = "~/Views/Shared/SiteLayout.cshtml";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-    @<script type="text/javascript">
+}
+@section scripts
+{
+<script type="text/javascript">
         $(function () {
             $('table.grid tbody tr:even').addClass('alt');
             $("a.delete").click(function (ev) {
@@ -19,7 +20,7 @@
                     });
             });
         });
-    </script>);
+    </script>)
 }
 
 <h2>ExtraValues</h2>

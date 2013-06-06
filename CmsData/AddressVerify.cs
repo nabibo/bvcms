@@ -27,7 +27,8 @@ namespace CmsData
 	{
 	    public class AddressResult
 	    {
-	        public bool found { get; set; }
+	        public bool? found { get; set; }
+	        public string error { get; set; }
 	        public string address { get; set; }
 	        public string Line1 { get; set; }
 	        public string Line2 { get; set; }
@@ -62,6 +63,8 @@ namespace CmsData
 				var serializer = new XmlSerializer(typeof(AddressResult));
 				var reader = new StringReader(s);
 				var ret = (AddressResult)serializer.Deserialize(reader);
+			    if (ret.found == null)
+			        ret.found = false;
 				return ret;
 			}
 			catch (Exception)

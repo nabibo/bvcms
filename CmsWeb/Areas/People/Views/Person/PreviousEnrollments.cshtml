@@ -9,9 +9,9 @@
     <thead>
         <tr>
             <th></th>
-            <th><a href="#" class="sortable">Organization</a></th>
-            <th><a href="#" class="sortable">Enroll Date</a></th>
-            <th><a href="#" class="sortable">Drop Date</a></th>
+            <th>@Model.Pager.SortLink("Organization")</th>
+            <th>@Model.Pager.SortLink("Enroll Date")</th>
+            <th>@Model.Pager.SortLink("Drop Date")</th>
             <th>MemberType</th>
             <th>AttendPct</th>
         </tr>
@@ -25,15 +25,15 @@
             {
                 pOrgType = om.OrgType;
             <tr class="section notshown">
-                <td><a rel="reveal" title="More Information" href="#"><i class="icon-info-sign"></i></a></td>
+                <td><a rel="reveal" title="More Information" href="#" class="reveal"><i class="icon-info-sign"></i></a></td>
                 <td colspan="4"><span>@om.OrgType</span></td>
             </tr>
             }
             if (User.IsInRole("Access"))
             {
             <tr class="organization @oddrow">
-                <td><a rel="reveal" title="More Information" href="#"><i class="icon-info-sign"></i></a></td>
-                <td><a href="/Organization/Index/@om.OrgId">@om.Name</a></td>
+                <td><a rel="reveal" title="More Information" href="#" class="reveal"><i class="icon-info-sign"></i></a></td>
+                <td><a href="/Organization/Index/@om.OrgId" class="reveal">@om.Name</a></td>
                 <td>@om.EnrollDate.FormatDate()</td>
     			<td>@om.DropDate.FormatDate()</td>
     			<td><a target="_blank" href="/TransactionHistory/Index/@om.PeopleId?oid=@om.OrgId">@om.MemberType</a></td>

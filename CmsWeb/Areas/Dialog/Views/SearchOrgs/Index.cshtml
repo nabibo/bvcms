@@ -1,16 +1,12 @@
 ﻿@using CmsWeb.Models
-@using CmsWeb
 @model SearchOrgsModel
-@{
-    CassetteBundleConfiguration.BundleRefCss();
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.Reference("SearchOrgs");
-}
 <html>
 <head>
 <title>Index</title>
-    @Bundles.RenderStylesheets()
+    @Helper.IncludeCss()
     <link href="/Content/styles/style2.css" rel="stylesheet" type="text/css" />
+    @Helper.IncludeJs()
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Search/SearchOrgs.js")"></script>
 </head>
 <body>
     <form name="form1">
@@ -34,6 +30,5 @@
         </table>
         @Html.Partial("Results", Model)
     </form>
-    @Bundles.RenderScripts()
 </body>
 </html>

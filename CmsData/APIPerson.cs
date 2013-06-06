@@ -359,7 +359,7 @@ namespace CmsData.API
 					a.Error = r.address;
 					return a;
 				}
-				if (!r.found)
+				if (r.found == false)
 				{
 					a.Error = r.address + ", if your address will not validate, change the country to 'USA, Not Validated'";
 					return a;

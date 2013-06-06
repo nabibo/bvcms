@@ -422,6 +422,34 @@ namespace CmsWeb
             return htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(ExpressionHelper.GetExpressionText(expression));
         }
 
+        public class HelpMessage
+        {
+            public HtmlString message;
+            public string errorClass;
+        }
+
+        public static HelpMessage HelpMessageFor<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression, string classname)
+        {
+            var name = helper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(ExpressionHelper.GetExpressionText(expression));
+            var help = helper.ViewContext.ViewData["help"] as string;
+            var m = helper.ViewData.ModelState[name];
+            if (m == null && help == null)
+                return new HelpMessage();
+            var b = new TagBuilder("span");
+            b.AddCssClass(classname);
+            var hasError = false;
+            if (m != null && m.Errors.Count > 0)
+            {
+                b.SetInnerText(m.Errors[0].ErrorMessage);
+                hasError = true;
+            }
+            else if (help != null)
+                b.InnerHtml = help;
+            else
+                return new HelpMessage();
+            return new HelpMessage { message = new HtmlString(b.ToString()), errorClass = hasError ? "error" : "" };
+        }
+
         public static string RenderPartialViewToString(Controller controller, string viewName, object model)
         {
             controller.ViewData.Model = model;

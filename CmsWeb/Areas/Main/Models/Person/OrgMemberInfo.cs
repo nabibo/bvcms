@@ -23,6 +23,6 @@ namespace CmsWeb.Models
         public string DivisionName { get; set; }
         public string ProgramName { get; set; }
     	public string OrgType { get; set; }
-    	public string HasDirectory { get; set; }
+    	public bool HasDirectory { get; set; }
     }
 }

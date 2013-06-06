@@ -1,0 +1,19 @@
+﻿@using UtilityExtensions
+@model CmsWeb.Areas.People.Models.Person.CellPhoneInfo
+<div class="control-group">
+    @Html.LabelFor(m=> m, new { @class = "control-label nwrap"})
+    <div class="controls">
+        <p>
+            @Model.Number.FmtFone()
+            @* todo: helptext for what the checkbox means *@
+            @if (Model.ReceiveText)
+            {
+                <i class="icon-check"></i>
+            }
+            else
+            {
+                <i class="icon-check-empty"></i>
+            }
+        </p>
+    </div>
+</div>

@@ -3,8 +3,6 @@
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "OrgGroups";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.Reference("OrgGroups");
 }           
 @section head
 {
@@ -14,6 +12,10 @@
         width: 98%;
     }
 </style>
+}
+@section scripts
+{
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Org/OrgGroups.js")"></script>
 }
 <form id="groupsform" action="/OrgGroups/Update" method="post">
 @Html.Partial("Form", Model)

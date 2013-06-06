@@ -32,7 +32,7 @@ namespace CmsData
 			{
 				try
 				{
-					return Db.RecordAttendance(MeetingId, PeopleId, attended);
+        			return Db.RecordAttendance(MeetingId, PeopleId, attended);
 				}
 				catch (SqlException ex)
 				{

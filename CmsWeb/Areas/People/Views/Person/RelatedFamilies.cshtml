@@ -8,8 +8,7 @@
     <div class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-plus-sign"></i></a>
         <ul class="dropdown-menu" role="menu">
-            <!-- dropdown menu links -->
-            <li><a href="/SearchAdd2/Index/RelatedFamily/@Model.displayperson.FamilyId" class="searchadd">Add Related Family</a></li>
+            <li><a href="/SearchAdd2/Dialog/RelatedFamily/@Model.displayperson.PeopleId" class="searchadd">Add Related Family</a></li>
         </ul>
     </div>
 </div>
@@ -24,11 +23,11 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li><a class="editfamily" href="#">Edit</a></li>
-                    <li><a href="#">Delete</a></li>
+                    <li><a href="/Person2/DeleteRelation/@Model.displayperson.PeopleId/@f.Id1/@f.Id2" class="delete-relation">Delete</a></li>
                 </ul>
             </div>
             <p>@f.Name
-                <span class="summary relation-description" data-value="@f.Description" data-toggle="manual" data-pk="@f.Id1/@f.Id2" title="Description of Relationship">
+                <span class="summary relation-description" id="rf-@f.Id1-@f.Id2" data-value="@f.Description" data-toggle="manual" data-pk="@f.Id1/@f.Id2" title="Description of Relationship">
                     @f.Description
                 </span>
             </p>

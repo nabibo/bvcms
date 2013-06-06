@@ -4,10 +4,7 @@
 @{
     ViewBag.Title = "Meeting Tickets";
     Layout = "~/Views/Shared/SiteLayout.cshtml";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.Reference("meeting-ticket");
 }
-
 @section head
 {
     <style>
@@ -20,9 +17,12 @@
         }
     </style>
 }
+@section scripts
+{
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/meeting/meeting-ticket.js")"></script>
+}
 <embed src="/Content/zylo.wav" autostart="false" width="0" height="0" id="zylo" enablejavascript="true">
 <embed src="/Content/ding.wav" autostart="false" width="0" height="0" id="ding" enablejavascript="true">
-
 <form id="markform" method="Post">
     <table>
         <tr>

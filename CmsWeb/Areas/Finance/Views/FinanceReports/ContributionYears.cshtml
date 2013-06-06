@@ -4,33 +4,6 @@
 @{
     Layout = "/Views/Shared/Reports.cshtml";
     ViewBag.Title = "ContributionYears";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-    @<script type="text/javascript">
-        $(function () {
-            $(".datepicker").datepicker();
-            $("#StatementDialog").dialog({ autoOpen: false });
-            $('body').on("click", '#Statement', function (ev) {
-                ev.preventDefault();
-                var a = this;
-                var d = $("#StatementDialog");
-                d.dialog("option", "buttons", {
-                    "Ok": function () {
-                        var fd = $.SortableDate($('#FromDate').val());
-                        var td = $.SortableDate($('#ToDate').val());
-                        var typ = $('input[name=indfam]:radio:checked').val();
-                        var args = "@Model.person.PeopleId?FromDate=" + fd + "&ToDate=" + td + "&typ=" + typ;
-                        var newWindowUrl = "/FinanceReports/ContributionStatement/" + args;
-                        window.open(newWindowUrl);
-                        d.dialog('close');
-                    }
-                });
-                d.dialog('open');
-                return false;
-            });
-        });
-    </script>
-    );
 }
 @section head 
 {
@@ -56,6 +29,33 @@
             font-size: 100%;
         }
     </style>
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $(".datepicker").datepicker();
+            $("#StatementDialog").dialog({ autoOpen: false });
+            $('body').on("click", '#Statement', function (ev) {
+                ev.preventDefault();
+                var a = this;
+                var d = $("#StatementDialog");
+                d.dialog("option", "buttons", {
+                    "Ok": function () {
+                        var fd = $.SortableDate($('#FromDate').val());
+                        var td = $.SortableDate($('#ToDate').val());
+                        var typ = $('input[name=indfam]:radio:checked').val();
+                        var args = "@Model.person.PeopleId?FromDate=" + fd + "&ToDate=" + td + "&typ=" + typ;
+                        var newWindowUrl = "/FinanceReports/ContributionStatement/" + args;
+                        window.open(newWindowUrl);
+                        d.dialog('close');
+                    }
+                });
+                d.dialog('open');
+                return false;
+            });
+        });
+    </script>
 }
 <h1>
     Yearly Contributions</h1>

@@ -4,25 +4,26 @@
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/SiteLayout.cshtml";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-        @<script type="text/javascript">
-             $(function() {
-                 $('table.grid tr:even').addClass('alt');
-                 $("a.unblock").click(function(ev) {
-                     if (confirm("are you sure?"))
-                         $.post("/Manage/Emails/Unblock", { email: $(this).attr("email") }, function(ret) {
-                             $.growlUI("email unblocked", ret);
-                         });
-                 });
-                 $("a.unspam").click(function(ev) {
-                     if (confirm("are you sure?"))
-                         $.post("/Manage/Emails/Unspam", { email: $(this).attr("email") }, function(ret) {
-                             $.growlUI("email unspamed", ret);
-                         });
-                 });
-             });
-         </script>);
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $(function() {
+            $('table.grid tr:even').addClass('alt');
+            $("a.unblock").click(function(ev) {
+                if (confirm("are you sure?"))
+                    $.post("/Manage/Emails/Unblock", { email: $(this).attr("email") }, function(ret) {
+                        $.growlUI("email unblocked", ret);
+                    });
+            });
+            $("a.unspam").click(function(ev) {
+                if (confirm("are you sure?"))
+                    $.post("/Manage/Emails/Unspam", { email: $(this).attr("email") }, function(ret) {
+                        $.growlUI("email unspamed", ret);
+                    });
+            });
+        });
+    </script>
 }
 <h2>Failed Emails</h2>
     <table class="grid" cellpadding="5">

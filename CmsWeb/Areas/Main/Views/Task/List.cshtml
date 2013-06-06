@@ -3,10 +3,11 @@
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "Tasks";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.Reference("task");
 }
-
+@section scripts
+{
+    @Helper.IncludeTaskJs()
+}
     <form id="form" action="/Task/List" method="get">
     @Html.Hidden("SortTask")
     <div class="roundbox floatleft">

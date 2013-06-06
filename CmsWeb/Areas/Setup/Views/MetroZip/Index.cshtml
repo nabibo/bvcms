@@ -2,29 +2,30 @@
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "MetroZip";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-        @<script type="text/javascript">
+}
+@section scripts
+{
+    <script type="text/javascript">
     //id=elements_id&value=user_edited_content
-             $(function() {
-                 $(".clickSelect").editable("/Setup/MetroZip/Edit/", {
-                     indicator: '<img src="/images/loading.gif">',
-                     loadurl: "/Setup/MetroZip/ResidentCodes/",
-                     loadtype: "POST",
-                     type: "select",
-                     submit: "OK",
-                     style: 'display: inline'
-                 });
-                 $("a.delete").click(function(ev) {
-                     if (confirm("are you sure?"))
-                         $.post("/Setup/MetroZip/Delete/" + $(this).attr("id"), null, function(ret) {
-                             window.location = "/Setup/MetroZip/";
-                         });
-                     return false;
-                 });
-                 $(".bt").button();
-             });
-         </script>);
+        $(function() {
+            $(".clickSelect").editable("/Setup/MetroZip/Edit/", {
+                indicator: '<img src="/images/loading.gif">',
+                loadurl: "/Setup/MetroZip/ResidentCodes/",
+                loadtype: "POST",
+                type: "select",
+                submit: "OK",
+                style: 'display: inline'
+            });
+            $("a.delete").click(function(ev) {
+                if (confirm("are you sure?"))
+                    $.post("/Setup/MetroZip/Delete/" + $(this).attr("id"), null, function(ret) {
+                        window.location = "/Setup/MetroZip/";
+                    });
+                return false;
+            });
+            $(".bt").button();
+        });
+    </script>
 }
 <h2>Zips</h2>
 <h3><span style="color:#008000">@ViewData["msg"]</span></h3>

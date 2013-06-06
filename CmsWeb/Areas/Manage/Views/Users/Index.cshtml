@@ -4,8 +4,10 @@
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "Users";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.Reference("Users");
+}
+@section scripts
+{
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Admin/Users.js")"></script>
 }
 @section head 
 {

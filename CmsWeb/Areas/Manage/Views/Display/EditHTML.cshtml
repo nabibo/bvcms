@@ -1,12 +1,11 @@
-﻿@using CmsWeb
-@model CmsData.Content
+﻿@model CmsData.Content
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-    @<script src="/ckeditor2/ckeditor.js" type="text/javascript"></script>);
-    Bundles.AddInlineScript(
-    @<script type="text/javascript">
+}
+@section scripts
+{
+    <script src="/ckeditor2/ckeditor.js" type="text/javascript"></script>
+    <script type="text/javascript">
         $(function () {
             $(".bt").button();
             $("#delete").click(function (ev) {
@@ -24,7 +23,7 @@
                 filebrowserImageUploadUrl: '/Account/CKEditorUpload/'
             });
         });
-    </script>);
+    </script>
 }
 @using (Html.BeginForm("ContentUpdate", "Display", FormMethod.Post))
 { 

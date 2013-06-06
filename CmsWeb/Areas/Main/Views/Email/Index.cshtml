@@ -4,21 +4,6 @@
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "Email";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-        @<script src="/ckeditor2/ckeditor.js" type="text/javascript"></script>);
-    Bundles.Reference("email");
-    Bundles.AddInlineScript(
-    @<script type="text/javascript">
-        $(function () {
-            CKEDITOR.replace('Body', {
-                height: 400,
-                fullPage: false,
-                filebrowserUploadUrl: '/Account/CKEditorUpload/',
-                filebrowserImageUploadUrl: '/Account/CKEditorUpload/'
-            });
-        });
-    </script> );
 }
 @section head 
 {
@@ -27,6 +12,21 @@
         display: block;
     }
 </style>
+}
+@section scripts
+{
+    <script src="/ckeditor2/ckeditor.js" type="text/javascript"></script>
+    <script src="@Fingerprint.Tag("/Scripts/Email/email.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            CKEDITOR.replace('Body', {
+                height: 400,
+                fullPage: false,
+                filebrowserUploadUrl: '/Account/CKEditorUpload/',
+                filebrowserImageUploadUrl: '/Account/CKEditorUpload/'
+            });
+        });
+    </script>
 }
 <div>
 <span class="style1">Please Note</span>: 

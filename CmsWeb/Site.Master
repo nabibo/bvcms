@@ -1,20 +1,18 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="True" CodeBehind="Site.master.cs" Inherits="CmsWeb.Site" %>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>CMS2</title>
-    <% CassetteBundleConfiguration.BundleRefCss();
-       CassetteBundleConfiguration.BundleRefJs(); 
-    %>
-    <%: Bundles.RenderStylesheets() %>
+    <link href="/content/styles/css.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/content/css/font-awesome.css" type="text/css" />
     <link href='/Content/styles/style2.css' rel='stylesheet' type='text/css' />
 
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 
-    <%:Bundles.RenderScripts() %>
-    <%: Bundles.RenderStylesheets() %>
+    <script src="/Scripts/jquery/main.js" type="text/javascript"></script>
+    <script src="/Scripts/chosen/chosen.jquery.js" type=""></script>
+    <script src="/Scripts/js/main.custom.js" type=""></script>
     <script type="text/javascript">
         $.dateFormat = '<%=Util.jQueryDateFormat%>';
         $(document).ready(function () {
@@ -48,8 +46,7 @@
             window.open(url, "_self");
         }
     </script>
-    <asp:ContentPlaceHolder ID="scripts" runat="server">
-    </asp:ContentPlaceHolder>
+
 </head>
 <body>
 

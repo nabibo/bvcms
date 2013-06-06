@@ -3,13 +3,6 @@
 @{
     Layout = "/Views/Shared/Reports.cshtml";
     ViewBag.Title = "AvgChurchAttendanceReport";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-    @<script type="text/javascript">
-        $(function() {
-            $(".datepicker").datepicker();
-        });
-    </script>);
 }
 @section head {
     <style type="text/css">
@@ -34,6 +27,14 @@
             font-size: 100%;
         }
     </style>
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $(function() {
+            $(".datepicker").datepicker();
+        });
+    </script>
 }
     <div style="text-align: center">
         <h1>

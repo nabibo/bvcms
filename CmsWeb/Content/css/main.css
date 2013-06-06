@@ -13,7 +13,14 @@ td.center, th.center {
     text-align: center;
 }
 
-/* Dave: I am adding these so that the controls are not spaced so far apart */
+  /* Dave: I am overriding this to make it look like bootstrap's divider */
+.dropdown-menu .divider {
+  /*margin: -0.25em 1px;*/
+    margin: auto;
+}
+
+/* Dave: I am adding these so that the controls are not spaced so far apart 
+   todo: test remove this */
 .control-group {
     margin-bottom: auto;
 }
@@ -33,4 +40,31 @@ form.form-horizontal.onecol .control-group {
     width: auto;
     *width: auto;
     margin-bottom: 1em;
+}
+.section span {
+    font-style: italic;
+    font-size: 110%;
+}
+
+table.expanding div.indent {
+    padding-left: 2em;
+}
+
+table.expanding a[rel="reveal"] {
+    text-decoration: none;
+}
+
+table.expanding tr.details td {
+    border-top: none;
+    padding: 0;
+}
+
+    table.enrollments tr.details td:first-child {
+        padding-left: 1em;
+    }
+
+/* Dave: I am using this to do my own table striping in this special case 
+    todo: test remove this*/
+table.expanding tr.oddrow > td {
+    background-color: #f9f9f9;
 }

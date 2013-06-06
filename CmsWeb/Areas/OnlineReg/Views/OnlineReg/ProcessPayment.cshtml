@@ -1,21 +1,21 @@
 ﻿@using UtilityExtensions
-@using CmsWeb
 @model CmsWeb.Models.PaymentForm
 @{
     Layout = "/Views/Shared/onlinereg.cshtml";
     ViewBag.Title = "Online Registration";
-    Bundles.Reference("OnlineRegister");
-    Bundles.Reference("onlineregpayment");
-    Bundles.AddInlineScript(
-        @<script type="text/javascript">
-             $(function() {
-                 $(document).bind("idle.idleTimer", function() {
-                     window.location.href = '@ViewBag.Url';
-                 });
-                 var tmout = parseInt('@ViewBag.timeout');
-                 //$.idleTimer(tmout);
-             });
-         </script>);
+}
+@section scripts
+{
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/onlinereg/onlineregpayment.js")"></script>
+    <script type="text/javascript">
+        $(function() {
+            $(document).bind("idle.idleTimer", function() {
+                window.location.href = '@ViewBag.Url';
+            });
+            var tmout = parseInt('@ViewBag.timeout');
+            //$.idleTimer(tmout);
+        });
+    </script>
 }
 @section head
 {

@@ -3,8 +3,10 @@
 @{
     ViewBag.Title = "SavedQuery";
     Layout = "~/Views/Shared/SiteLayout.cshtml";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.Reference("SavedQuery");
+}
+@section scripts
+{
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Search/SavedQuery.js")"></script>
 }
 <div class="roundbox" style="display: table">
 <h2>Saved Search Builder Queries</h2>

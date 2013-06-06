@@ -3,8 +3,10 @@
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "Advanced Search";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.Reference("advancedsearch");
+}
+@section scripts
+{
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Search/AdvancedSearch.js")"></script>
 }
 @section head 
 {

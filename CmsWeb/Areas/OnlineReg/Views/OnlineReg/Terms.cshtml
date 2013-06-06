@@ -2,29 +2,30 @@
 @{
     Layout = "/Views/Shared/onlinereg.cshtml";
     ViewBag.Title = "Online Registration";
-    Bundles.Reference("OnlineRegister");
-    Bundles.AddInlineScript(
-        @<script type="text/javascript">
-             $(function() {
-                 $(document).bind("idle.idleTimer", function() {
-                     window.location.href = '@Model._URL';
-                 });
-                 var tmout = parseInt('@Model._timeout');
-                 $.idleTimer(tmout);
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $(function() {
+            $(document).bind("idle.idleTimer", function() {
+                window.location.href = '@Model._URL';
+            });
+            var tmout = parseInt('@Model._timeout');
+            $.idleTimer(tmout);
 
-                 if ($('#IAgree').attr("id")) {
-                     $("#Submit").attr("disabled", "disabled");
-                 }
-                 $("#IAgree").click(function() {
-                     var checked_status = this.checked;
-                     if (checked_status == true) {
-                         $("#Submit").removeAttr("disabled");
-                     } else {
-                         $("#Submit").attr("disabled", "disabled");
-                     }
-                 });
-             });
-         </script>);
+            if ($('#IAgree').attr("id")) {
+                $("#Submit").attr("disabled", "disabled");
+            }
+            $("#IAgree").click(function() {
+                var checked_status = this.checked;
+                if (checked_status == true) {
+                    $("#Submit").removeAttr("disabled");
+                } else {
+                    $("#Submit").attr("disabled", "disabled");
+                }
+            });
+        });
+    </script>
 }
 <style type="text/css">
 div.terms {

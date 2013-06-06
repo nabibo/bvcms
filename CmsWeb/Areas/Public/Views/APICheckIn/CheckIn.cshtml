@@ -3,8 +3,10 @@
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "Checkin";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.Reference("CheckIn");
+}
+@section scripts
+{
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/js/Checkin.js")"></script>
 }
 
     @Html.Hidden("OrgId")

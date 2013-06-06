@@ -1,28 +1,28 @@
 ﻿@model CmsWeb.Models.ManagePledgesModel
-@using UtilityExtensions
 @{
     Layout = "/Views/Shared/onlinereg.cshtml";
     ViewBag.Title = "Online Registration";
-    Bundles.Reference("OnlineRegister");
-    Bundles.AddInlineScript(
-        @<script type="text/javascript">
-             $(function() {
-                 $("#confirm").validate({
-                     rules: {
-                         "pledge": {
-                             number: true,
-                             required: true,
-                             min: 10
-                         }
-                     },
-                     errorLabelContainer: "#messageBox",
-                     wrapper: "div",
-                     submitHandler: function(form) {
-                         form.submit();
-                     }
-                 });
-             });
-         </script>);
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $(function() {
+            $("#confirm").validate({
+                rules: {
+                    "pledge": {
+                        number: true,
+                        required: true,
+                        min: 10
+                    }
+                },
+                errorLabelContainer: "#messageBox",
+                wrapper: "div",
+                submitHandler: function(form) {
+                    form.submit();
+                }
+            });
+        });
+    </script>
 }
 <h2>@Model.Organization.OrganizationName</h2>
 <h4>Pledge Information for @Model.person.Name &lt;@Model.person.EmailAddress&gt;</h4>

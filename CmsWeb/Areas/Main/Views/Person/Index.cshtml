@@ -1,5 +1,4 @@
-﻿@using CmsWeb
-@using CmsWeb.Models
+﻿@using CmsWeb.Models
 @using CmsData
 @using UtilityExtensions
 @model CmsWeb.Models.PersonPage.PersonModel
@@ -13,20 +12,6 @@
     var isfinance = User.IsInRole("Finance");
     var ismanager = User.IsInRole("Manager");
     var memberedit = isadmin || User.IsInRole("Membership");
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.Reference("person");
-    if(memberedit)
-    {
-    Bundles.AddInlineScript(@<script type="text/javascript"> function ShowMemberDocs() { $("#memberdocs").show(); } </script>);
-    }
-    Bundles.AddInlineScript(
-    @<script type="text/javascript">
-        function ShowMemberExtras() {
-            if (window.ShowMemberDocs)
-                ShowMemberDocs();
-            $.extraEditable('#memberextras');
-        }
-    </script>);
 }
 @section head
 {
@@ -48,6 +33,25 @@ pre {
  word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 </style>
+}
+@section scripts
+{
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/People/person.js")"></script>
+    @if(memberedit)
+    {
+        <script type="text/javascript"> 
+            function ShowMemberDocs() { 
+                $("#memberdocs").show(); 
+            } 
+        </script>
+    }
+    <script type="text/javascript">
+        function ShowMemberExtras() {
+            if (window.ShowMemberDocs)
+                ShowMemberDocs();
+            $.extraEditable('#memberextras');
+        }
+    </script>
 }
 
 @Html.Hidden("PeopleId", p.PeopleId)

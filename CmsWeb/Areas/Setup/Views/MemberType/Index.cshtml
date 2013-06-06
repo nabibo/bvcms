@@ -2,40 +2,41 @@
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "MemberType";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.AddInlineScript(
-        @<script type="text/javascript">
+}
+@section scripts
+{
+    <script type="text/javascript">
         //id=elements_id&value=user_edited_content
-             $(function() {
-                 $(".clickEdit").editable("/Setup/MemberType/Edit/", {
-                     indicator: "<img src='/images/loading.gif'>",
-                     tooltip: "Click to edit...",
-                     style: 'display: inline',
-                     width: '200px',
-                     height: 25
-                 });
-                 $(".clickSelect").editable("/Setup/MemberType/EditAttendType/", {
-                     indicator: '<img src="/images/loading.gif">',
-                     loadurl: "/Setup/MemberType/AttendTypeCodes/",
-                     loadtype: "POST",
-                     type: "select",
-                     submit: "OK",
-                     style: 'display: inline'
-                 });
-                 $("a.delete").click(function(ev) {
-                     ev.preventDefault();
-                     if (confirm("are you sure?"))
-                         $.post("/Setup/MemberType/Delete/" + $(this).attr("id"), null, function(ret) {
-                             if (ret == "used")
-                                 alert("that member type is being used");
-                             else
-                                 window.location = "/Setup/MemberType/";
-                         });
-                     return false;
-                 });
-                 $(".bt").button();
-             });
-         </script>);
+        $(function() {
+            $(".clickEdit").editable("/Setup/MemberType/Edit/", {
+                indicator: "<img src='/images/loading.gif'>",
+                tooltip: "Click to edit...",
+                style: 'display: inline',
+                width: '200px',
+                height: 25
+            });
+            $(".clickSelect").editable("/Setup/MemberType/EditAttendType/", {
+                indicator: '<img src="/images/loading.gif">',
+                loadurl: "/Setup/MemberType/AttendTypeCodes/",
+                loadtype: "POST",
+                type: "select",
+                submit: "OK",
+                style: 'display: inline'
+            });
+            $("a.delete").click(function(ev) {
+                ev.preventDefault();
+                if (confirm("are you sure?"))
+                    $.post("/Setup/MemberType/Delete/" + $(this).attr("id"), null, function(ret) {
+                        if (ret == "used")
+                            alert("that member type is being used");
+                        else
+                            window.location = "/Setup/MemberType/";
+                    });
+                return false;
+            });
+            $(".bt").button();
+        });
+    </script>
 }
 <h2>Member Types</h2>
 <blockquote style="max-width:40em"><i>Click to edit the Code or Name. The items that cannot be deleted are expected to be there by the system. The description for those can be edited as long as the meaning is the same.</i></blockquote>

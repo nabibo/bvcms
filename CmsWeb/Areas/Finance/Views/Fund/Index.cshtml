@@ -3,10 +3,11 @@
 @{
     Layout = "/Views/Shared/SiteLayout.cshtml";
     ViewBag.Title = "Funds";
-    CassetteBundleConfiguration.BundleRefJs();
-    Bundles.Reference("Funds");
 }
-
+@section scripts
+{
+    <script type="text/javascript" src="@Fingerprint.Tag("/Scripts/Finance/Funds.js")"></script>
+}
 <h2>Funds</h2>
 <p>
 @if(ViewBag.status == 1)
