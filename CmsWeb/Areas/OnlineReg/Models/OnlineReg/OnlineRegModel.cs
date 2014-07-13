@@ -331,6 +331,5 @@ namespace CmsWeb.Models
             get { return history; }
             set { history = value; }
         }
-
     }
 }

@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using CmsData;
 using CmsWeb.Models;
+using ICSharpCode.SharpZipLib.Core;
 using UtilityExtensions;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -277,7 +278,7 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
             Confirm,
             ConfirmAccount,
         }
-        private ConfirmEnum ConfirmTransaction(OnlineRegModel m, string TransactionID, ExtraDatum ed = null)
+        private ConfirmEnum ConfirmTransaction(OnlineRegModel m, string TransactionID)
         {
             m.ParseSettings();
             if (m.List.Count == 0)
@@ -288,18 +289,11 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
             var t = m.Transaction;
             if (t == null && !managingsubs && !choosingslots)
             {
+                m.History.Add("ConfirmTransaction");
+                m.UpdateDatum(completed: true);
                 var pf = PaymentForm.CreatePaymentForm(m);
-                if (ed != null)
-                    pf.DatumId = ed.Id;
                 t = pf.CreateTransaction(DbUtil.Db);
                 m.TranId = t.Id;
-                if (ed != null)
-                {
-                    m.History.Add("ConfirmTransaction");
-                    ed.Completed = true;
-                    ed.Data = Util.Serialize<OnlineRegModel>(m);
-                    DbUtil.Db.SubmitChanges();
-                }
             }
             if (t != null)
                 ViewBag.message = t.Message;
@@ -470,16 +464,14 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
             if (!transactionId.HasValue())
                 return Content("error no transaction");
 
-            var ed = DbUtil.Db.ExtraDatas.SingleOrDefault(e => e.Id == id);
-            if (ed == null || ed.Completed == true)
+            var m = OnlineRegModel.GetRegistrationFromDatum(id ?? 0);
+            if (m == null || m.Completed)
                 return Content("no pending confirmation found");
 
-            var m = Util.DeSerialize<OnlineRegModel>(ed.Data);
             try
             {
-                var view = ConfirmTransaction(m, transactionId, ed);
-                ed.Completed = true;
-                DbUtil.Db.SubmitChanges();
+                var view = ConfirmTransaction(m, transactionId);
+                m.UpdateDatum(completed: true);
                 SetHeaders(m);
                 if (view == ConfirmEnum.ConfirmAccount)
                     return View("ConfirmAccount", m);

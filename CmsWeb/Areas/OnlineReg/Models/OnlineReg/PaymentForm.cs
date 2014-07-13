@@ -259,6 +259,7 @@ namespace CmsWeb.Models
             else if (pf.NoEChecksAllowed)
                 pf.Type = "C"; // credit card only
             pf.Type = pf.NoEChecksAllowed ? "C" : pf.Type;
+            pf.DatumId = m.DatumId ?? 0;
             return pf;
         }
         public static Transaction CreateTransaction(CMSDataContext Db, Transaction t, decimal? amount)

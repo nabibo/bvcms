@@ -25,6 +25,12 @@ namespace CmsData
 		
 		private bool? _Completed;
 		
+		private int? _OrganizationId;
+		
+		private int? _UserPeopleId;
+		
+		private bool? _Abandoned;
+		
    		
    		private EntitySet< Contribution> _Contributions;
 		
@@ -47,6 +53,15 @@ namespace CmsData
 		
 		partial void OnCompletedChanging(bool? value);
 		partial void OnCompletedChanged();
+		
+		partial void OnOrganizationIdChanging(int? value);
+		partial void OnOrganizationIdChanged();
+		
+		partial void OnUserPeopleIdChanging(int? value);
+		partial void OnUserPeopleIdChanged();
+		
+		partial void OnAbandonedChanging(bool? value);
+		partial void OnAbandonedChanged();
 		
     #endregion
 		public ExtraDatum()
@@ -142,6 +157,72 @@ namespace CmsData
 					this._Completed = value;
 					this.SendPropertyChanged("Completed");
 					this.OnCompletedChanged();
+				}
+
+			}
+
+		}
+
+		
+		[Column(Name="OrganizationId", UpdateCheck=UpdateCheck.Never, Storage="_OrganizationId", DbType="int")]
+		public int? OrganizationId
+		{
+			get { return this._OrganizationId; }
+
+			set
+			{
+				if (this._OrganizationId != value)
+				{
+				
+                    this.OnOrganizationIdChanging(value);
+					this.SendPropertyChanging();
+					this._OrganizationId = value;
+					this.SendPropertyChanged("OrganizationId");
+					this.OnOrganizationIdChanged();
+				}
+
+			}
+
+		}
+
+		
+		[Column(Name="UserPeopleId", UpdateCheck=UpdateCheck.Never, Storage="_UserPeopleId", DbType="int")]
+		public int? UserPeopleId
+		{
+			get { return this._UserPeopleId; }
+
+			set
+			{
+				if (this._UserPeopleId != value)
+				{
+				
+                    this.OnUserPeopleIdChanging(value);
+					this.SendPropertyChanging();
+					this._UserPeopleId = value;
+					this.SendPropertyChanged("UserPeopleId");
+					this.OnUserPeopleIdChanged();
+				}
+
+			}
+
+		}
+
+		
+		[Column(Name="abandoned", UpdateCheck=UpdateCheck.Never, Storage="_Abandoned", DbType="bit")]
+		public bool? Abandoned
+		{
+			get { return this._Abandoned; }
+
+			set
+			{
+				if (this._Abandoned != value)
+				{
+				
+                    this.OnAbandonedChanging(value);
+					this.SendPropertyChanging();
+					this._Abandoned = value;
+					this.SendPropertyChanged("Abandoned");
+					this.OnAbandonedChanged();
 				}
 
 			}

@@ -1,0 +1,37 @@
+﻿@using UtilityExtensions
+@model CmsWeb.Models.OnlineRegModel
+
+@{
+  Layout = Model.UseBootstrap
+      ? "~/Views/Shared/onlinereg2.cshtml"
+      : "~/Views/Shared/onlinereg.cshtml";
+  ViewBag.Title = "Online Registration";
+}
+@section scripts
+{
+  <script type="text/javascript">
+    $.dateFormat = '@Util.jQueryDateFormat';
+    $.timeoutUrl = '/OnlineReg/Timeout?ret=' + encodeURI('@Model.URL');
+    $.tmout = parseInt('@Model.TimeOut');
+  </script>
+  @(Model.UseBootstrap
+        ? @Fingerprint.Script("/Scripts/OnlineReg/OnlineReg2.js")
+        : @Fingerprint.Script("/Scripts/OnlineReg/OnlineReg.js"))
+}
+
+@if (Model.UseBootstrap)
+{
+  <div class="regform">
+    <h3>@Model.Header</h3>
+    <a href="/OnlineReg/Continue/@Model.DatumId">Continue with Unfinished Registration started @Model.Datum.Stamp.ToString2("g")</a><br/>
+    <a href="/OnlineReg/StartOver/@Model.DatumId">Start Over</a>
+  </div>
+}
+else
+{
+  <div class="regform pagecontainer">
+    <h2>@Model.Header</h2>
+    <a href="/OnlineReg/Continue/@Model.DatumId">Continue with Unfinished Registration started @Model.Datum.Stamp.ToString2("g")</a><br/>
+    <a href="/OnlineReg/StartOver/@Model.DatumId">Start Over</a>
+  </div>
+}

@@ -38,7 +38,7 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
 //            }
             if (DbUtil.Db.Roles.Any(rr => rr.RoleName == "disabled"))
                 return Content("Site is disabled for maintenance, check back later");
-            Util.NoCache(Response);
+            Response.NoCache();
             if (!id.HasValue)
                 return Content("no organization");
             var m = new OnlineRegModel { Orgid = id };
@@ -113,8 +113,16 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
 
             if (pid > 0)
             {
-                //m.List = new List<OnlineRegPersonModel>();
+                // at this point, I am already logged in, or I have clicked a registerlink
                 m.UserPeopleId = pid;
+
+                var existingRegistration = m.GetExistingRegistration();
+                if (existingRegistration != null)
+                {
+                    TempData["er"] = m.UserPeopleId;
+                    return Redirect("/OnlineReg/Existing/" + existingRegistration.DatumId);
+                }
+
                 OnlineRegPersonModel p = null;
                 if (showfamily != true)
                 {
@@ -141,7 +149,6 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
                 {
                     TempData["mg"] = m.UserPeopleId;
                     return ManageGiving(m.Orgid.ToString(), m.testing);
-                    //return Redirect("/OnlineReg/ManageGiving/{0}".Fmt(m.Orgid));
                 }
                 if (m.org != null && m.org.RegistrationTypeId == RegistrationTypeCode.OnlinePledge)
                 {
@@ -160,7 +167,7 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
                         ModelState.AddModelError(m.GetNameFor(mm => mm.List[0].Found), "Sorry, but registration is closed.");
                     if (p.Found == true)
                         p.FillPriorInfo();
-                    CheckSetFee(m, p);
+                    p.CheckSetFee();
                     m.History.Add("index, pid={0}, !showfamily, p.org, found=true".Fmt(pid));
                     return View(m);
                 }
@@ -181,12 +188,18 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
                 return FlowList(m, "Login");
             }
             Session["OnlineRegLogin"] = true;
-            var user = ret as User;
             if (m.Orgid == Util.CreateAccountCode)
                 return Content("/Person2/" + Util.UserPeopleId);
 
+            var existingRegistration = m.GetExistingRegistration();
+            if (existingRegistration != null)
+            {
+                TempData["er"] = m.UserPeopleId = Util.UserPeopleId;
+                return Content("/OnlineReg/Existing/" + existingRegistration.DatumId);
+            }
+
             m.CreateList();
-            m.UserPeopleId = user.PeopleId;
+            m.UserPeopleId = Util.UserPeopleId;
 
             if (m.ManagingSubscriptions())
             {
@@ -248,11 +261,10 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
             if (!ModelState.IsValid)
                 return FlowList(m, "Register");
             m.List[index] = p;
+
             if (p.ManageSubscriptions() && p.Found == true)
-            {
-                //p.OtherOK = true;
                 return FlowList(m, "Register");
-            }
+
             if (p.org != null && p.Found == true)
             {
                 p.IsFilled = p.org.RegLimitCount(DbUtil.Db) >= p.org.Limit;
@@ -260,14 +272,15 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
                     ModelState.AddModelError(m.GetNameFor(mm => mm.List[m.List.IndexOf(p)].Found), "Sorry, but registration is filled.");
                 if (p.Found == true)
                     p.FillPriorInfo();
-                //if (!p.AnyOtherInfo())
-                //p.OtherOK = true;
                 return FlowList(m, "Register");
             }
-            else if (p.org == null && p.ComputesOrganizationByAge())
+
+            if (p.org == null && p.ComputesOrganizationByAge())
                 ModelState.AddModelError(m.GetNameFor(mm => mm.List[id].Found), p.NoAppropriateOrgError);
+
             if (p.ShowDisplay() && p.org != null && p.ComputesOrganizationByAge())
                 p.classid = p.org.OrganizationId;
+
             return FlowList(m, "Register");
         }
         [HttpPost]
@@ -397,34 +410,20 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
             if (p.org != null && p.ShowDisplay() && p.ComputesOrganizationByAge())
                 p.classid = p.org.OrganizationId;
 
-            CheckSetFee(m, p);
+            p.CheckSetFee();
 
             return FlowList(m, "PersonFind");
         }
 
         private ActionResult ErrorResult(OnlineRegModel m, Exception ex, string errorDisplay)
         {
-            var d = new ExtraDatum { Stamp = Util.Now };
-            d.Data = Util.Serialize<OnlineRegModel>(m);
-            DbUtil.Db.ExtraDatas.InsertOnSubmit(d);
-            DbUtil.Db.SubmitChanges();
-            var ex2 = new Exception("{0}, {2}".Fmt(errorDisplay, d.Id, DbUtil.Db.ServerLink("/OnlineReg/RegPeople/") + d.Id), ex);
+            m.UpdateDatum();
+            var ex2 = new Exception("{0}, {2}".Fmt(errorDisplay, m.DatumId, DbUtil.Db.ServerLink("/OnlineReg/RegPeople/") + m.DatumId), ex);
             ErrorSignal.FromCurrentContext().Raise(ex2);
             TempData["error"] = errorDisplay;
             return Content("/Error/");
         }
 
-        // Set suggested giving fee for an indidividual person
-        private static void CheckSetFee(OnlineRegModel m, OnlineRegPersonModel p)
-        {
-            if (m.OnlineGiving() && p.setting.ExtraValueFeeName.HasValue())
-            {
-                var f = CmsWeb.Models.OnlineRegPersonModel.Funds().SingleOrDefault(ff => ff.Text == p.setting.ExtraValueFeeName);
-                var evamt = p.person.GetExtra(p.setting.ExtraValueFeeName).ToDecimal();
-                if (f != null && evamt > 0)
-                    p.FundItem[f.Value.ToInt()] = evamt;
-            }
-        }
         [HttpPost]
         public ActionResult SubmitNew(int id, OnlineRegModel m)
         {
@@ -573,17 +572,14 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
 
             RemmoveLastRegistrantIfEmpty(m);
 
-            var d = new ExtraDatum { Stamp = Util.Now };
-            d.Data = Util.Serialize<OnlineRegModel>(m);
-            DbUtil.Db.ExtraDatas.InsertOnSubmit(d);
-            DbUtil.Db.SubmitChanges();
-            DbUtil.LogActivity("Online Registration: {0} ({1})".Fmt(m.Header, d.Id));
+            m.UpdateDatum();
+            DbUtil.LogActivity("Online Registration: {0} ({1})".Fmt(m.Header, m.DatumId));
 
             if (m.PayAmount() == 0 && (m.donation ?? 0) == 0 && !m.Terms.HasValue())
                 return RedirectToAction("Confirm",
                      new
                      {
-                         id = d.Id,
+                         id = m.DatumId,
                          TransactionID = "zero due",
                      });
 
@@ -598,7 +594,7 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
                      {
                          Terms = m.Terms,
                          _URL = m.URL,
-                         PostbackURL = DbUtil.Db.ServerLink("/OnlineReg/Confirm/" + d.Id),
+                         PostbackURL = DbUtil.Db.ServerLink("/OnlineReg/Confirm/" + m.DatumId),
                          _timeout = m.TimeOut
                      });
             }
@@ -612,7 +608,6 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
                 return Content("You are already registered it appears");
 
             var pf = PaymentForm.CreatePaymentForm(m);
-            pf.DatumId = d.Id;
             if (OnlineRegModel.GetTransactionGateway() == "serviceu")
                 return View("Payment/ServiceU", pf);
             ModelState.Clear();
@@ -674,10 +669,10 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
         {
             try
             {
-                var view = m.UseBootstrap
-                    ? ViewExtensions2.RenderPartialViewToString2(this, "Flow2/List", m)
-                    : ViewExtensions2.RenderPartialViewToString2(this, "Flow/List", m);
-                return Content(view);
+                m.UpdateDatum();
+                var view = m.UseBootstrap ? "Flow2/List" : "Flow/List";
+                var content = ViewExtensions2.RenderPartialViewToString2(this, view, m);
+                return Content(content);
             }
             catch (Exception ex)
             {
@@ -685,5 +680,44 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult Continue(int id)
+        {
+            var m = OnlineRegModel.GetRegistrationFromDatum(id);
+            if (m == null)
+                return Content("no existing registration available");
+            var n = m.List.Count - 1;
+            m.List[n].ValidateModelForOther(ModelState, n);
+            m.History.Add("continue");
+            m.UpdateDatum();
+            return View("Index", m);
+        }
+        [HttpGet]
+        public ActionResult StartOver(int id)
+        {
+            var pid = (int)TempData["er"];
+            if (pid == 0)
+                return Content("not logged in");
+            var m = OnlineRegModel.GetRegistrationFromDatum(id);
+            if (m == null)
+                return Content("no existing registration available");
+            m.History.Add("startover");
+            m.UpdateDatum(abandoned: true);
+            return Redirect(m.URL);
+        }
+        [HttpGet]
+        public ActionResult Existing(int id)
+        {
+            var pid = (int)TempData["er"];
+            if (pid == 0)
+                return Content("not logged in");
+            var m = OnlineRegModel.GetRegistrationFromDatum(id);
+            if (m == null)
+                return Content("no existing registration available");
+            if (m.UserPeopleId != pid)
+                return Content("incorrect user");
+            TempData["er"] = pid;
+            return View(m);
+        }
     }
 }
