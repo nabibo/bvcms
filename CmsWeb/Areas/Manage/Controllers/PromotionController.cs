@@ -6,31 +6,33 @@ namespace CmsWeb.Areas.Manage.Controllers
     [RouteArea("Manage", AreaPrefix= "Promotion"), Route("{action=index}/{id?}")]
     public class PromotionController : CmsStaffController
     {
+        [HttpGet]
         public ActionResult Index()
         {
             var m = new PromotionModel();
-            UpdateModel(m);
             return View(m);
         }
-
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult AssignPending()
+        [HttpGet]
+        [Route("~/Promotion/Reload")]
+        public ActionResult Reload(PromotionModel m)
         {
-            var m = new PromotionModel();
-            UpdateModel(m);
+            return Redirect("/Promotion");
+        }
+
+        [HttpPost]
+        public ActionResult AssignPending(PromotionModel m)
+        {
             m.AssignPending();
             return RedirectToAction("Index");
         }
-        public ActionResult List()
+        [HttpPost]
+        public ActionResult List(PromotionModel m)
         {
-            var m = new PromotionModel();
-            UpdateModel(m);
-            return PartialView("List", m);
+            return View("List", m);
         }
-        public ActionResult Export()
+        [HttpPost]
+        public ActionResult Export(PromotionModel m)
         {
-            var m = new PromotionModel();
-            UpdateModel(m);
             return new ExcelResult(m.Export(), "promotion.xls");
         }
     }
