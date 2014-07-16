@@ -895,6 +895,7 @@
     <Content Include="Areas\People\Views\Person\Profile\Tab.cshtml" />
     <Content Include="Areas\People\Views\Person\Profile\Membership\Edit.cshtml" />
     <Content Include="Areas\People\Views\Person\Profile\MemberNotes\Display.cshtml" />
+    <Content Include="Scripts\Search\RegistrationSearch.js" />
     <Content Include="Scripts\Search\SavedQuery2.js" />
     <Content Include="Scripts\Search\SearchTypeahead.js" />
     <Content Include="Scripts\Search\searchtour.js" />
@@ -1097,6 +1098,8 @@
     <Content Include="Areas\Reports\Views\Reports\EnrollmentControl2b.cshtml" />
     <Content Include="Areas\Manage\Views\Display\EditPythonScript.cshtml" />
     <Content Include="Areas\OnlineReg\Views\OnlineReg\Existing.cshtml" />
+    <Content Include="Areas\Search\Views\RegistrationSearch\Index.cshtml" />
+    <Content Include="Areas\Search\Views\RegistrationSearch\Results.cshtml" />
     <None Include="Properties\PublishProfiles\production.pubxml" />
     <Content Include="Scripts\Search\ContactSearch2.js" />
     <Content Include="Scripts\Search\SavedQueryList.js" />
