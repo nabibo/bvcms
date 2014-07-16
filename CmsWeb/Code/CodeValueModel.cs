@@ -406,7 +406,17 @@ namespace CmsWeb.Code
 				new CodeValueItem { Value = "Gift Bag Given" },
 			};
         }
-
+        public IEnumerable<CodeValueItem> RegistrationStatusList()
+        {
+            return new List<CodeValueItem> 
+			{
+				new CodeValueItem { Value = "(not selected)" },
+				new CodeValueItem { Value = "Complete" },
+				new CodeValueItem { Value = "Incomplete" },
+				new CodeValueItem { Value = "Abandoned" },
+				new CodeValueItem { Value = "Expired" },
+			};
+        }
 
         public IEnumerable<CodeValueItem> ExtraValueTypeCodes()
         {

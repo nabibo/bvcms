@@ -116,7 +116,7 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
                 // at this point, I am already logged in, or I have clicked a registerlink
                 m.UserPeopleId = pid;
 
-                var existingRegistration = m.GetExistingRegistration();
+                var existingRegistration = m.GetExistingRegistration(pid);
                 if (existingRegistration != null)
                 {
                     TempData["er"] = m.UserPeopleId;
@@ -191,7 +191,7 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
             if (m.Orgid == Util.CreateAccountCode)
                 return Content("/Person2/" + Util.UserPeopleId);
 
-            var existingRegistration = m.GetExistingRegistration();
+            var existingRegistration = m.GetExistingRegistration(Util.UserPeopleId ?? 0);
             if (existingRegistration != null)
             {
                 TempData["er"] = m.UserPeopleId = Util.UserPeopleId;

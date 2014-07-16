@@ -506,13 +506,13 @@ namespace CmsWeb.Models
             return m;
         }
 
-        public OnlineRegModel GetExistingRegistration()
+        public OnlineRegModel GetExistingRegistration(int pid)
         {
             if (!AllowSaveProgress())
                 return null;
             var ed = (from e in DbUtil.Db.ExtraDatas
                       where e.OrganizationId == (masterorgid ?? orgid)
-                      where e.UserPeopleId == UserPeopleId
+                      where e.UserPeopleId == pid
                       where (e.Abandoned ?? false) == false
                       where (e.Completed ?? false) == false
                       where (e.Data.Contains("<DatumId>"))
