@@ -418,6 +418,13 @@ else
 	<tr><td class="right" colspan="2">
 		    <input type="button" id="otheredit" href="/OnlineReg/SubmitOtherInfo/@index" class="submitbutton ajax" 
 		           value="Submit" />
+    @if (Model.Parent.AllowSaveProgress())
+    {
+      <div>
+        <input type="button" href="/OnlineReg/SaveProgress/@index" class="submitbutton ajax" 
+               value='Save Progress, Finish Later' />
+      </div>
+    }
 		    <div class="formerror">@Html.ValidationMessage( "Form" )</div>
 	    </td>
 	</tr>

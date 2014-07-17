@@ -466,16 +466,16 @@ namespace CmsWeb.Models
         public void UpdateDatum(bool completed = false, bool abandoned = false)
         {
             if (DatumId.HasValue)
-                Datum = DbUtil.Db.ExtraDatas.Single(dd => dd.Id == DatumId);
+                Datum = DbUtil.Db.RegistrationDatas.Single(dd => dd.Id == DatumId);
             else
             {
-                Datum = new ExtraDatum
+                Datum = new RegistrationDatum
                 {
                     OrganizationId = masterorgid ?? orgid,
                     UserPeopleId = UserPeopleId,
                     Stamp = Util.Now
                 };
-                DbUtil.Db.ExtraDatas.InsertOnSubmit(Datum);
+                DbUtil.Db.RegistrationDatas.InsertOnSubmit(Datum);
                 DbUtil.Db.SubmitChanges();
                 DatumId = Datum.Id;
             }
@@ -491,17 +491,20 @@ namespace CmsWeb.Models
         public int? DatumId { get; set; }
 
         [XmlIgnore]
-        public ExtraDatum Datum { get; set; }
+        public RegistrationDatum Datum { get; set; }
 
         public static OnlineRegModel GetRegistrationFromDatum(int id)
         {
-            var ed = DbUtil.Db.ExtraDatas.SingleOrDefault(e => e.Id == id);
+            var ed = DbUtil.Db.RegistrationDatas.SingleOrDefault(e => e.Id == id);
             if (ed == null)
                 return null;
             if (ed.Completed == true || ed.Abandoned == true)
                 return null;
             var m = Util.DeSerialize<OnlineRegModel>(ed.Data);
+            if (m.UserPeopleId == null)
+                return null;
             m.Datum = ed;
+            m.DatumId = id;
             m.Completed = ed.Completed ?? false;
             return m;
         }
@@ -510,12 +513,11 @@ namespace CmsWeb.Models
         {
             if (!AllowSaveProgress())
                 return null;
-            var ed = (from e in DbUtil.Db.ExtraDatas
+            var ed = (from e in DbUtil.Db.RegistrationDatas
                       where e.OrganizationId == (masterorgid ?? orgid)
                       where e.UserPeopleId == pid
                       where (e.Abandoned ?? false) == false
                       where (e.Completed ?? false) == false
-                      where (e.Data.Contains("<DatumId>"))
                       orderby e.Stamp descending
                       select e).FirstOrDefault();
             return ed != null

@@ -28,6 +28,10 @@
             else
             {
                 @Helper.OnlineRegSubmitButton("Complete Registration", style: "btn-success")
+                if (Model.AllowSaveProgress())
+                {
+                  @Helper.OnlineRegAjaxButton("/OnlineReg/SaveProgress", "Save Progress, Finish Later")
+                }
             }
         </span>
         @if (sendlinkmsg.HasValue())

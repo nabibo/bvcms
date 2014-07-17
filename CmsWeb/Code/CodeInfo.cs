@@ -66,8 +66,8 @@ namespace CmsWeb.Code
                     case "ContactResult":
                         Items = cv.ContactResultList().ToSelect("Value");
                         break;
-                    case "RegistrationStatus":
-                        Items = cv.RegistrationStatusList().ToSelect("Value");
+                    case "YesNoAll":
+                        Items = cv.YesNoAll().ToSelect("Value");
                         break;
                     default:
                         var getlist = cv.GetType().GetMethod(value + "List");

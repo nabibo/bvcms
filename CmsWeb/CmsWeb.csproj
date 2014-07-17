@@ -1100,6 +1100,7 @@
     <Content Include="Areas\OnlineReg\Views\OnlineReg\Existing.cshtml" />
     <Content Include="Areas\Search\Views\RegistrationSearch\Index.cshtml" />
     <Content Include="Areas\Search\Views\RegistrationSearch\Results.cshtml" />
+    <Content Include="Areas\OnlineReg\Views\OnlineReg\FinishLater.cshtml" />
     <None Include="Properties\PublishProfiles\production.pubxml" />
     <Content Include="Scripts\Search\ContactSearch2.js" />
     <Content Include="Scripts\Search\SavedQueryList.js" />

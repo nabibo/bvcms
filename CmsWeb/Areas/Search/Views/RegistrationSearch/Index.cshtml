@@ -16,9 +16,14 @@
                     <div class="inline">
                         @Html.EditorFor(m => m.SearchParameters.Organization)
                         @Html.EditorFor(m => m.SearchParameters.Registrant)
+                        @Html.EditorFor(m => m.SearchParameters.count)
                         @Html.EditorFor(m => m.SearchParameters.StartDate)
                         @Html.EditorFor(m => m.SearchParameters.EndDate)
-                        @Html.EditorFor(m => m.SearchParameters.Status)
+                    </div>
+                    <div class="inline align-top">
+                        @Html.EditorFor(m => m.SearchParameters.Complete)
+                        @Html.EditorFor(m => m.SearchParameters.Active)
+                        @Html.EditorFor(m => m.SearchParameters.Abandoned)
                     </div>
                 </div>
                 <div class="row-fluid">

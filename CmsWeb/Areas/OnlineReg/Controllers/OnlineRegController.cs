@@ -535,16 +535,18 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
             m.History.Add("AskDonation");
             if (m.List.Count == 0)
                 return Content("Can't find any registrants");
-            RemmoveLastRegistrantIfEmpty(m);
+            RemoveLastRegistrantIfEmpty(m);
             SetHeaders(m);
             return View(m);
         }
 
-        private static void RemmoveLastRegistrantIfEmpty(OnlineRegModel m)
+        private static void RemoveLastRegistrantIfEmpty(OnlineRegModel m)
         {
-            if (!m.last.IsNew && !m.last.Found == true)
+            if (m.last.OtherOK == false)
                 m.List.Remove(m.last);
-            if (!(m.last.IsValidForNew || m.last.IsValidForExisting))
+            else if (!m.last.IsNew && !m.last.Found == true)
+                m.List.Remove(m.last);
+            else if (!(m.last.IsValidForNew || m.last.IsValidForExisting))
                 m.List.Remove(m.last);
         }
 
@@ -570,7 +572,7 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
             if (m.List.Count == 0)
                 return Content("Can't find any registrants");
 
-            RemmoveLastRegistrantIfEmpty(m);
+            RemoveLastRegistrantIfEmpty(m);
 
             m.UpdateDatum();
             DbUtil.LogActivity("Online Registration: {0} ({1})".Fmt(m.Header, m.DatumId));
@@ -705,6 +707,15 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
             m.UpdateDatum(abandoned: true);
             return Redirect(m.URL);
         }
+        [HttpPost]
+        public ActionResult SaveProgress(OnlineRegModel m)
+        {
+            m.History.Add("saveprogress");
+            if(m.UserPeopleId == null)
+                m.UserPeopleId = Util.UserPeopleId;
+            m.UpdateDatum();
+            return Content("We have saved your progress, an email with a link to finish this registration will come to you shortly.");
+        }
         [HttpGet]
         public ActionResult Existing(int id)
         {
@@ -714,7 +725,7 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
             var m = OnlineRegModel.GetRegistrationFromDatum(id);
             if (m == null)
                 return Content("no existing registration available");
-            if (m.UserPeopleId != pid)
+            if (m.UserPeopleId != m.Datum.UserPeopleId)
                 return Content("incorrect user");
             TempData["er"] = pid;
             return View(m);

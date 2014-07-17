@@ -72,33 +72,46 @@ namespace CmsWeb.Areas.Search.Models
                     q = q.Where(cc => cc.Cnt < cnt);
             }
 
-            switch (SearchParameters.Status.Value)
+            switch (SearchParameters.Complete.Value)
             {
-                case "(not specified)":
+                case "All":
                     break;
-                case "Incomplete":
+                case "No":
                     q = from r in q
                         where (r.Completed ?? false) == false
                         select r;
                     break;
-                case "Complete":
+                case "Yes":
                     q = from r in q
                         where (r.Completed ?? false)
                         select r;
                     break;
-                case "Abandoned":
-                    q = from r in q
-                        where (r.Abandoned ?? false)
-                        select r;
+            }
+            switch(SearchParameters.Active.Value)
+            {
+                case "All":
                     break;
-                case "Expired":
+                case "No":
                     q = from r in q
                         where (r.Expired ?? false)
                         select r;
                     break;
-                case "Active":
+                case "Yes":
                     q = from r in q
                         where (r.Expired ?? false) == false
+                        select r;
+                    break;
+            }
+            switch (SearchParameters.Abandoned.Value)
+            {
+                case "Yes":
+                    q = from r in q
+                        where (r.Abandoned ?? false)
+                        select r;
+                    break;
+                case "No":
+                    q = from r in q
+                        where (r.Abandoned ?? false) == false
                         select r;
                     break;
             }
@@ -137,7 +150,7 @@ namespace CmsWeb.Areas.Search.Models
             switch (Pager.SortExpression)
             {
             }
-            return q;
+            return q.OrderByDescending(r => r.Id);
         }
 
         public override IEnumerable<RegistrationList> DefineViewList(IQueryable<RegistrationList> q)

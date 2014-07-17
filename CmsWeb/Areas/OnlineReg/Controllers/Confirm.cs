@@ -17,6 +17,32 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
     {
         //private string confirm;
 
+        [HttpPost]
+        public ActionResult SaveProgressPayment(int id)
+        {
+            var ed = DbUtil.Db.RegistrationDatas.SingleOrDefault(e => e.Id == id);
+            if (ed != null)
+            {
+                var m = Util.DeSerialize<OnlineRegModel>(ed.Data);
+                m.History.Add("saveprogress");
+                if (m.UserPeopleId == null)
+                    m.UserPeopleId = Util.UserPeopleId;
+                m.UpdateDatum();
+                return Json(new {confirm = "/OnlineReg/FinishLater/" + id});
+            }
+            return Json(new {confirm = "/OnlineReg/Unknown"});
+        }
+        [HttpGet]
+        public ActionResult FinishLater(int id)
+        {
+            var ed = DbUtil.Db.RegistrationDatas.SingleOrDefault(e => e.Id == id);
+            if (ed != null)
+            {
+                var m = Util.DeSerialize<OnlineRegModel>(ed.Data);
+                return View(m);
+            }
+            return View("Unknown");
+        }
         public ActionResult ProcessPayment(PaymentForm pf)
         {
 #if DEBUG
@@ -26,7 +52,7 @@ namespace CmsWeb.Areas.OnlineReg.Controllers
 					return Content("Already submitted");                    
 #endif
             OnlineRegModel m = null;
-            var ed = DbUtil.Db.ExtraDatas.SingleOrDefault(e => e.Id == pf.DatumId);
+            var ed = DbUtil.Db.RegistrationDatas.SingleOrDefault(e => e.Id == pf.DatumId);
             if (ed != null)
                 m = Util.DeSerialize<OnlineRegModel>(ed.Data);
 

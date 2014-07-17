@@ -406,15 +406,13 @@ namespace CmsWeb.Code
 				new CodeValueItem { Value = "Gift Bag Given" },
 			};
         }
-        public IEnumerable<CodeValueItem> RegistrationStatusList()
+        public IEnumerable<CodeValueItem> YesNoAll()
         {
             return new List<CodeValueItem> 
 			{
-				new CodeValueItem { Value = "(not selected)" },
-				new CodeValueItem { Value = "Complete" },
-				new CodeValueItem { Value = "Incomplete" },
-				new CodeValueItem { Value = "Abandoned" },
-				new CodeValueItem { Value = "Expired" },
+				new CodeValueItem { Value = "All" },
+				new CodeValueItem { Value = "Yes" },
+				new CodeValueItem { Value = "No" },
 			};
         }
 

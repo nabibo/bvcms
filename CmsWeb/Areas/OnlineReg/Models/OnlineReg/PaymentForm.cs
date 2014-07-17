@@ -61,6 +61,7 @@ namespace CmsWeb.Models
         public bool? IsLoggedIn { get; set; }
         public bool? CanSave { get; set; }
         public bool SavePayInfo { get; set; }
+        public bool? AllowSaveProgress { get; set; }
         public bool? IsGiving { get; set; }
         public bool NoCreditCardsAllowed { get; set; }
         private bool? _noEChecksAllowed;
@@ -241,6 +242,7 @@ namespace CmsWeb.Models
                 Type = r.payinfo.PreferredPaymentType,
 #endif
             };
+            pf.AllowSaveProgress = m.AllowSaveProgress();
             pf.NoCreditCardsAllowed = m.NoCreditCardsAllowed();
             pf.UseBootstrap = m.UseBootstrap;
             if (m.OnlineGiving())
