@@ -166,7 +166,11 @@
                 </div>
             }
             @Helper.OnlineRegAjaxButton("/OnlineReg/SubmitOtherInfo/" + @Model.Index, "Submit",
-                id: "otheredit", style: "btn-primary pull-right")
+                id: "otheredit", style: "btn-primary pull-right min-width15em")
+            @if (Model.Parent.AllowSaveProgress())
+            {
+              @Helper.OnlineRegAjaxButton("/OnlineReg/SaveProgress", "Save Progress, Finish Later", style: "btn-warning pull-right min-width15em")
+            }
             @Html.DivValidationMessage("Form")
         </div>
     </div>

@@ -1,5 +1,4 @@
 ﻿@using CmsWeb
-@using DocumentFormat.OpenXml.Wordprocessing
 @using UtilityExtensions
 @model CmsWeb.Models.PaymentForm
 <div class="regform">
@@ -106,7 +105,11 @@
                     {
                         <span style="margin-right: 2em;">Save Pay Info @Html.CheckBoxFor(m => m.SavePayInfo)</span>
                     }
-                    @Helper.OnlineRegSubmitButton("Make Payment", onlyoneallowed: true)
+                    @Helper.OnlineRegSubmitButton("Make Payment", onlyoneallowed: true, style:"btn-primary min-width15em")
+                    @if (Model.AllowSaveProgress == true)
+                    {
+                      @Helper.OnlineRegAjaxButton("/OnlineReg/SaveProgressPayment/" + Model.DatumId, "Save Progress, Finish Later", style: "btn-warning min-width15em")
+                    }
                 </span>
             </div>
         </div>
