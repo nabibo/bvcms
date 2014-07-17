@@ -257,7 +257,7 @@ namespace CmsWeb.Areas.Search.Controllers
         public ActionResult Help(string name)
         {
             var wc = new WebClient();
-            var s = wc.DownloadString("https://www.bvcms.com/DocDialog2/" + name);
+            var s = wc.DownloadString("http://docs.bvcms.com/SearchBuilder/{0}.html".Fmt(name));
             return Content(s);
         }
         [HttpPost]

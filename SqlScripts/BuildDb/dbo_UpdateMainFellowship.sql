@@ -16,7 +16,6 @@ BEGIN
 	JOIN dbo.OrganizationMembers om ON p.PeopleId = om.PeopleId
 	WHERE om.OrganizationId = @orgid
 END
-
 GO
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
 GO

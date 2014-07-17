@@ -23,7 +23,6 @@ CREATE VIEW [dbo].SpouseOrHeadWithEmail AS
 		) st ON st.PeopleId = ht.SpouseId
 	) tt
 	WHERE LEN(email) > 0
-
 GO
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
 GO

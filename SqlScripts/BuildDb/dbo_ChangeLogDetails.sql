@@ -13,7 +13,6 @@ SELECT
 FROM dbo.ChangeLog lg
 JOIN dbo.ChangeDetails dt ON dt.Id = lg.Id
 
-
 GO
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
 GO

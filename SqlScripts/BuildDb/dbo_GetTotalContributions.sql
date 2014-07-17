@@ -53,7 +53,6 @@ RETURN
 			)
 	GROUP BY hh.PeopleId, hh.spouseId, hh.Name, hh.SpouseName, f.FundId, f.FundName, hh.ContributionOptionsId, hh.SpouseContributionOptionsId
 )
-
 GO
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
 GO

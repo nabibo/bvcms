@@ -7,7 +7,6 @@ UNION
 SELECT OtherPreviousChurch c FROM dbo.People
 ) AS t
 GROUP BY c
-
 GO
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
 GO

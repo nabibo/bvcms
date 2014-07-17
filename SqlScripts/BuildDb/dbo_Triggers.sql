@@ -7,7 +7,6 @@ FROM  sys.sysobjects AS Triggers INNER JOIN
                sys.syscomments AS Comments ON Triggers.id = Comments.id
 WHERE (Triggers.xtype = 'TR') AND (Tables.xtype = 'U')
 ORDER BY TableName, TriggerName
-
 GO
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
 GO

@@ -19,7 +19,6 @@ AS
 	   order by TransactionDate
 	RETURN @dt
 	END
-
 GO
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
 GO

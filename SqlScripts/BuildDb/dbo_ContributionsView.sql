@@ -22,7 +22,6 @@ JOIN lookup.ContributionStatus cs ON c.ContributionStatusId = cs.Id
 JOIN lookup.ContributionType ct ON c.ContributionTypeId = ct.Id
 JOIN dbo.ContributionFund f ON c.FundId = f.FundId
 
-
 GO
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
 GO

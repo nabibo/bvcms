@@ -13,7 +13,6 @@ FROM (SELECT DISTINCT Name, EmailAddress,
 FROM dbo.Users u
 WHERE EmailAddress NOT IN ('david@bvcms.com','karen@bvcms.com', 'support@bvcms.com')
 ) tt
-
 GO
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
 GO

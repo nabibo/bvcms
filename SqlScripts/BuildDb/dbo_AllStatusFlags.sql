@@ -8,7 +8,6 @@ AS
 	JOIN dbo.Tag t ON tp.Id = t.Id
 	JOIN dbo.StatusFlagNamesRoles sfr ON sfr.Flag = SUBSTRING(t.Name, 1, 5)
 
-
 GO
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
 GO

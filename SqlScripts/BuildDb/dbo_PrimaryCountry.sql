@@ -13,7 +13,6 @@ where PeopleId = @pid
 
 	RETURN @n
 	END
-
 GO
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
 GO

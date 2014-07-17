@@ -13,7 +13,6 @@ LEFT JOIN dbo.Roles r ON r.RoleName = 'StatusFlag:' + t.Name
 WHERE t.TypeId = 100
 GROUP BY t.Name, c.Name, r.RoleName
 
-
 GO
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
 GO

@@ -27,7 +27,6 @@ WHERE EXISTS(
 		JOIN dbo.Roles r ON ur.RoleId = r.RoleId
 		WHERE r.RoleName = 'Access'
 		AND u.PeopleId = tt.PeopleId )
-
 GO
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
 GO

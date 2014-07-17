@@ -30,7 +30,6 @@ AS
 	GROUP BY OrganizationId, PeopleId, [Year], [Week], AttendCredit
 	
 
-
 GO
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
 GO
