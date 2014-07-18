@@ -1,0 +1,37 @@
+﻿@model CmsWeb.Models.OnlineRegModel
+
+@functions {
+    private ViewDataDictionary GetViewData(int i)
+    {
+        var viewdata = new ViewDataDictionary(ViewData)
+        {
+            TemplateInfo = new TemplateInfo {HtmlFieldPrefix = "List[" + i + "]"}
+        };
+        return viewdata;
+    }
+}
+
+@if (Model.DisplayLogin()) // nobody registered yet
+{
+  // Show Login
+}
+else
+{
+    if (!Model.OnlyOneAllowed() && Model.List.Count > 1) // label is necessary if more than one
+    {
+       // Show Pending 
+    }
+        <div class="panel-group" id="accordion">
+            @for (var i = 0; i < Model.List.Count; i++)
+            {
+                Model.List[i].Index = i;
+                @Html.Partial("Flow3/Registrant", Model.List[i], GetViewData(i))
+            }
+        </div>
+
+    if (Model.last != null && Model.last.OtherOK && Model.last.ShowDisplay())
+    //show the buttons if we are ready to move on
+    {
+        @Html.Partial("Flow2/Buttons", Model)
+    }
+}

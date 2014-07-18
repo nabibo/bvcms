@@ -1,0 +1,79 @@
+﻿@using UtilityExtensions
+@model CmsWeb.Models.OnlineRegPersonModel
+@{
+    var or = "";
+}
+
+@if (!Model.ShowDisplay())
+// This is a header that will show above the last unfinished item
+{
+    if (Model.LastItem() && !Model.Finished() && Model.NotFirst())
+    {
+      // Show Complete For Pending
+    }
+    if (Model.UserSelectsOrganization()) // show a select organization dropdown
+    {
+      // Show Select Class
+    }
+    if (Model.Parent.UserPeopleId.HasValue && Model.Parent.FamilyMembers().Any())
+    // show a family list because logged in and more than one in family
+    {
+      // Show Select Family
+    }
+    else
+    {
+        if (Model.Parent.List.Count == 1 && !Model.IsNew && Model.Found != true && !Model.LoggedIn && !Model.OtherOK)
+        {
+          // Show Option to Login
+        }
+    }
+}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            @if (Model.Finished())
+            {
+              // Show Collapsed Details
+            }
+            else
+            {
+                if (Model.Found.HasValue)
+                {
+                  ;// Show Pending's Name
+                }
+                else
+                {
+                  ; // Show Help Us Find
+                }
+            }
+        </h4>
+    </div>
+    <div id="collapse@(Model.Index)" class="panel-collapse collapse @(Model.Finished() ? "" : "in")">
+        <div class="panel-body">
+            @Html.ValidationSummary()
+            @if (!Model.ShowAddress && Model.NotFoundText.HasValue())
+            {
+              // Show Not Found Alert
+            }
+            @if (Model.ShowDisplay())
+            {
+              // Show Person Display
+            }
+            else
+            {
+                if (!Model.Parent.IsEnded())
+                {
+                    if (Model.IsFamily)
+                    {
+                      // Show Person Display for Selected Family Member to Register
+                    }
+                    else 
+                    {
+                        // Show Find or Add New Registrant
+                        @Html.Partial("Flow3/PersonEdit", Model)
+                    }
+                }
+            }
+        </div>
+    </div>
+</div>
