@@ -199,7 +199,8 @@ namespace CmsWeb.Areas.Public.Models
 
 			var orgs = from o in DbUtil.Db.Organizations
 						  where o.DivOrgs.Any(ee => divList.Contains(ee.DivId))
-                          where o.OrganizationStatusId == CmsData.Codes.OrgStatusCode.Active
+						  where o.OrganizationStatusId == CmsData.Codes.OrgStatusCode.Active
+						  orderby o.OrganizationName
 						  select o;
 
 			foreach (var filter in search)
@@ -210,12 +211,14 @@ namespace CmsWeb.Areas.Public.Models
 				{
 					orgs = from g in orgs
 							 where g.OrganizationExtras.Any(oe => oe.Field == filter.Key && filter.Value.values.Contains(oe.Data))
+							 orderby g.OrganizationName
 							 select g;
 				}
 				else
 				{
 					orgs = from g in orgs
 							 where g.OrganizationExtras.Any(oe => oe.Field == filter.Key && oe.Data == filter.Value.values[0])
+							 orderby g.OrganizationName
 							 select g;
 				}
 			}
