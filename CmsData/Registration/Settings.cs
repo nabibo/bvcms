@@ -52,7 +52,6 @@ namespace CmsData.Registration
         public string AccountingCode { get; set; }
 		public int? TimeSlotLockDays { get; set; }
 		public string GroupToJoin { get; set; }
-		public bool GiveOrgMembAccess { get; set; }
 	    public bool AddAsProspect { get; set; }
 
         public bool UseBootstrap
@@ -271,14 +270,8 @@ namespace CmsData.Registration
 				case Parser.RegKeywords.GroupToJoin:
 					GroupToJoin = parser.GetString();
 					break;
-				case Parser.RegKeywords.GiveOrgMembAccess:
-					GiveOrgMembAccess = parser.GetBool();
-					break;
 				case Parser.RegKeywords.AddAsProspect:
 					AddAsProspect = parser.GetBool();
-					break;
-				case Parser.RegKeywords.UseBootstrap:
-					parser.GetBool();
 					break;
 				case Parser.RegKeywords.LinkGroupsFromOrgs:
 					LinkGroupsFromOrgs = (from i in parser.curr.value.Split(',')
@@ -333,6 +326,12 @@ namespace CmsData.Registration
 
 
 // BEGIN support for old Registration Documents
+				case Parser.RegKeywords.GiveOrgMembAccess:
+					parser.GetBool();
+					break;
+				case Parser.RegKeywords.UseBootstrap:
+					parser.GetBool();
+					break;
 				case Parser.RegKeywords.AskGrade:
 					parser.GetBool();
 					parser.GetLabel("Grade");
@@ -655,7 +654,6 @@ namespace CmsData.Registration
 			AddValueCk(0, sb, "AllowSaveProgress", AllowSaveProgress);
 			AddValueCk(0, sb, "MemberOnly", MemberOnly);
 			AddValueCk(0, sb, "GroupToJoin", GroupToJoin);
-			AddValueCk(0, sb, "GiveOrgMembAccess", GiveOrgMembAccess);
 			AddValueCk(0, sb, "AddAsProspect", AddAsProspect);
 			AddValueCk(0, sb, "NoReqBirthYear", NoReqBirthYear);
 			AddValueCk(0, sb, "NotReqDOB", NotReqDOB);

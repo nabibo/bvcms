@@ -24,7 +24,7 @@ namespace CmsWeb.Areas.Org.Models
                         mm.Person.Name,
                         mm.Organization.OrganizationName,
                         om = mm,
-                        mt = mm.Organization.IsMissionTrip == true,
+                        mt = mm.Organization.IsMissionTrip ?? false,
                         ts
                     };
             var i = q.SingleOrDefault();
@@ -64,6 +64,9 @@ namespace CmsWeb.Areas.Org.Models
         public string OrgName { get; set; }
         public decimal? Amount { get; set; }
         public decimal? Payment { get; set; }
+        public bool AdjustFee { get; set; }
+        [StringLength(100)]
+        public string Description { get; set; }
 
         internal void PostTransaction()
         {
@@ -77,17 +80,20 @@ namespace CmsWeb.Areas.Org.Models
                     om.AddToGroup(DbUtil.Db, "Goer");
                     om.Amount = Amount;
                 }
-                var gs = new GoerSenderAmount
+                if (AdjustFee == false)
                 {
-                    GoerId = om.PeopleId,
-                    SupporterId = om.PeopleId,
-                    Amount = Payment,
-                    OrgId = om.OrganizationId,
-                    Created = DateTime.Now,
-                };
-                DbUtil.Db.GoerSenderAmounts.InsertOnSubmit(gs);
+                    var gs = new GoerSenderAmount
+                    {
+                        GoerId = om.PeopleId,
+                        SupporterId = om.PeopleId,
+                        Amount = Payment,
+                        OrgId = om.OrganizationId,
+                        Created = DateTime.Now,
+                    };
+                    DbUtil.Db.GoerSenderAmounts.InsertOnSubmit(gs);
+                }
             }
-            om.AddTransaction(DbUtil.Db, reason, Payment ?? 0, Amount);
+            om.AddTransaction(DbUtil.Db, reason, Payment ?? 0, Description, Amount, AdjustFee);
         }
     }
 }
