@@ -18,6 +18,9 @@ namespace CmsWeb.MobileAPI
 
 		public int id = 0;
 
+		public int argInt = 0;
+		public string argString = "";
+
 		public string data = "";
 
 		public override void ExecuteResult(ControllerContext context)
@@ -98,6 +101,7 @@ namespace CmsWeb.MobileAPI
 		// 80000's - Giving = 81000's - Read / 82000's Write
 		// Media Read
 		public const int API_TYPE_MEDIA_PLAYLIST = 81001;
+		public const int API_TYPE_MEDIA_PLAYLIST_ITEM = 81002;
 		// Media Write
 		
 		// 90000's - System = 91000's - Read / 92000's Write
@@ -106,6 +110,8 @@ namespace CmsWeb.MobileAPI
 		public const int API_TYPE_SYSTEM_STATES = 91002;
 		public const int API_TYPE_SYSTEM_COUNTRIES = 91003;
 		public const int API_TYPE_SYSTEM_GIVING_FUNDS = 91004;
+		public const int API_TYPE_SYSTEM_HOME_ACTIONS = 91005;
+		public const int API_TYPE_SYSTEM_ICONS = 91006;
 		// System Write
 	}
 }

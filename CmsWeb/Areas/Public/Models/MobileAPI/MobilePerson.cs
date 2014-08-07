@@ -94,6 +94,8 @@ namespace CmsWeb.MobileAPI
 			status = p.MemberStatusId;
 			statusText = p.MemberStatus.Description;
 
+			
+
 			deceased = ((p.IsDeceased ?? false) ? 1 : 0);
 
 			foreach (var m in p.Family.People.Where(mm => mm.PeopleId != p.PeopleId))

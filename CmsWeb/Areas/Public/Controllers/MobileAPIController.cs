@@ -28,6 +28,11 @@ namespace CmsWeb.Areas.Public.Controllers
 			}
 		}
 
+		public ActionResult Exists()
+		{
+			return Content("1");
+		}
+
 		public ActionResult CheckLogin(string data)
 		{
 			var authError = Authenticate();

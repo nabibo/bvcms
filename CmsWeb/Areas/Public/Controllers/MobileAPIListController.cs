@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using CmsData;
 using CmsWeb.MobileAPI;
 using Newtonsoft.Json;
+using System;
 
 namespace CmsWeb.Areas.Public.Controllers
 {
@@ -114,17 +115,23 @@ namespace CmsWeb.Areas.Public.Controllers
 			return br;
 		}
 
-		public ActionResult Playlists()
+		public ActionResult Playlists(string data)
 		{
-			// Authenticate first
-			var authError = Authenticate();
-			if (authError != null) return authError;
+			// Check to see if type matches
+			BaseMessage dataIn = BaseMessage.createFromString(data);
+			if (dataIn.type != BaseMessage.API_TYPE_MEDIA_PLAYLIST)
+				return BaseMessage.createTypeErrorReturn();
 
 			var playlists = from p in DbUtil.Db.MobileAppPlaylists
+								 where p.Type == dataIn.argInt
+								 where p.Enabled == true
 								 select new MobilePlaylist
 								 {
 									 id = p.Id,
-									 name = p.Name
+									 type = p.Type,
+									 name = p.Name,
+									 url = p.Url,
+									 thumb = p.Thumb
 								 };
 
 			BaseMessage br = new BaseMessage();
@@ -132,6 +139,90 @@ namespace CmsWeb.Areas.Public.Controllers
 			br.type = BaseMessage.API_TYPE_MEDIA_PLAYLIST;
 			br.count = playlists.Count();
 			br.data = JsonConvert.SerializeObject(playlists.ToList());
+
+			return br;
+		}
+
+		public ActionResult PlaylistItems(string data)
+		{
+			// Check to see if type matches
+			BaseMessage dataIn = BaseMessage.createFromString(data);
+			if (dataIn.type != BaseMessage.API_TYPE_MEDIA_PLAYLIST_ITEM)
+				return BaseMessage.createTypeErrorReturn();
+
+			var playlistItems = from p in DbUtil.Db.MobileAppPlaylistItems
+									  where p.PlaylistID == dataIn.argInt
+									  where p.Enabled == true
+									  orderby p.DateX descending
+									  select new MobilePlaylistItem
+									  {
+										  type = p.Type,
+										  date = p.DateX ?? DateTime.Now,
+										  name = p.Name,
+										  url = p.Url,
+										  thumb = p.Thumb,
+										  speaker = p.Speaker,
+										  reference = p.Reference
+									  };
+
+			BaseMessage br = new BaseMessage();
+			br.error = 0;
+			br.type = BaseMessage.API_TYPE_MEDIA_PLAYLIST_ITEM;
+			br.count = playlistItems.Count();
+			br.data = JsonConvert.SerializeObject(playlistItems.ToList());
+
+			return br;
+		}
+
+		public ActionResult HomeActions(string data)
+		{
+			// Check to see if type matches
+			BaseMessage dataIn = BaseMessage.createFromString(data);
+			if (dataIn.type != BaseMessage.API_TYPE_SYSTEM_HOME_ACTIONS)
+				return BaseMessage.createTypeErrorReturn();
+
+			var actions = from p in DbUtil.Db.MobileAppActions
+							  where p.Enabled == true
+							  orderby p.Section, p.Order
+							  select new MobileHomeAction
+							  {
+								  section = p.Section,
+								  type = p.Type,
+								  title = p.Title,
+								  url = p.Url,
+								  custom = p.Custom
+							  };
+
+			BaseMessage br = new BaseMessage();
+			br.error = 0;
+			br.type = BaseMessage.API_TYPE_SYSTEM_HOME_ACTIONS;
+			br.count = actions.Count();
+			br.data = JsonConvert.SerializeObject(actions.ToList());
+
+			return br;
+		}
+
+		public ActionResult IconSet(string data)
+		{
+			// Check to see if type matches
+			BaseMessage dataIn = BaseMessage.createFromString(data);
+			if (dataIn.type != BaseMessage.API_TYPE_SYSTEM_ICONS)
+				return BaseMessage.createTypeErrorReturn();
+
+			var actions = from p in DbUtil.Db.MobileAppIconSets
+							  join i in DbUtil.Db.MobileAppIcons on p.Id equals i.SetID
+							  where p.Active
+							  select new MobileIcon
+							  {
+								  type = i.Type,
+								  url = i.Url
+							  };
+
+			BaseMessage br = new BaseMessage();
+			br.error = 0;
+			br.type = BaseMessage.API_TYPE_SYSTEM_ICONS;
+			br.count = actions.Count();
+			br.data = JsonConvert.SerializeObject(actions.ToList().ToDictionary( k => k.type, v => v.url ));
 
 			return br;
 		}
