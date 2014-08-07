@@ -9,14 +9,14 @@
 			switch (iType)
 			{
 				case TYPE_STRING:
-					if( liItem.GetType().GetProperty(sText) != null )
+					if (liItem.GetType().GetProperty(sText) != null && liItem.GetType().GetProperty(sText).GetValue(liItem, null) != null)
 						sText = liItem.GetType().GetProperty(sText).GetValue(liItem, null).ToString();
 					else
 						sText = "";
 					break;
 
 				case TYPE_BARCODE:
-					if (liItem.GetType().GetProperty(sText) != null)
+					if (liItem.GetType().GetProperty(sText) != null && liItem.GetType().GetProperty(sText).GetValue(liItem, null) != null)
 						sText = liItem.GetType().GetProperty(sText).GetValue(liItem, null).ToString();
 					else
 						sText = "";

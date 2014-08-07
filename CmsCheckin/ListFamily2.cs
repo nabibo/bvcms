@@ -72,16 +72,16 @@ namespace CmsCheckin
 			//page = 1;
 			//xdoc = this.GetDocument("Checkin2/SingleFamily/" + fid + "?Building=" + Program.Building);
 
-            Program.FamilyId = fid;
+			Program.FamilyId = fid;
 
-            var url = "Checkin2/SingleFamily/" + fid;
+			var url = "Checkin2/SingleFamily/" + fid;
 
-            var post = new NameValueCollection();
-            post.Add("building", Program.Building);
-            post.Add("querybit", Program.BuildingInfo.querybit);
+			var post = new NameValueCollection();
+			post.Add("building", Program.Building);
+			post.Add("querybit", Program.BuildingInfo.querybit);
 
-            var x = this.PostDocument(url, post);
-			
+			var x = this.PostDocument(url, post);
+
 			ShowFamily(x);
 		}
 
@@ -90,28 +90,28 @@ namespace CmsCheckin
 			xdoc = x;
 			hasprinter = PrintRawHelper.HasPrinter(Program.Printer);
 			this.Focus();
-            Program.FamilyId = x.Root.Attribute("familyid").Value.ToInt();
+			Program.FamilyId = x.Root.Attribute("familyid").Value.ToInt();
 
 			list = new List<PersonInfo>();
-            if (x.Descendants("member").Count() == 0)
-            {
-                ClearControls();
-                var lab = new Label();
-                lab.Font = pfont;
-                lab.Location = new Point(15, 200);
-                lab.AutoSize = true;
-                pgup.Visible = false;
-                pgdn.Visible = false;
-                lab.Text = "Not Found, try another phone number, or 411?";
-                this.Controls.Add(lab);
-                Return.Text = "Try Again";
-                controls.Add(lab);
-                return;
-            }
-            else
-            {
-                Return.Text = "Return";
-            }
+			if (x.Descendants("member").Count() == 0)
+			{
+				ClearControls();
+				var lab = new Label();
+				lab.Font = pfont;
+				lab.Location = new Point(15, 200);
+				lab.AutoSize = true;
+				pgup.Visible = false;
+				pgdn.Visible = false;
+				lab.Text = "Not Found, try another phone number, or 411?";
+				this.Controls.Add(lab);
+				Return.Text = "Try Again";
+				controls.Add(lab);
+				return;
+			}
+			else
+			{
+				Return.Text = "Return";
+			}
 
 			foreach (var e in x.Descendants("member"))
 			{
@@ -133,9 +133,9 @@ namespace CmsCheckin
 					Row = list.Count,
 					HasPicture = bool.Parse(e.Attribute("haspicture").Value),
 					MemberStatus = e.Attribute("memberstatus").Value,
-                    access = e.Attribute("access").Value,
+					access = e.Attribute("access").Value,
 					notes = e.Value,
-                    visitcount = e.Attribute("visitcount").Value.ToInt(),
+					visitcount = e.Attribute("visitcount").Value.ToInt(),
 				};
 				list.Add(a);
 			}
@@ -367,48 +367,53 @@ namespace CmsCheckin
 			if (c.lastpress.HasValue && DateTime.Now.Subtract(c.lastpress.Value).TotalSeconds < 1)
 				return;
 
-            if (c.access == "restricted")
-            {
-                Program.attendant.AddHistoryString("-- " + DateTime.Now.ToString("MM-dd-yy hh:mm tt") + " Check-in rejected for " + c.name + " because they are not permitted to use the facility.");
-                MessageBox.Show("An access error has occurred. Please check with the attendant.", "Access Error");
-                return;
-            }
+			if (c.access == "restricted")
+			{
+				Program.attendant.AddHistoryString("-- " + DateTime.Now.ToString("MM-dd-yy hh:mm tt") + " Check-in rejected for " + c.name + " because they are not permitted to use the facility.");
+				MessageBox.Show("An access error has occurred. Please check with the attendant.", "Access Error");
+				return;
+			}
+			else if( c.access == "timer" )
+			{
+				Program.attendant.AddHistoryString("-- " + DateTime.Now.ToString("MM-dd-yy hh:mm tt") + " Check-in rejected for " + c.name + " because they have logged in recently.");
+				MessageBox.Show("An access error has occurred. Please check with the attendant.", "Access Error");
+				return;
+			}
+			else if (c.access == "true")
+			{
+				c.accesstype = 1;
+			}
+			else
+			{
+				if (c.visitcount < Program.BuildingInfo.maxvisits && Program.addguests == null)
+				{
+					MessageBox.Show("Welcome " + c.name + "! This is visit number " + (c.visitcount + 1) + " of " + Program.BuildingInfo.maxvisits + ".", "Guest Information");
+					c.accesstype = 2;
+				}
+				else
+				{
+					if (Program.addguests == null)
+					{
+						Program.attendant.AddHistoryString("-- " + DateTime.Now.ToString("MM-dd-yy hh:mm tt") + " Check-in rejected for " + c.name + " because they are not a member.");
+						MessageBox.Show("Only members may check-in. You will need to be a guest of a member to check-in.", "Members Only Error");
+						return;
+					}
 
-            if (c.access == "true")
-            {
-                c.accesstype = 1;
-            }
-            else
-            {
-                if (c.visitcount < Program.BuildingInfo.maxvisits && Program.addguests == null)
-                {
-                    MessageBox.Show("Welcome " + c.name + "! This is visit number " + (c.visitcount + 1) + " of " + Program.BuildingInfo.maxvisits + ".", "Guest Information");
-                    c.accesstype = 2;
-                }
-                else
-                {
-                    if (Program.addguests == null)
-                    {
-                        Program.attendant.AddHistoryString("-- " + DateTime.Now.ToString("MM-dd-yy hh:mm tt") + " Check-in rejected for " + c.name + " because they are not a member.");
-                        MessageBox.Show("Only members may check-in. You will need to be a guest of a member to check-in.", "Members Only Error");
-                        return;
-                    }
+					if (Program.BuildingInfo.maxguests > -1)
+					{
+						var p = Program.GuestOf();
 
-                    if (Program.BuildingInfo.maxguests > -1)
-                    {
-                        var p = Program.GuestOf();
+						if (p != null && Util.GetGuestCount(p.pid) >= Program.BuildingInfo.maxguests)
+						{
+							Program.attendant.AddHistoryString("-- " + DateTime.Now.ToString("MM-dd-yy hh:mm tt") + " Check-in rejected for " + c.name + " because " + p.name + " reached the guest limit.");
+							MessageBox.Show("No additional guests are permitted for today.", "Guest Limit Error");
+							return;
+						}
 
-                        if (p != null && Util.GetGuestCount(p.pid) >= Program.BuildingInfo.maxguests)
-                        {
-                            Program.attendant.AddHistoryString("-- " + DateTime.Now.ToString("MM-dd-yy hh:mm tt") + " Check-in rejected for " + c.name + " because " + p.name + " reached the guest limit.");
-                            MessageBox.Show("No additional guests are permitted for today.", "Guest Limit Error");
-                            return;
-                        }
-
-                        c.accesstype = 3;
-                    }
-                }
-            }
+						c.accesstype = 3;
+					}
+				}
+			}
 
 			var pb = Program.attendant.pictureBox1;
 			pb.SetPropertyThreadSafe(() => pb.Image, Util.GetImage(c.pid));
@@ -613,7 +618,7 @@ namespace CmsCheckin
 
 		private void MagicButton_Click(object sender, EventArgs e)
 		{
-            if (!Program.CheckAdminPIN()) return;
+			if (!Program.CheckAdminPIN()) return;
 
 			Program.TimerStop();
 			if (list.Count == 0)
@@ -663,13 +668,13 @@ namespace CmsCheckin
 				return;
 			}
 
-            if (Program.addguests == null && list.Where(i => i.ischecked && i.access == "true").Any())
+			if (Program.addguests == null && list.Where(i => i.ischecked && i.access == "true").Any())
 			{
 				Program.addguests = new AddGuests();
 				Program.addguests.StartPosition = FormStartPosition.Manual;
 				Program.addguests.Location = new Point(Program.baseform.Location.X + 100, Program.baseform.Location.Y + 100);
 				var i = 1;
-                foreach (var p in list.Where(pp => pp.ischecked && pp.access == "true"))
+				foreach (var p in list.Where(pp => pp.ischecked && pp.access == "true"))
 				{
 					var rb = Program.addguests.Controls.Find("rb" + i, true)[0] as RadioButton;
 					rb.Text = p.name;
@@ -681,15 +686,15 @@ namespace CmsCheckin
 				}
 			}
 
-            if (Program.addguests != null)
-            {
-                var ret = Program.addguests.ShowDialog();
-                if (ret == DialogResult.No)
-                {
-                    Program.addguests.Dispose();
-                    Program.addguests = null;
-                }
-            }
+			if (Program.addguests != null)
+			{
+				var ret = Program.addguests.ShowDialog();
+				if (ret == DialogResult.No)
+				{
+					Program.addguests.Dispose();
+					Program.addguests = null;
+				}
+			}
 
 			PleaseWaitForm = new PleaseWait();
 			PleaseWaitForm.Show();
@@ -776,14 +781,15 @@ namespace CmsCheckin
 		public bool HasPicture { get; set; }
 		public string MemberStatus { get; set; }
 		public string notes { get; set; }
-        public string access { get; set; }
-        public int visitcount { get; set; }
-        public int accesstype { get; set; }
+		public string access { get; set; }
+		public int visitcount { get; set; }
+		public int accesstype { get; set; }
 
 		public string name
 		{
 			get { return first + " " + last; }
 		}
+
 		public string ItemsDisplay()
 		{
 			var s = string.Join(",", Items.Select(ii => ii.display));
