@@ -226,5 +226,66 @@ namespace CmsWeb.Areas.Public.Controllers
 
 			return br;
 		}
+
+		public ActionResult MapInfo(string data)
+		{
+			// Check to see if type matches
+			//BaseMessage dataIn = BaseMessage.createFromString(data);
+			//if (dataIn.type != BaseMessage.API_TYPE_MAP_INFO)
+//				return BaseMessage.createTypeErrorReturn();
+
+			var campuses = from p in DbUtil.Db.MobileAppBuildings
+								where p.Enabled
+								orderby p.Order
+								select new MobileCampus
+								{
+									id = p.Id,
+									name = p.Name
+								};
+
+			var campusList = campuses.ToList();
+
+			foreach (MobileCampus campus in campusList)
+			{
+				var floors = from p in DbUtil.Db.MobileAppFloors
+								 where p.Enabled
+								 where p.Campus == campus.id
+								 orderby p.Order
+								 select new MobileFloor
+								 {
+									 id = p.Id,
+									 name = p.Name,
+									 image = p.Image,
+								 };
+
+				var floorList = floors.ToList();
+
+				foreach (MobileFloor floor in floorList)
+				{
+					var rooms = from p in DbUtil.Db.MobileAppRooms
+									where p.Enabled
+									where p.Floor == floor.id
+									select new MobileRoom
+									{
+										name = p.Name,
+										room = p.Room,
+										x = p.X,
+										y = p.Y
+									};
+
+					floor.rooms = rooms.ToList();
+				}
+
+				campus.floors = floorList;
+			}
+
+			BaseMessage br = new BaseMessage();
+			br.error = 0;
+			br.type = BaseMessage.API_TYPE_MAP_INFO;
+			br.count = campusList.Count();
+			br.data = JsonConvert.SerializeObject(campusList);
+
+			return br;
+		}
 	}
 }

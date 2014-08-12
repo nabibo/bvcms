@@ -98,6 +98,11 @@ namespace CmsWeb.MobileAPI
 		// Giving Write
 		public const int API_TYPE_GIVING_GIVE = 32001;
 
+		// 70000's - Giving = 71000's - Read / 72000's Write
+		// Media Read
+		public const int API_TYPE_MAP_INFO = 71001;
+		// Media Write
+
 		// 80000's - Giving = 81000's - Read / 82000's Write
 		// Media Read
 		public const int API_TYPE_MEDIA_PLAYLIST = 81001;
