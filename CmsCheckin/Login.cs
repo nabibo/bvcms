@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using System.Drawing.Printing;
 using CmsCheckin.Classes;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace CmsCheckin
 {
@@ -73,6 +74,8 @@ namespace CmsCheckin
 			PrintKiosks.Enter += textbox_Enter;
 			PrinterWidth.Enter += textbox_Enter;
 			PrinterHeight.Enter += textbox_Enter;
+			AdminPIN.Enter += textbox_Enter;
+			AdminPINTimeout.Enter += textbox_Enter;
 
 			password.Focus();
 		}
@@ -205,14 +208,26 @@ namespace CmsCheckin
 		private void Login_Load(object sender, EventArgs e)
 		{
 			password.Focus();
+
 			var prtdoc = new PrintDocument();
 			var defp = prtdoc.PrinterSettings.PrinterName;
-			foreach (var s in PrinterSettings.InstalledPrinters)
-				Printer.Items.Add(s);
+			var printerList = new List<string>();
 
-			Printer.SelectedIndex = Printer.FindStringExact(defp);
-			if (Settings1.Default.Printer.HasValue())
+			for (int i = 0; i < PrinterSettings.InstalledPrinters.Count; i++)
+			{
+				printerList.Add( PrinterSettings.InstalledPrinters[i] );
+				Printer.Items.Add( PrinterSettings.InstalledPrinters[i] );
+			}
+
+			if (printerList.Contains(Settings1.Default.Printer))
+			{
 				Printer.SelectedIndex = Printer.FindStringExact(Settings1.Default.Printer);
+			}
+			else
+			{
+				Printer.SelectedIndex = Printer.FindStringExact(defp);
+			}
+
 			DisableLocationLabels.Checked = Settings1.Default.DisableLocationLabels;
 			BuildingAccessMode.Checked = Settings1.Default.BuildingMode;
 			URL.Text = Settings1.Default.URL;
@@ -229,7 +244,7 @@ namespace CmsCheckin
 
 			if (!Util.IsDebug())
 			{
-				this.Height = 570;
+				this.Height = 496;
 
 				PrintTest.Enabled = false;
 				label5.Enabled = false;
@@ -238,7 +253,7 @@ namespace CmsCheckin
 				label10.Enabled = false;
 				LoadLabelList.Enabled = false;
 				SaveLabel.Enabled = false;
-				UseSSL.Enabled = false;
+
 
 				PrintTest.Visible = false;
 				label5.Visible = false;
@@ -247,20 +262,16 @@ namespace CmsCheckin
 				label10.Visible = false;
 				LoadLabelList.Visible = false;
 				SaveLabel.Visible = false;
-				UseSSL.Visible = false;
-
 			}
 
 			if (PrintMode.Text == "Print From Server")
 			{
 				PrintKiosks.Enabled = true;
-				label12.Enabled = true;
 				label1.Enabled = true;
 			}
 			else
 			{
 				PrintKiosks.Enabled = false;
-				label12.Enabled = false;
 				label1.Enabled = false;
 			}
 		}
@@ -518,13 +529,11 @@ namespace CmsCheckin
 			if (PrintMode.SelectedIndex == 2)
 			{
 				PrintKiosks.Enabled = true;
-				label12.Enabled = true;
 				label1.Enabled = true;
 			}
 			else
 			{
 				PrintKiosks.Enabled = false;
-				label12.Enabled = false;
 				label1.Enabled = false;
 				PrintKiosks.Text = "";
 			}
