@@ -10,10 +10,7 @@ namespace CmsCheckin
 		// 360 tries of 10 seconds = 1 Hour
 		//private const int MAX_TRIES = 360;
 
-		// For testing only
 		private const int MAX_TRIES = 720;
-
-		private DateTime dtLastPrint;
 		private const int INT_count = 10;
 
 		private int triesLeft;
@@ -44,7 +41,9 @@ namespace CmsCheckin
 			Countdown.Text = "Checking...";
 
 			count = 0;
-			StartChecking();
+			triesLeft = MAX_TRIES;
+
+			CheckServer();
 		}
 
 		private void CheckServer()
@@ -59,8 +58,6 @@ namespace CmsCheckin
 
 			if (pj.jobs.Count > 0)
 			{
-				dtLastPrint = DateTime.Now;
-
 				foreach (var j in pj.jobs)
 				{
 					Program.SecurityCode = j.securitycode;

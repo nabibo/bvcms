@@ -63,10 +63,6 @@ namespace CmsCheckin
 			bdot.Click += buttonclick;
 			bslash.Click += buttonclick;
 
-			//username.KeyPress += textBox_KeyPress;
-			//password.KeyPress += textBox_KeyPress;
-			//URL.KeyPress += textBox_KeyPress;
-
 			username.Enter += textbox_Enter;
 			password.Enter += textbox_Enter;
 			URL.Enter += textbox_Enter;
@@ -76,8 +72,6 @@ namespace CmsCheckin
 			PrinterHeight.Enter += textbox_Enter;
 			AdminPIN.Enter += textbox_Enter;
 			AdminPINTimeout.Enter += textbox_Enter;
-
-			password.Focus();
 		}
 
 		public XDocument campuses { get; set; }
@@ -207,8 +201,6 @@ namespace CmsCheckin
 		TextBox current = null;
 		private void Login_Load(object sender, EventArgs e)
 		{
-			password.Focus();
-
 			var prtdoc = new PrintDocument();
 			var defp = prtdoc.PrinterSettings.PrinterName;
 			var printerList = new List<string>();
@@ -273,6 +265,17 @@ namespace CmsCheckin
 			{
 				PrintKiosks.Enabled = false;
 				label1.Enabled = false;
+			}
+
+			if( username.Text.Length > 0 )
+			{
+				current = password;
+				this.ActiveControl = password;
+			}
+			else
+			{
+				current = URL;
+				this.ActiveControl = URL;
 			}
 		}
 
